@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e7b0aea3a63c49459fd3b379c83f95e, type: 3}
+  m_Name: Player_Arrow
+  m_EditorClassIdentifier: 
+  speed: 20
+  damage: 10
+  lifeTime: 1
+  turnSpeed: 1
+  isHoming: 0
+  isExplosive: 1
+  timeToExplode: 0.5
+  explosionRadius: 0
+  explosionForce: 0
+  explosionDamage: 0
+  numberOfProjectiles: 10
+  childProjectile: {fileID: 11400000, guid: 9180c7a17326c4fadbdd3b3f690e92e9, type: 2}
