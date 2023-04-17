@@ -38,9 +38,9 @@ public class Player_Movement :  MonoBehaviour
         var position = transform1.position;
         Vector2 direction = new Vector2(mousePos.x - position.x, mousePos.y - position.y);
         transform1.up = direction;
-        
-        
-        
+
+
+
         _movement.x = Input.GetAxisRaw("Horizontal");
         _movement.y = Input.GetAxisRaw("Vertical");
         

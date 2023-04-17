@@ -37,6 +37,7 @@ public class Player_Behaviour : MonoBehaviour
     [SerializeField]
     private bool poison = false;
     
+    
 
 
 

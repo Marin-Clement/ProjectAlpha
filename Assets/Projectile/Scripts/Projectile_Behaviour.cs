@@ -1,30 +1,33 @@
+using System;
 using UnityEngine;
 
 public class Projectile_Behaviour : MonoBehaviour
 {
     // Projectile Variables
-    private Rigidbody _rigidbody;
+    private Rigidbody2D _rigidbody;
     private Vector3 _direction;
 
     public Projectile_Data projectileData;
-    
+
 
     // Homing Variables
     private GameObject _target;
     
     // Explosive Variables
-    private float currentExplosionTime;
-    private float spawnTime = 0.3f;
+    private float _currentExplosionTime;
+    private float _spawnTime = 0.3f;
+    
+    // Player Variables
+    private float _duration;
     
 
     private void Start()
     {
-        _target = GameObject.FindGameObjectWithTag("Enemy");
-        currentExplosionTime = projectileData.timeToExplode;
-        _rigidbody = GetComponent<Rigidbody>();
+        _currentExplosionTime = projectileData.timeToExplode;
+        _rigidbody = GetComponent<Rigidbody2D>();
         if (projectileData.lifeTime > 0)
         {
-            Destroy(gameObject, projectileData.lifeTime);
+            Destroy(gameObject, _duration);
         }
     }
 
@@ -34,8 +37,8 @@ public class Projectile_Behaviour : MonoBehaviour
         {
             if (_target)
             {
-                spawnTime -= Time.deltaTime;
-                if (spawnTime <= 0)
+                _spawnTime -= Time.deltaTime;
+                if (_spawnTime <= 0)
                 {
                     _direction = _target.transform.position - transform.position;
                     _direction.Normalize();
@@ -56,11 +59,11 @@ public class Projectile_Behaviour : MonoBehaviour
             _rigidbody.velocity = _direction * projectileData.speed;
         }
         if (!projectileData.isExplosive) return;
-        currentExplosionTime -= Time.deltaTime;
-        if (currentExplosionTime <= 0)
+        _currentExplosionTime -= Time.deltaTime;
+        if (_currentExplosionTime <= 0)
         {
             Explode();
-            currentExplosionTime = projectileData.timeToExplode;
+            _currentExplosionTime = projectileData.timeToExplode;
         }
     }
     
@@ -76,7 +79,25 @@ public class Projectile_Behaviour : MonoBehaviour
         }
         Destroy(gameObject);
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        switch (col.gameObject.tag)
+        {
+            case "Enemy":
+                // col.gameObject.GetComponent<Enemy_Behaviour>().TakeDamage(projectileData.damage);
+                Debug.Log("Enemy Hit for" + projectileData.damage);
+                Destroy(gameObject);
+                break;
+            case "Wall":
+                Destroy(gameObject);
+                break;
+        }
+        {
+            
+        }
+    }
+
     public void SetDirection(Vector3 direction)
     {
         _direction = direction;
@@ -85,5 +106,11 @@ public class Projectile_Behaviour : MonoBehaviour
     public void SetTarget(GameObject target)
     {
         _target = target;
+    }
+    
+    public float Duration
+    {
+        get => _duration;
+        set => _duration = value;
     }
 }
