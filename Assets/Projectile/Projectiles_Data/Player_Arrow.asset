@@ -12,12 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7b0aea3a63c49459fd3b379c83f95e, type: 3}
   m_Name: Player_Arrow
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 30
   damage: 10
-  lifeTime: 0.7
+  lifeTime: 1
+  pierceCount: 3
+  isSticky: 0
+  isBouncy: 1
+  isPoisonous: 0
+  isFreezing: 0
+  isBurning: 0
+  isElectrifying: 0
+  isStunning: 0
   turnSpeed: 1
+  bounces: 3
   isHoming: 0
   isExplosive: 0
+  statusEffect: 1
   timeToExplode: 0.5
   explosionRadius: 0
   explosionForce: 0

@@ -383,6 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 3158241048368802958, guid: f0b90aab27e5345e088cd43802775ec6, type: 3}
   rangeIndicator: {fileID: 1310002907}
+  arrowData: {fileID: 11400000, guid: 6e532112f0d93468d9a1b2af03cbb7b2, type: 2}
 --- !u!1 &8681103541166672084
 GameObject:
   m_ObjectHideFlags: 0

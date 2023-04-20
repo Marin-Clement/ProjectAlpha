@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
 
 public class Projectile_Behaviour : MonoBehaviour
 {
     // Projectile Variables
     private Rigidbody2D _rigidbody;
+    private BoxCollider2D _collider;
     private Vector3 _direction;
-
     public Projectile_Data projectileData;
 
 
@@ -20,14 +19,31 @@ public class Projectile_Behaviour : MonoBehaviour
     // Player Variables
     private float _duration;
     
+    // Pierce Variables
+    private int _pierceCount;
+    private int _enemyPierced;
+    
+    // Bouncy Variables
+    private int _bounceCount;
 
     private void Start()
     {
+        // Declare Variables
         _currentExplosionTime = projectileData.timeToExplode;
+        _pierceCount += projectileData.pierceCount;
+        _bounceCount += projectileData.bounces;
+        
         _rigidbody = GetComponent<Rigidbody2D>();
-        if (projectileData.lifeTime > 0)
+        _collider = GetComponent<BoxCollider2D>();
+        
+        switch (gameObject.tag)
         {
-            Destroy(gameObject, _duration);
+            case "PlayerProjectile":
+                Destroy(gameObject, _duration);
+                break;
+            case "EnemyProjectile":
+                Destroy(gameObject, projectileData.lifeTime);
+                break;
         }
     }
 
@@ -74,38 +90,57 @@ public class Projectile_Behaviour : MonoBehaviour
         {
             Vector3 direction = Quaternion.AngleAxis(angle * i, Vector3.forward) * transform.up;
             GameObject projectile = Instantiate(gameObject, transform.position, Quaternion.identity);
-            projectile.GetComponent<Projectile_Behaviour>().projectileData = projectileData.childProjectile;
-            projectile.GetComponent<Projectile_Behaviour>().SetDirection(direction);
+            Projectile_Behaviour projectileBehaviour = projectile.GetComponent<Projectile_Behaviour>();
+            projectileBehaviour.SetDirection(direction);
+            projectileBehaviour.projectileData = projectileData.childProjectile;
+            projectileBehaviour.Duration = projectileData.lifeTime;
         }
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        switch (col.gameObject.tag)
+        switch (col.tag)
         {
             case "Enemy":
-                // col.gameObject.GetComponent<Enemy_Behaviour>().TakeDamage(projectileData.damage);
-                Debug.Log("Enemy Hit for" + projectileData.damage);
-                Destroy(gameObject);
+                if (col.gameObject.CompareTag("Enemy"))
+                {
+                    Debug.Log("Enemy Hit Enemy" + GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
+                    if (_pierceCount > 0)
+                    {
+                        _pierceCount--;
+                        _enemyPierced++;
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
+                }
                 break;
             case "Wall":
-                Destroy(gameObject);
+                if (projectileData.isBouncy)
+                {
+                    if (_bounceCount > 0)
+                    {
+                        _bounceCount--;
+                        _direction = Vector3.Reflect(_direction, col.transform.up);
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
                 break;
-        }
-        {
-            
         }
     }
 
     public void SetDirection(Vector3 direction)
     {
         _direction = direction;
-    }
-    
-    public void SetTarget(GameObject target)
-    {
-        _target = target;
     }
     
     public float Duration

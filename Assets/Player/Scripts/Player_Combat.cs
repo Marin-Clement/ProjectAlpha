@@ -5,14 +5,13 @@ public class Player_Combat : MonoBehaviour
 {
     private Player_Behaviour _playerBehaviour;
     
-    [SerializeField]
-    private GameObject arrowPrefab;
-    [SerializeField]
-    private SpriteRenderer rangeIndicator;
+    [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private SpriteRenderer rangeIndicator;
     
     // Bow Stats
     private float _heldTime;
-    
+    private const float MinHoldTime = 0.2f;
+    [SerializeField] private Projectile_Data arrowData;
 
     private void Start()
     {
@@ -26,9 +25,9 @@ public class Player_Combat : MonoBehaviour
         {
             rangeIndicator.gameObject.SetActive(true);
             _heldTime += Time.deltaTime;
-            if (_heldTime > 0.7f)
+            if (_heldTime > arrowData.lifeTime)
             {
-                _heldTime = 0.7f;
+                _heldTime = arrowData.lifeTime;
             }
             SetRangeIndicator(_heldTime);
         }
@@ -47,14 +46,14 @@ public class Player_Combat : MonoBehaviour
         var playerTranform = transform;
         var arrow = Instantiate(arrowPrefab, playerTranform.position, playerTranform.rotation);
         var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();
-        projectileBehaviour.Duration = (_heldTime + 0.15f) * 1.2f;
+        projectileBehaviour.Duration = (_heldTime + MinHoldTime) * 1.2f;
         projectileBehaviour.SetDirection(playerTranform.up);
     }
     
     public void SetRangeIndicator(float range)
     {
         var transform1 = rangeIndicator.transform;
-        transform1.localScale = new Vector3(0.5f, (range + 0.25f) * 20.5f, 1);
-        transform1.localPosition = new Vector3(0, (range + 0.25f) * 10.25f, 0);
+        transform1.localScale = new Vector3(0.5f, (arrowData.speed * (range + MinHoldTime) * 1.2f), 1);
+        transform1.localPosition = new Vector3(0, (transform1.localScale.y / 2), 0);
     }
 }
