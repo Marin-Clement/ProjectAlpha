@@ -124,6 +124,7 @@ public class Projectile_Behaviour : MonoBehaviour
                     {
                         _bounceCount--;
                         _direction = Vector3.Reflect(_direction, col.transform.up);
+                        gameObject.transform.up = _direction;
                     }
                     else
                     {

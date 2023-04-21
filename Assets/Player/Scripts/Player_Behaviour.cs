@@ -86,6 +86,6 @@ public class Player_Behaviour : MonoBehaviour
     
     public float CalculateArrowDamage(float arrowDamage, int enemyPierce, float holdTime)
     {
-        return ((arrowDamage * (1 - (enemyPierce / ((enemyPierce + 100) * holdTime)))) * damage) * math.pow(0.85f, enemyPierce);
+        return ((arrowDamage * (1 - (enemyPierce / ((enemyPierce + damage) * holdTime))))) * math.pow(0.85f, enemyPierce);
     }
 }
