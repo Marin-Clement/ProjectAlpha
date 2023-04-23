@@ -8,7 +8,6 @@ public class Projectile_Behaviour : MonoBehaviour
     private Vector3 _direction;
     public Projectile_Data projectileData;
 
-
     // Homing Variables
     private GameObject _target;
     
@@ -92,6 +91,7 @@ public class Projectile_Behaviour : MonoBehaviour
             GameObject projectile = Instantiate(gameObject, transform.position, Quaternion.identity);
             Projectile_Behaviour projectileBehaviour = projectile.GetComponent<Projectile_Behaviour>();
             projectileBehaviour.SetDirection(direction);
+            projectileBehaviour.gameObject.transform.up = direction;
             projectileBehaviour.projectileData = projectileData.childProjectile;
             projectileBehaviour.Duration = projectileData.lifeTime;
         }

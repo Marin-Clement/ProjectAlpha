@@ -14,19 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   damage: 10
-<<<<<<< Updated upstream
-  lifeTime: 5
-  pierceCount: 0
-  isSticky: 0
-  isBouncy: 1
-  isPoisonous: 0
-  isFreezing: 0
-  isBurning: 0
-  isElectrifying: 0
-  isStunning: 0
-=======
   lifeTime: 1
->>>>>>> Stashed changes
   turnSpeed: 1
   bounces: 0
   isHoming: 0

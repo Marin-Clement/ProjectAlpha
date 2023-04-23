@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using Unity.Mathematics;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class Player_Behaviour : MonoBehaviour
@@ -20,7 +17,7 @@ public class Player_Behaviour : MonoBehaviour
     // Attack stats
     [Header("Attack Stats")] 
     
-    [SerializeField] private int damage = 1; // Default damage is 1
+    [SerializeField] private int damage = 10; // Default damage is 10
     [SerializeField] private int attackRange = 1; // Default attack range is 1
     [SerializeField] private int criticalChance = 0; // Default critical chance is 0
     [SerializeField] private int criticalDamage = 10; // Default critical damage is 10
@@ -86,6 +83,6 @@ public class Player_Behaviour : MonoBehaviour
     
     public float CalculateArrowDamage(float arrowDamage, int enemyPierce, float holdTime)
     {
-        return ((arrowDamage * (1 - (enemyPierce / ((enemyPierce + damage) * holdTime))))) * math.pow(0.85f, enemyPierce);
+        return (((arrowDamage * (1 + (holdTime / 10))) * damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
     }
 }

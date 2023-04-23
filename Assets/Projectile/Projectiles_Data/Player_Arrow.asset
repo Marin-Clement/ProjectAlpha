@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Arrow
   m_EditorClassIdentifier: 
   speed: 30
-  damage: 10
+  damage: 50
   lifeTime: 1
   pierceCount: 3
   isSticky: 0
