@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Projectile", menuName = "Projectile")]
+[CreateAssetMenu(fileName = "New Projectile", menuName = "Projectiles/Projectile")]
 public class Projectile_Data : ScriptableObject
 {
     // Projectile Variables

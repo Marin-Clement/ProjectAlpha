@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Projectile_Behaviour : MonoBehaviour
@@ -98,9 +99,9 @@ public class Projectile_Behaviour : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        switch (col.tag)
+        switch (col.gameObject.tag)
         {
             case "Enemy":
                 if (col.gameObject.CompareTag("Enemy"))
@@ -123,8 +124,8 @@ public class Projectile_Behaviour : MonoBehaviour
                     if (_bounceCount > 0)
                     {
                         _bounceCount--;
-                        _direction = Vector3.Reflect(_direction, col.transform.up);
-                        gameObject.transform.up = _direction;
+                        _direction = Vector3.Reflect(_direction, col.contacts[0].normal);
+                        transform.up = _direction;
                     }
                     else
                     {
@@ -137,13 +138,16 @@ public class Projectile_Behaviour : MonoBehaviour
                 }
                 break;
         }
+        {
+            
+        }
     }
 
     public void SetDirection(Vector3 direction)
     {
         _direction = direction;
     }
-    
+
     public float Duration
     {
         get => _duration;

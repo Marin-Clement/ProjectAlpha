@@ -17,7 +17,7 @@ MonoBehaviour:
   lifeTime: 1
   pierceCount: 3
   isSticky: 0
-  isBouncy: 1
+  isBouncy: 0
   isPoisonous: 0
   isFreezing: 0
   isBurning: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   bounces: 3
   isHoming: 0
   isExplosive: 0
-  statusEffect: 1
+  statusEffect: 0
   timeToExplode: 0.5
   explosionRadius: 0
   explosionForce: 0
