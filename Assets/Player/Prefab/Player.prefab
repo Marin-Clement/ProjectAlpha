@@ -355,17 +355,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b5a7561706e45c2ad4f9378163530f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healh: 50
+  health: 50
   lvl: 1
   playerCamera: {fileID: 0}
   damage: 10
-  attackSpeed: 1
   attackRange: 1
   criticalChance: 0
   criticalDamage: 10
   armorPenetration: 0
-  bleed: 0
-  poison: 0
   armor: 10
   magicResistance: 0
   dodge: 0

@@ -103,10 +103,10 @@ public class Projectile_Behaviour : MonoBehaviour
     {
         switch (col.gameObject.tag)
         {
-            case "Enemy":
-                if (col.gameObject.CompareTag("Enemy"))
+            case "Player":
+                if (CompareTag("EnemyProjectile"))
                 {
-                    Debug.Log("Enemy Hit Enemy" + GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
+                    Debug.Log("Player Hit Enemy" + GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
                     if (_pierceCount > 0)
                     {
                         _pierceCount--;
@@ -116,6 +116,10 @@ public class Projectile_Behaviour : MonoBehaviour
                     {
                         Destroy(gameObject);
                     }
+                }
+                else
+                {
+                    Destroy(gameObject);
                 }
                 break;
             case "Wall":
@@ -140,6 +144,28 @@ public class Projectile_Behaviour : MonoBehaviour
         }
         {
             
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Enemy":
+                if (other.gameObject.CompareTag("Enemy"))
+                {
+                    Debug.Log("Enemy Hit Enemy" + GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
+                    if (_pierceCount > 0)
+                    {
+                        _pierceCount--;
+                        _enemyPierced++;
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+                break;
         }
     }
 

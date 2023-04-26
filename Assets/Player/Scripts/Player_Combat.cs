@@ -44,7 +44,7 @@ public class Player_Combat : MonoBehaviour
     public void Attack()
     {
         var playerTranform = transform;
-        var arrow = Instantiate(arrowPrefab, playerTranform.position, playerTranform.rotation);
+        var arrow = Instantiate(arrowPrefab, playerTranform.position + (playerTranform.up), Quaternion.identity);
         var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();
         projectileBehaviour.Duration = (_heldTime + MinHoldTime) * 1.2f;
         projectileBehaviour.SetDirection(playerTranform.up);

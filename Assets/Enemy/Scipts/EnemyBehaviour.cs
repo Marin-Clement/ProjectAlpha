@@ -67,4 +67,123 @@ public class EnemyBehaviour : MonoBehaviour
         _isMagic = enemyData.isMagic;
         _isPhysical = enemyData.isPhysical;
     }
+    
+    // Setters Getters Functions
+    public Sprite Sprite
+    {
+        get => enemySprite;
+        set => enemySprite = value;
+    }
+    
+    public string EnemyName
+    {
+        get => enemyName;
+        set => enemyName = value;
+    }
+    
+    public GameObject EnemyProjectile
+    {
+        get => enemyProjectile;
+        set => enemyProjectile = value;
+    }
+    
+    // Enemy stats
+    
+    public int Health
+    {
+        get => health;
+        set => health = value;
+    }
+    
+    public int Lvl
+    {
+        get => lvl;
+        set => lvl = value;
+    }
+    
+    // Attack stats
+    
+    public int Damage
+    {
+        get => damage;
+        set => damage = value;
+    }
+    
+    public int AttackRange
+    {
+        get => attackRange;
+        set => attackRange = value;
+    }
+    
+    public int CriticalChance
+    {
+        get => criticalChance;
+        set => criticalChance = value;
+    }
+    
+    public int CriticalDamage
+    {
+        get => criticalDamage;
+        set => criticalDamage = value;
+    }
+    
+    public int ArmorPenetration
+    {
+        get => armorPenetration;
+        set => armorPenetration = value;
+    }
+    
+    public float AttackSpeed
+    {
+        get => attackSpeed;
+        set => attackSpeed = value;
+    }
+    
+    // Defence stats
+    
+    public int Armor
+    {
+        get => armor;
+        set => armor = value;
+    }
+    
+    public int MagicResistance
+    {
+        get => magicResistance;
+        set => magicResistance = value;
+    }
+    
+    // Movement stats
+    
+    public float MovementSpeed
+    {
+        get => movementSpeed;
+        set => movementSpeed = value;
+    }
+    
+    // Enemy type
+    
+    public bool IsRanged
+    {
+        get => _isRanged;
+        set => _isRanged = value;
+    }
+    
+    public bool IsMelee
+    {
+        get => _isMelee;
+        set => _isMelee = value;
+    }
+    
+    public bool IsMagic
+    {
+        get => _isMagic;
+        set => _isMagic = value;
+    }
+    
+    public bool IsPhysical
+    {
+        get => _isPhysical;
+        set => _isPhysical = value;
+    }
 }
