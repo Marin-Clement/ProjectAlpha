@@ -7,32 +7,32 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private EnemyData enemyData;
 
     [Header("Enemy Data")]
-    private Sprite enemySprite;
-    private string enemyName;
-    private GameObject enemyProjectile;
+    private Sprite _enemySprite;
+    private string _enemyName;
+    private GameObject _enemyProjectile;
    
     // Enemy stats
     [Header("Enemy Base Stats")]
-    private int health;
-    private int lvl;
+    private int _health;
+    private int _lvl;
 
     // Attack stats
     [Header("Attack Stats")]
-    private int damage;
-    private int attackRange;
-    private int criticalChance;
-    private int criticalDamage;
-    private int armorPenetration;
-    private float attackSpeed;
+    private int _damage;
+    private int _attackRange;
+    private int _criticalChance;
+    private int _criticalDamage;
+    private int _armorPenetration;
+    private float _attackSpeed;
    
     // Defence stats
     [Header("Defence Stats")]
-    private int armor;
-    private int magicResistance;
+    private int _armor;
+    private int _magicResistance;
    
     // Movement stats
     [Header("Movement Stats")]
-    private float movementSpeed;
+    private float _movementSpeed;
    
     // Enemy type
     [Header("Enemy Type")]
@@ -40,6 +40,10 @@ public class EnemyBehaviour : MonoBehaviour
     private bool _isMelee;
     private bool _isMagic;
     private bool _isPhysical;
+    
+    // Debug
+    [Header("Debug")]
+    public string enemyStatus;
 
     private void Start()
     {
@@ -48,20 +52,20 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void SetEnemyVariables()
     {
-        enemySprite = enemyData.enemySprite;
-        enemyName = enemyData.enemyName;
-        enemyProjectile = enemyData.enemyProjectile;
-        health = enemyData.health;
-        lvl = enemyData.lvl;
-        damage = enemyData.damage;
-        attackRange = enemyData.attackRange;
-        criticalChance = enemyData.criticalChance;
-        criticalDamage = enemyData.criticalDamage;
-        armorPenetration = enemyData.armorPenetration;
-        attackSpeed = enemyData.attackSpeed;
-        armor = enemyData.armor;
-        magicResistance = enemyData.magicResistance;
-        movementSpeed = enemyData.movementSpeed;
+        _enemySprite = enemyData.enemySprite;
+        _enemyName = enemyData.enemyName;
+        _enemyProjectile = enemyData.enemyProjectile;
+        _health = enemyData.health;
+        _lvl = enemyData.lvl;
+        _damage = enemyData.damage;
+        _attackRange = enemyData.attackRange;
+        _criticalChance = enemyData.criticalChance;
+        _criticalDamage = enemyData.criticalDamage;
+        _armorPenetration = enemyData.armorPenetration;
+        _attackSpeed = enemyData.attackSpeed;
+        _armor = enemyData.armor;
+        _magicResistance = enemyData.magicResistance;
+        _movementSpeed = enemyData.movementSpeed;
         _isRanged = enemyData.isRanged;
         _isMelee = enemyData.isMelee;
         _isMagic = enemyData.isMagic;
@@ -71,94 +75,94 @@ public class EnemyBehaviour : MonoBehaviour
     // Setters Getters Functions
     public Sprite Sprite
     {
-        get => enemySprite;
-        set => enemySprite = value;
+        get => _enemySprite;
+        set => _enemySprite = value;
     }
     
     public string EnemyName
     {
-        get => enemyName;
-        set => enemyName = value;
+        get => _enemyName;
+        set => _enemyName = value;
     }
     
     public GameObject EnemyProjectile
     {
-        get => enemyProjectile;
-        set => enemyProjectile = value;
+        get => _enemyProjectile;
+        set => _enemyProjectile = value;
     }
     
     // Enemy stats
     
     public int Health
     {
-        get => health;
-        set => health = value;
+        get => _health;
+        set => _health = value;
     }
     
     public int Lvl
     {
-        get => lvl;
-        set => lvl = value;
+        get => _lvl;
+        set => _lvl = value;
     }
     
     // Attack stats
     
     public int Damage
     {
-        get => damage;
-        set => damage = value;
+        get => _damage;
+        set => _damage = value;
     }
     
     public int AttackRange
     {
-        get => attackRange;
-        set => attackRange = value;
+        get => _attackRange;
+        set => _attackRange = value;
     }
     
     public int CriticalChance
     {
-        get => criticalChance;
-        set => criticalChance = value;
+        get => _criticalChance;
+        set => _criticalChance = value;
     }
     
     public int CriticalDamage
     {
-        get => criticalDamage;
-        set => criticalDamage = value;
+        get => _criticalDamage;
+        set => _criticalDamage = value;
     }
     
     public int ArmorPenetration
     {
-        get => armorPenetration;
-        set => armorPenetration = value;
+        get => _armorPenetration;
+        set => _armorPenetration = value;
     }
     
     public float AttackSpeed
     {
-        get => attackSpeed;
-        set => attackSpeed = value;
+        get => _attackSpeed;
+        set => _attackSpeed = value;
     }
     
     // Defence stats
     
     public int Armor
     {
-        get => armor;
-        set => armor = value;
+        get => _armor;
+        set => _armor = value;
     }
     
     public int MagicResistance
     {
-        get => magicResistance;
-        set => magicResistance = value;
+        get => _magicResistance;
+        set => _magicResistance = value;
     }
     
     // Movement stats
     
     public float MovementSpeed
     {
-        get => movementSpeed;
-        set => movementSpeed = value;
+        get => _movementSpeed;
+        set => _movementSpeed = value;
     }
     
     // Enemy type

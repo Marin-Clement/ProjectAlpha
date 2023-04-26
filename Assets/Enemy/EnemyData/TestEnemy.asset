@@ -18,7 +18,7 @@ MonoBehaviour:
   health: 100
   lvl: 1
   damage: 10
-  attackRange: 10
+  attackRange: 3
   criticalChance: 0
   criticalDamage: 0
   armorPenetration: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   armor: 0
   magicResistance: 0
   movementSpeed: 5
-  isRanged: 1
-  isMelee: 0
+  isRanged: 0
+  isMelee: 1
   isMagic: 0
   isPhysical: 0
