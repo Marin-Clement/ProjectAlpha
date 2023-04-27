@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,9 +12,12 @@ public class EnemyMovement : MonoBehaviour
     private float[] directionWeights;
     int highestWeightIndex = 0;
 
+    private float _rangePersonalSpace;
+
     private void Start()
     {
         _enemyBehaviour = GetComponent<EnemyBehaviour>();
+        _rangePersonalSpace = _enemyBehaviour.AttackRange * 0.9f;
         // Define the direction vectors
         directionVectors = new Vector2[] {
             new Vector2(0.0f, 1.0f),
@@ -99,7 +99,20 @@ public class EnemyMovement : MonoBehaviour
         {
             if (_enemyBehaviour.IsRanged && !Physics2D.Raycast(transform.position, GameManager.Instance.playerBehaviour.transform.position - transform.position, _enemyBehaviour.AttackRange, obstacleLayer))
             {
-                _enemyBehaviour.enemyStatus = "Range!";
+                Debug.Log((Vector2.Distance(transform.position, GameManager.Instance.playerBehaviour.transform.position) < _rangePersonalSpace));
+                // if player in range of personal space move away
+                if (Vector2.Distance(transform.position, GameManager.Instance.playerBehaviour.transform.position) < _rangePersonalSpace)
+                {
+                    Debug.Log("Personal space!");
+                    _enemyBehaviour.enemyStatus = "Personal space!";
+                    Vector2 direction = directionVectors[highestWeightIndex];
+                    direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
+                    transform.position -= (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    _enemyBehaviour.enemyStatus = "Firing!";
+                }
             }
             else
             {

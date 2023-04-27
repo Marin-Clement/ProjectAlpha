@@ -17,8 +17,8 @@ MonoBehaviour:
   enemyProjectile: {fileID: 0}
   health: 100
   lvl: 1
-  damage: 10
-  attackRange: 3
+  damage: 5
+  attackRange: 10
   criticalChance: 0
   criticalDamage: 0
   armorPenetration: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   armor: 0
   magicResistance: 0
   movementSpeed: 5
-  isRanged: 0
-  isMelee: 1
+  isRanged: 1
+  isMelee: 0
   isMagic: 0
   isPhysical: 0

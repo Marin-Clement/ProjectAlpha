@@ -45,7 +45,7 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Debug")]
     public string enemyStatus;
 
-    private void Start()
+    private void Awake()
     {
         SetEnemyVariables();
     }
