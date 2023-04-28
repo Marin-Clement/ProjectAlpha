@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy/EnemyData")]
@@ -38,3 +39,4 @@ public class EnemyData : ScriptableObject
    public bool isMagic;
    public bool isPhysical;
 }
+
