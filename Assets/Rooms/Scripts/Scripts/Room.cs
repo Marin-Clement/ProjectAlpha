@@ -34,6 +34,7 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         SetRoomVariables();
+        SpawnEnemies();
     }
     
     // Spawn enemies on enemy spawner 
@@ -60,7 +61,6 @@ public class Room : MonoBehaviour
         _hasEastDoor = roomData.hasEastDoor;
         _hasWestDoor = roomData.hasWestDoor;
         _isStartRoom = roomData.isStartRoom;
-        _roomPrefab = roomData.roomPrefab;
         _enemies = roomData.enemies;
         _traps = roomData.traps;
         _loot = roomData.loot;

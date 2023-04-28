@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d781658dc4b240e9873b38865bebc13, type: 3}
-  m_Name: TestRoom
+  m_Name: RoomTest
   m_EditorClassIdentifier: 
   hasNorthDoor: 0
   hasSouthDoor: 1
   hasEastDoor: 0
   hasWestDoor: 0
   isStartRoom: 1
-  enemies: []
+  enemies:
+  - {fileID: 1237119205558181865, guid: b30852767cd864546a820d983a5782e9, type: 3}
   traps: []
   loot: []
-  roomPrefab: {fileID: 0}
-  isCombatRoom: 0
+  isCombatRoom: 1
   isTrapRoom: 0
   isLootRoom: 0
   isBossRoom: 0

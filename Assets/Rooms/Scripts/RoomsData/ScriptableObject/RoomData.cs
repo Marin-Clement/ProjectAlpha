@@ -17,9 +17,6 @@ public class RoomData : ScriptableObject
     public List<GameObject> enemies;
     public List<GameObject> traps;
     public List<GameObject> loot;
-    
-    [Header("Room Prefab")]
-    public GameObject roomPrefab;
 
     [Header("Room Type")]
     public bool isCombatRoom;
