@@ -30,11 +30,18 @@ public class Room : MonoBehaviour
     private bool _isLootRoom;
     private bool _isBossRoom;
     
-    
-    private void Awake()
+
+    private void Start()
     {
         SetRoomVariables();
         SpawnEnemies();
+        if (_isStartRoom)
+        {
+            var position = transform.position;
+            var player = Instantiate(GameManager.Instance.player, position, Quaternion.identity);
+            var playerCamera = Instantiate(GameManager.Instance.playerCamera, position, Quaternion.identity);
+            playerCamera.GetComponent<Player_Camera>().player = player.GetComponent<Player_Movement>();
+        }
     }
     
     // Spawn enemies on enemy spawner 

@@ -28,6 +28,7 @@ public class Projectile_Behaviour : MonoBehaviour
 
     private void Start()
     {
+        transform.up = _direction;
         // Declare Variables
         _currentExplosionTime = projectileData.timeToExplode;
         _pierceCount += projectileData.pierceCount;

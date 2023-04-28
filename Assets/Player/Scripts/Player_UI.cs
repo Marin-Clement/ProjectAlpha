@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,14 +22,7 @@ public class Player_UI : MonoBehaviour
     {
         dashTimer.maxValue = _playerMovement.DashCd;
         dashTimer.value = _playerMovement.GetDashTimerCount();
-        if (_playerMovement.GetDashTimerCount() >= _playerMovement.DashCd)
-        {
-            _dashTimerObject.SetActive(false);
-        }
-        else
-        {
-            _dashTimerObject.SetActive(true);
-        }
+        _dashTimerObject.SetActive(_playerMovement.GetDashTimerCount() != 0);
         switch (_playerMovement.GetDashCount())
         {
             case 0:

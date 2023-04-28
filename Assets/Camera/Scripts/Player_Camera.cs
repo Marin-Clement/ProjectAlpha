@@ -4,8 +4,7 @@ using Random = UnityEngine.Random;
 
 public class Player_Camera : MonoBehaviour
 {
-    [SerializeField]
-    private Player_Movement player;
+    public Player_Movement player;
     
     private Vector3 _offset;
     
@@ -14,9 +13,11 @@ public class Player_Camera : MonoBehaviour
     
     private bool _isShaking;
     
+
     void Start()
     {
-        _offset = transform.position - player.transform.position;
+        
+        _offset = new Vector3(0, 0, -10);
     }
 
     private void FixedUpdate()
