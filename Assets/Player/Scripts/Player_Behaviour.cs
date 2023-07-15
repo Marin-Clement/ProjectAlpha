@@ -84,19 +84,19 @@ public class Player_Behaviour : MonoBehaviour
     
     public List<object> CalculateArrowDamage(float arrowDamage, int enemyPierce, float holdTime)
     {
-        List<object> result = new List<object>();
+        List<object> damageInfo = new List<object>();
 
-        float calculatedDamage = (((arrowDamage * (1 + (holdTime / 10))) * damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
+        float calculatedDamage = (((arrowDamage * (1 + (holdTime / 5))) * damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
         bool isCriticalHit = criticalChance > Random.Range(0, 100);
 
         if (isCriticalHit)
         {
-            calculatedDamage *= (1 + (criticalDamage * 0.1f));
+            calculatedDamage *= (1 + (criticalDamage * 0.01f));
         }
 
-        result.Add(calculatedDamage);
-        result.Add(isCriticalHit);
+        damageInfo.Add(calculatedDamage);
+        damageInfo.Add(isCriticalHit);
         
-        return result;
+        return damageInfo;
     }
 }

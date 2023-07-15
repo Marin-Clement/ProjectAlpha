@@ -58,7 +58,8 @@ public class EnemyBehaviour : MonoBehaviour
         bool isCritical = (bool) damageInfo[1];
         
         GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
-        damagePopupInstance.GetComponent<DamageFloatingText>().SetText(damage.ToString("0.0"), isCritical ? Color.red : Color.white);
+        damagePopupInstance.GetComponent<DamageFloatingText>().isCritical = isCritical;
+        damagePopupInstance.GetComponent<DamageFloatingText>().damage = damage;
     }
 
     private void SetEnemyVariables()

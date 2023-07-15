@@ -133,7 +133,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237119205558181865}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a53c395b71634483baae0e964f43749e, type: 3}
   m_Name: 
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: c4bd3f77f77114bb3b780bc3465f51d3, type: 2}
   enemyStatus: Debug
+  damagePopup: {fileID: 4754867091677353270, guid: a13535022d3a84b1c86d1a70c9b7b523, type: 3}
 --- !u!1 &1237119205688643076
 GameObject:
   m_ObjectHideFlags: 0
