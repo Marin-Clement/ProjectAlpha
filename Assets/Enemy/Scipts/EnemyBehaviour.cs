@@ -47,6 +47,8 @@ public class EnemyBehaviour : MonoBehaviour
     public string enemyStatus;
     public GameObject damagePopup;
 
+    public Animator animator;
+
     private void Awake()
     {
         SetEnemyVariables();
@@ -60,6 +62,7 @@ public class EnemyBehaviour : MonoBehaviour
         GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
         damagePopupInstance.GetComponent<DamageFloatingText>().isCritical = isCritical;
         damagePopupInstance.GetComponent<DamageFloatingText>().damage = damage;
+        animator.Play("dummy_hit");
     }
 
     private void SetEnemyVariables()
