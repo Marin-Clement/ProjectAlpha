@@ -37,7 +37,7 @@ namespace Particles.DamageText
             direction = new Vector3(directionX, directionY, 0f).normalized;
             if (isCritical)
             {
-                SetText(damage, new Color(1f, 0.1746475f, 0.009134057f, 1f));
+                SetText(damage, new Color(1f,0.5529412f,0.2039216f));
                 criticalHitSprite.SetActive(true);
             }
             else
@@ -73,7 +73,7 @@ namespace Particles.DamageText
 
         private void SetText(float text, Color color)
         {
-            textMeshPro.text = text.ToString("0.00");
+            textMeshPro.text = text.ToString("0");
             textMeshPro.color = color;
         }
     }

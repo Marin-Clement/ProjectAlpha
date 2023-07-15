@@ -30,8 +30,8 @@ MonoBehaviour:
   isExplosive: 0
   statusEffect: 1
   timeToExplode: 0.5
-  explosionRadius: 0
-  explosionForce: 0
-  explosionDamage: 0
-  numberOfProjectiles: 10
+  explosionRadius: 20
+  explosionForce: 20
+  explosionDamage: 50
+  numberOfProjectiles: 9
   childProjectile: {fileID: 11400000, guid: 9180c7a17326c4fadbdd3b3f690e92e9, type: 2}
