@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Particles.DamageText;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -44,10 +45,20 @@ public class EnemyBehaviour : MonoBehaviour
     // Debug
     [Header("Debug")]
     public string enemyStatus;
+    public GameObject damagePopup;
 
     private void Awake()
     {
         SetEnemyVariables();
+    }
+    
+    public void TakeDamage(List<object> damageInfo)
+    {
+        float damage = (float) damageInfo[0];
+        bool isCritical = (bool) damageInfo[1];
+        
+        GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
+        damagePopupInstance.GetComponent<DamageFloatingText>().SetText(damage.ToString("0.0"), isCritical ? Color.red : Color.white);
     }
 
     private void SetEnemyVariables()

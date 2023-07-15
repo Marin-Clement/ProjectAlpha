@@ -35,7 +35,6 @@ public class Player_Camera : MonoBehaviour
     }
     
     
-    
     public void Shake(float duration, float magnitude)
     {
         _isShaking = true;

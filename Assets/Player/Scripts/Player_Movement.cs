@@ -127,6 +127,4 @@ public class Player_Movement :  MonoBehaviour
         get => dashCd;
         set => dashCd = value;
     }
-    
-    
 }

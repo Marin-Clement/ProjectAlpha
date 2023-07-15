@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_Behaviour : MonoBehaviour
@@ -61,7 +62,7 @@ public class Player_Behaviour : MonoBehaviour
             TakeDamage(10);
             if (col.gameObject.CompareTag("Enemy"))
             {
-                playerCamera.Shake(0.5f, 1f);
+                playerCamera.Shake(0.5f, 10f);
                 _playerMovement.Knockback(col.transform.position);
             }
 
@@ -71,18 +72,31 @@ public class Player_Behaviour : MonoBehaviour
             }
         }
 
-        StartCoroutine(InvencibilityTimer());
+        StartCoroutine(InvincibilityTimer());
     }
 
-    private IEnumerator InvencibilityTimer()
+    private IEnumerator InvincibilityTimer()
     {
         _vulnerable = false;
         yield return new WaitForSeconds(0.5f);
         _vulnerable = true;
     }
     
-    public float CalculateArrowDamage(float arrowDamage, int enemyPierce, float holdTime)
+    public List<object> CalculateArrowDamage(float arrowDamage, int enemyPierce, float holdTime)
     {
-        return (((arrowDamage * (1 + (holdTime / 10))) * damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
+        List<object> result = new List<object>();
+
+        float calculatedDamage = (((arrowDamage * (1 + (holdTime / 10))) * damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
+        bool isCriticalHit = criticalChance > Random.Range(0, 100);
+
+        if (isCriticalHit)
+        {
+            calculatedDamage *= (1 + (criticalDamage * 0.1f));
+        }
+
+        result.Add(calculatedDamage);
+        result.Add(isCriticalHit);
+        
+        return result;
     }
 }

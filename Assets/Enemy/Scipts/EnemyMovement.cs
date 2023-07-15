@@ -102,7 +102,6 @@ public class EnemyMovement : MonoBehaviour
                 // if player in range of personal space move away
                 if (Vector2.Distance(transform.position, GameManager.Instance.playerBehaviour.transform.position) < _rangePersonalSpace)
                 {
-                    Debug.Log("Personal space!");
                     _enemyBehaviour.enemyStatus = "Personal space!";
                     Vector2 direction = directionVectors[highestWeightIndex];
                     direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));

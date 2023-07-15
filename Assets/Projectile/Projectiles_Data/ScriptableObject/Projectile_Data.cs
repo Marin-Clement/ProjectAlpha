@@ -11,6 +11,7 @@ public class Projectile_Data : ScriptableObject
     public float damage;
     public float lifeTime;
     public int pierceCount;
+    public GameObject deathParticle;
     
     // Status Variables
     [HideInInspector] public bool isSticky;

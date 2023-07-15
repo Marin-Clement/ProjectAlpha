@@ -155,7 +155,7 @@ public class Projectile_Behaviour : MonoBehaviour
             case "Enemy":
                 if (other.gameObject.CompareTag("Enemy"))
                 {
-                    Debug.Log("Enemy Hit Enemy" + GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
+                    other.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
                     if (_pierceCount > 0)
                     {
                         _pierceCount--;
@@ -173,6 +173,11 @@ public class Projectile_Behaviour : MonoBehaviour
     public void SetDirection(Vector3 direction)
     {
         _direction = direction;
+    }
+
+    private void OnDestroy()
+    {
+        Instantiate(projectileData.deathParticle, transform.position, Quaternion.identity);
     }
 
     public float Duration

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -140,5 +139,27 @@ public class Room : MonoBehaviour
     public bool GetIsBossRoom()
     {
         return _isBossRoom;
+    }
+    
+    public int GetRoomWeight()
+    {
+        var weight = 0;
+        if (_hasNorthDoor)
+        {
+            weight += 1;
+        }
+        if (_hasSouthDoor)
+        {
+            weight += 1;
+        }
+        if (_hasEastDoor)
+        {
+            weight += 1;
+        }
+        if (_hasWestDoor)
+        {
+            weight += 1;
+        }
+        return weight;
     }
 }
