@@ -58,10 +58,11 @@ public class EnemyBehaviour : MonoBehaviour
     {
         float damage = (float) damageInfo[0];
         bool isCritical = (bool) damageInfo[1];
-        
+
         GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
-        damagePopupInstance.GetComponent<DamageFloatingText>().isCritical = isCritical;
-        damagePopupInstance.GetComponent<DamageFloatingText>().damage = damage;
+        DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
+        floatingText.isCritical = isCritical;
+        floatingText.damage = damage;
         animator.Play("dummy_hit");
     }
 

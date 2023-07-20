@@ -62,7 +62,7 @@ public class Player_Behaviour : MonoBehaviour
             TakeDamage(10);
             if (col.gameObject.CompareTag("Enemy"))
             {
-                playerCamera.Shake(0.5f, 10f);
+                StartCoroutine(playerCamera.Shake(0.2f, 0.1f));
                 _playerMovement.Knockback(col.transform.position);
             }
 
@@ -86,7 +86,7 @@ public class Player_Behaviour : MonoBehaviour
     {
         List<object> damageInfo = new List<object>();
 
-        float calculatedDamage = (((arrowDamage * (1 + (holdTime))) * damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
+        float calculatedDamage = (((arrowDamage * (1 + holdTime)) * damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
         bool isCriticalHit = criticalChance > Random.Range(0, 100);
 
         if (isCriticalHit)

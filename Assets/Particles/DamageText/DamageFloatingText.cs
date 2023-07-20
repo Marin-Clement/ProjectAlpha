@@ -7,7 +7,6 @@ namespace Particles.DamageText
     {
         public float speed = 2f; // Floating speed
         public float duration = 1f; // Duration of the popup
-        public AnimationCurve curve; // Animation curve for the floating motion
         public Vector2 sizeRange = new Vector2(1f, 1.5f); // Range for random size
         public Vector2 directionRange = new Vector2(-1f, 1f); // Range for random direction
         public AnimationCurve sizeCurve; // Animation curve for size variation over time
@@ -51,8 +50,7 @@ namespace Particles.DamageText
             timer += Time.deltaTime;
 
             // Floating animation using sine function and animation curve
-            float xOffset = curve.Evaluate(timer / duration);
-            Vector3 floatingOffset = new Vector3(xOffset, 0f, 0f) * (speed * Time.deltaTime);
+            Vector3 floatingOffset = new Vector3(1f, 0f, 0f) * (speed * Time.deltaTime);
             Vector3 positionOffset = direction * floatingOffset.magnitude;
             transform.position += positionOffset;
 
