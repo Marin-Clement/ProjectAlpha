@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,24 +7,26 @@ public class Player_Movement :  MonoBehaviour
     private Rigidbody2D _rigidbody;
 
     // Basic Movement
-    [SerializeField]
-    private int speed = 5;
+    [SerializeField] private int speed = 5;
     private Vector2 _movement;
     
     // Dash Movement
-    [SerializeField] 
-    private int dashForce = 10;
+    [SerializeField] private int dashForce = 10;
     private bool _isDashing;
     private int _dashCount = 2;
     private bool _dashTimer;
-    [SerializeField]
-    private float dashCd = 2f;
+    [SerializeField] private float dashCd = 2f;
     private float _dashTimerCount;
+
+    // playerUI
+
+    private Player_UI _playerUi;
 
 
 
     void Start()
     {
+        _playerUi = GetComponentInParent<Player_UI>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
     
@@ -48,6 +49,7 @@ public class Player_Movement :  MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCount > 0 && _movement != Vector2.zero)
         {
             Dash();
+            _playerUi.animateDashIcon();
         }
         if (!_dashTimer && _dashCount < 2)
         {

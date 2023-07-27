@@ -7,10 +7,7 @@ public class Player_Camera : MonoBehaviour
     
     private Vector3 _offset;
     
-    [SerializeField]
-    private int cameraSpeed = 5;
-    
-    private bool _isShaking;
+    [SerializeField] private int cameraSpeed = 5;
     
 
     void Start()
@@ -20,10 +17,7 @@ public class Player_Camera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isShaking)
-        {
-            FollowPlayer();
-        }
+        FollowPlayer();
     }
 
 
@@ -47,6 +41,5 @@ public class Player_Camera : MonoBehaviour
             yield return 0;
         }
         transform.position = Vector3.Lerp(transform.position , player.transform.position + _offset, cameraSpeed * Time.deltaTime);
-        _isShaking = false;
     }
 }

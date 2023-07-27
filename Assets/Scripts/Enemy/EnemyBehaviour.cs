@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Particles.DamageText;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -61,8 +60,8 @@ public class EnemyBehaviour : MonoBehaviour
 
         GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
         DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
-        floatingText.isCritical = isCritical;
-        floatingText.damage = damage;
+        floatingText.IsCritical = isCritical;
+        floatingText.Damage = damage;
         animator.Play("dummy_hit");
     }
 
