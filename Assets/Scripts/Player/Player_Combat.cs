@@ -8,36 +8,50 @@ public class Player_Combat : MonoBehaviour
     [Header("Arrow Variables")]
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private Projectile_Data arrowData;
-    private LineRenderer _lineRenderer;
     
     // Bow Stats
+    [Header("Bow Stats")]
+
+    [SerializeField] private float minHoldTime = 0.2f;
+    [SerializeField] private float cooldown = 0.2f;
     private float _heldTime;
-    private const float MinHoldTime = 0.2f;
-    
+    private float _currentCooldown;
+
+    // playerUI
+    private Player_UI _playerUi;
 
     private void Start()
     {
+        _playerUi = GetComponentInParent<Player_UI>();
         _playerBehaviour = GetComponent<Player_Behaviour>();
-        _lineRenderer = GetComponentInChildren<LineRenderer>();
-        _lineRenderer.enabled = false;
     }
 
     public void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            _heldTime += Time.deltaTime;
-            if (_heldTime > arrowData.lifeTime)
-            {
-                _heldTime = arrowData.lifeTime;
-            }
-        }
-        if (!Input.GetKeyUp(KeyCode.Mouse0)) return;
+    // Reduce cooldown time
+    if (_currentCooldown < cooldown)
+    {
+        _currentCooldown += Time.deltaTime;
+    }
+
+    // Check for attack input and update held time
+    if (Input.GetKey(KeyCode.Mouse0) && _currentCooldown >= cooldown)
+    {
+        _heldTime += Time.deltaTime;
+        _heldTime = Mathf.Min(_heldTime, arrowData.lifeTime);
+    }
+
+    // Check for attack release and perform attack if held time is positive
+    if (Input.GetKeyUp(KeyCode.Mouse0))
+    {
         if (_heldTime > 0)
         {
             Attack();
+            _playerUi.animateMainSpellIcon();
+            _currentCooldown = 0f;
         }
         _heldTime = 0;
+    }
     }
 
     private void Attack()
@@ -46,7 +60,23 @@ public class Player_Combat : MonoBehaviour
         var up = playerTranform.up;
         var arrow = Instantiate(arrowPrefab, playerTranform.position + (up), Quaternion.identity);
         var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();
-        projectileBehaviour.Duration = (_heldTime + MinHoldTime) * 1.2f;
+        projectileBehaviour.Duration = (_heldTime + minHoldTime) * 1.2f;
         projectileBehaviour.SetDirection(up);
     }
+
+    public float CurrentCooldown
+    {
+        get => _currentCooldown;
+        set => _currentCooldown = value;
+    }
+
+    public float MaxCooldown => cooldown;
+
+    public float HeldTime
+    {
+        get => _heldTime;
+        set => _heldTime = value;
+    }
+
+    public float HoldTime => arrowData.lifeTime;
 }

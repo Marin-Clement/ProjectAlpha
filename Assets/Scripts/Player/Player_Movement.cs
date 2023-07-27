@@ -21,15 +21,14 @@ public class Player_Movement :  MonoBehaviour
     private bool _dashTimer;
     private float _dashTimerCount;
 
+
     // playerUI
-
     private Player_UI _playerUi;
-
 
 
     void Start()
     {
-        _playerUi = GetComponentInParent<Player_UI>();
+        _playerUi = GetComponent<Player_UI>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
     

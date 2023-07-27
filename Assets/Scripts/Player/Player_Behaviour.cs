@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Player_Behaviour : MonoBehaviour
 {
-    [Header("Player Stats")] [SerializeField]
-    private int health = 50; // Default lives is 50
+    [Header("Player Stats")] 
+
+    [SerializeField] private float maxHealth = 50f; // Default max lives is 50
+    [SerializeField] private float health = 50f; // Default lives is 50
 
     [SerializeField] private int lvl = 1; // Default level is 1
 
@@ -98,5 +100,17 @@ public class Player_Behaviour : MonoBehaviour
         damageInfo.Add(isCriticalHit);
         
         return damageInfo;
+    }
+
+    public float Health
+    {
+        get => health;
+        set => health = value;
+    }
+    
+    public float MaxHealth
+    {
+        get => maxHealth;
+        set => maxHealth = value;
     }
 }

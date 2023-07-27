@@ -16,13 +16,21 @@ public class Player_UI : MonoBehaviour
     [SerializeField] private GameObject spell1Container;
     [SerializeField] private Image spell1Icon;
     [SerializeField] private Slider spell1Timer;
+    [SerializeField] private Slider spell1ArrowTimer;
 
     [Header("Spell2 UI")]
     [SerializeField] private GameObject spell2Container;
     [SerializeField] private Image spell2Icon;
     [SerializeField] private Slider spell2Timer;
 
+    [Header("Health UI")]
+    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private Slider healthBar;
+    [SerializeField] private Slider healthTempBar;
+
     // Player
+
+    private Player_Behaviour _playerBehaviour;
     private Player_Movement _playerMovement;
     private Player_Combat _playerCombat;
 
@@ -37,6 +45,7 @@ public class Player_UI : MonoBehaviour
 
     void Start()
     {
+        _playerBehaviour = GetComponent<Player_Behaviour>();
         _playerMovement = GetComponent<Player_Movement>();
         _playerCombat = GetComponent<Player_Combat>();
         indevTextRectTransform = indevText.GetComponent<RectTransform>();
@@ -47,6 +56,8 @@ public class Player_UI : MonoBehaviour
     {
         KeepIndevTextAtTopRightCorner();
         UpdateDashUI();
+        UpdateMainSpellUI();
+        UpdateHealthUI();
     }
 
 
@@ -88,10 +99,39 @@ public class Player_UI : MonoBehaviour
         }
     }
 
+    public void UpdateMainSpellUI()
+    {
+        spell1Timer.maxValue = _playerCombat.MaxCooldown;
+        spell1ArrowTimer.maxValue = _playerCombat.HoldTime;
+        if (_playerCombat.CurrentCooldown <= 0)
+        {
+            spell1Timer.value = spell1Timer.maxValue;
+        }
+        else
+        {
+            spell1Timer.value = _playerCombat.CurrentCooldown;
+        }
+        spell1ArrowTimer.value = _playerCombat.HeldTime;
+    }
+
+    public void UpdateHealthUI()
+    {
+        healthBar.maxValue = _playerBehaviour.MaxHealth;
+        healthTempBar.maxValue = _playerBehaviour.MaxHealth;
+        healthText.text = _playerBehaviour.Health.ToString() + "/" + _playerBehaviour.MaxHealth.ToString();
+        healthBar.value = Mathf.Lerp(healthBar.value, _playerBehaviour.Health, 0.1f);
+        healthTempBar.value = Mathf.Lerp(healthTempBar.value, healthBar.value, 0.01f);
+    }
     public void animateDashIcon()
     {
         StartCoroutine(AnimateContainerCoroutine(dashContainer.transform));
         StartCoroutine(AnimateIconCoroutine(dashIcon));
+    }
+
+    public void animateMainSpellIcon()
+    {
+        StartCoroutine(AnimateContainerCoroutine(spell1Container.transform));
+        StartCoroutine(AnimateIconCoroutine(spell1Icon));
     }
     
     private IEnumerator AnimateIconCoroutine(Image Icon)
