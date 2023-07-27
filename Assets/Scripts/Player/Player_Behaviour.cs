@@ -6,10 +6,10 @@ public class Player_Behaviour : MonoBehaviour
 {
     [Header("Player Stats")] 
 
-    [SerializeField] private float maxHealth = 50f; // Default max lives is 50
-    [SerializeField] private float health = 50f; // Default lives is 50
+    [SerializeField] private float maxHealth = 100;
+    private float health;
 
-    [SerializeField] private int lvl = 1; // Default level is 1
+    [SerializeField] private int lvl = 1;
 
     private bool _vulnerable = true;
 
@@ -20,11 +20,11 @@ public class Player_Behaviour : MonoBehaviour
     // Attack stats
     [Header("Attack Stats")] 
     
-    [SerializeField] private int damage = 10; // Default damage is 10
+    [SerializeField] private int damage = 10;
     [SerializeField] private int attackRange = 1; // Default attack range is 1
-    [SerializeField] private int criticalChance = 0; // Default critical chance is 0
-    [SerializeField] private int criticalDamage = 10; // Default critical damage is 10
-    [SerializeField] private int armorPenetration = 0; // Default armor penetration is 0
+    [SerializeField] private int criticalChance = 0; // In percentage
+    [SerializeField] private int criticalDamage = 10; // In percentage
+    [SerializeField] private int armorPenetration = 0; // In percentage
     
     // Defence stats
     [Header("Defence Stats")] [SerializeField]
@@ -37,8 +37,8 @@ public class Player_Behaviour : MonoBehaviour
     {
         _playerMovement = GetComponent<Player_Movement>();
         GameManager.Instance.playerBehaviour = this;
+        health = maxHealth;
     }
-
 
     // Stats Functions
     private void CalculateStatsPerLevels()
@@ -59,21 +59,22 @@ public class Player_Behaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("EnemyProjectile") && _vulnerable)
+        if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("EnemyProjectile"))
         {
-            TakeDamage(10);
+            playerCamera.ShakeCamera(0.2f, 0.1f);
+            _playerMovement.Knockback(col.transform.position);
+            if (!_vulnerable) return;
             if (col.gameObject.CompareTag("Enemy"))
             {
-                StartCoroutine(playerCamera.Shake(0.2f, 0.1f));
-                _playerMovement.Knockback(col.transform.position);
+                TakeDamage(10);
             }
 
             if (col.gameObject.CompareTag("EnemyProjectile"))
             {
+                TakeDamage(10);
                 Destroy(col.gameObject);
             }
         }
-
         StartCoroutine(InvincibilityTimer());
     }
 
@@ -107,7 +108,7 @@ public class Player_Behaviour : MonoBehaviour
         get => health;
         set => health = value;
     }
-    
+
     public float MaxHealth
     {
         get => maxHealth;

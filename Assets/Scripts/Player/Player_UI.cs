@@ -138,7 +138,7 @@ public class Player_UI : MonoBehaviour
     {
         Color originalColor = Icon.color;
         Icon.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
-        for (float i = 0; i < 1f; i += 0.1f)
+        for (float i = 0; i <= 1f; i += 0.2f)
         {
             
             Icon.color = new Color(originalColor.r, originalColor.g, originalColor.b, i);
@@ -148,9 +148,9 @@ public class Player_UI : MonoBehaviour
 
     private IEnumerator AnimateContainerCoroutine(Transform Container)
     {
-        float baseScale = 0.7f;
+        float baseScale = 0.5f;
         Container.localScale = new Vector3(baseScale, baseScale, 1f);
-        for (float i = baseScale; i < 1f; i += 0.02f)
+        for (float i = baseScale; i <= 0.8f; i += 0.02f)
         {
             Container.localScale = new Vector3(i,i,1f);
             yield return new WaitForSeconds(0.01f);

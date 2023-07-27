@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   damage: 50
-  lifeTime: 1
+  lifeTime: 0.5
   pierceCount: 3
   deathParticle: {fileID: 4397324319892588662, guid: 52a1b958048654266943454cd4591125, type: 3}
   isSticky: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   isStunning: 0
   turnSpeed: 1
   bounces: 3
-  isHoming: 1
+  isHoming: 0
   isExplosive: 0
   statusEffect: 0
   timeToExplode: 0.2

@@ -25,9 +25,13 @@ public class Player_Camera : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position , player.transform.position + _offset, cameraSpeed * Time.deltaTime);
     }
+
+    public void ShakeCamera(float duration, float magnitude)
+    {
+        StartCoroutine(Shake(duration, magnitude));
+    }    
     
-    
-    public IEnumerator Shake(float duration, float magnitude)
+    private IEnumerator Shake(float duration, float magnitude)
     {
         transform.position = Vector3.Lerp(transform.position , player.transform.position + _offset, cameraSpeed * Time.deltaTime);
         float elapsed = 0f;
