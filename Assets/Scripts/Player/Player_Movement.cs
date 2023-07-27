@@ -7,15 +7,18 @@ public class Player_Movement :  MonoBehaviour
     private Rigidbody2D _rigidbody;
 
     // Basic Movement
-    [SerializeField] private int speed = 5;
+    [Header("Basic Movement")]
+    [SerializeField] private int speed;
     private Vector2 _movement;
+
     
     // Dash Movement
-    [SerializeField] private int dashForce = 10;
+    [Header("Dash Movement")]
+    [SerializeField] private int dashForce;
+    [SerializeField] private float dashCd;
     private bool _isDashing;
     private int _dashCount = 2;
     private bool _dashTimer;
-    [SerializeField] private float dashCd = 2f;
     private float _dashTimerCount;
 
     // playerUI

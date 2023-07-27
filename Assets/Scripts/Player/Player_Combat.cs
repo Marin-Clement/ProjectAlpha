@@ -3,14 +3,17 @@ using UnityEngine;
 public class Player_Combat : MonoBehaviour
 {
     private Player_Behaviour _playerBehaviour;
-    
+
+    // Arrow Variables
+    [Header("Arrow Variables")]
     [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private Projectile_Data arrowData;
     private LineRenderer _lineRenderer;
     
     // Bow Stats
     private float _heldTime;
     private const float MinHoldTime = 0.2f;
-    [SerializeField] private Projectile_Data arrowData;
+    
 
     private void Start()
     {
@@ -36,8 +39,7 @@ public class Player_Combat : MonoBehaviour
         }
         _heldTime = 0;
     }
-    
-    // ReSharper disable Unity.PerformanceAnalysis
+
     private void Attack()
     {
         var playerTranform = transform;
