@@ -1973,7 +1973,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50/50
+  m_text: NaN/NaN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bdbc40df5e9105544881668e69aa81de, type: 2}
   m_sharedMaterial: {fileID: 5648686919612507959, guid: bdbc40df5e9105544881668e69aa81de, type: 2}

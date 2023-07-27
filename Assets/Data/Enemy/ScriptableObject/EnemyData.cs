@@ -11,7 +11,7 @@ public class EnemyData : ScriptableObject
    
    // Enemy stats
    [Header("Enemy Base Stats")]
-   public int health;
+   public float health;
    public int lvl;
 
    // Attack stats

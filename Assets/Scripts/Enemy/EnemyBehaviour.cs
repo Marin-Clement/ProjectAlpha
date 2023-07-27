@@ -13,7 +13,9 @@ public class EnemyBehaviour : MonoBehaviour
    
     // Enemy stats
     [Header("Enemy Base Stats")]
-    private int _health;
+
+    private float _maxHealth;
+    private float _health;
     private int _lvl;
 
     // Attack stats
@@ -45,19 +47,47 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Debug")]
     public string enemyStatus;
     public GameObject damagePopup;
-
     public Animator animator;
+
+    [Header("Dummy")]
+    [SerializeField] private bool isDummy; 
+    [SerializeField] private float dummyCooldown = 3f;
+    [SerializeField] private float dummyCooldownTimer;
 
     private void Awake()
     {
         SetEnemyVariables();
     }
+
+    private void Update()
+    {
+        if (isDummy)
+        {
+            if (dummyCooldownTimer > 0)
+            {
+                dummyCooldownTimer -= Time.deltaTime;
+            }
+            else
+            {
+                dummyCooldownTimer = dummyCooldown;
+                _health = _maxHealth;
+            }
+        }
+    }
     
     public void TakeDamage(List<object> damageInfo)
     {
         float damage = (float) damageInfo[0];
-        bool isCritical = (bool) damageInfo[1];
 
+        bool isCritical = (bool) damageInfo[1];
+        // TODO : Remove this when done testing
+        if (isDummy)
+        {
+            _health -= damage;
+            dummyCooldownTimer = dummyCooldown;
+            Debug.Log("Dummy took <color=red>" + damage + "</color> damage He has <color=green> " + _health + "</color> health left");
+        }
+        
         GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
         DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
         floatingText.IsCritical = isCritical;
@@ -70,6 +100,7 @@ public class EnemyBehaviour : MonoBehaviour
         _enemySprite = enemyData.enemySprite;
         _enemyName = enemyData.enemyName;
         _enemyProjectile = enemyData.enemyProjectile;
+        _maxHealth = enemyData.health;
         _health = enemyData.health;
         _lvl = enemyData.lvl;
         _damage = enemyData.damage;
@@ -107,8 +138,13 @@ public class EnemyBehaviour : MonoBehaviour
     }
     
     // Enemy stats
+    public float MaxHealth
+    {
+        get => _maxHealth;
+        set => _maxHealth = value;
+    }
     
-    public int Health
+    public float Health
     {
         get => _health;
         set => _health = value;
