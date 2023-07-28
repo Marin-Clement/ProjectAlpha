@@ -5,6 +5,9 @@ using TMPro;
 
 public class Player_UI : MonoBehaviour
 {
+    // Player reference
+    private Player_Behaviour _playerBehaviour;
+
     [Header("Dash UI")]
     [SerializeField] private GameObject dashContainer;
     [SerializeField] private Image dashIcon;
@@ -28,12 +31,6 @@ public class Player_UI : MonoBehaviour
     [SerializeField] private Slider healthBar;
     [SerializeField] private Slider healthTempBar;
 
-    // Player
-
-    private Player_Behaviour _playerBehaviour;
-    private Player_Movement _playerMovement;
-    private Player_Combat _playerCombat;
-
 
     [Header("Indev UI")]
     [SerializeField] private TextMeshProUGUI indevText;
@@ -46,8 +43,6 @@ public class Player_UI : MonoBehaviour
     void Start()
     {
         _playerBehaviour = GetComponent<Player_Behaviour>();
-        _playerMovement = GetComponent<Player_Movement>();
-        _playerCombat = GetComponent<Player_Combat>();
         indevTextRectTransform = indevText.GetComponent<RectTransform>();
         canvasRectTransform = indevText.transform.parent.GetComponent<RectTransform>();
     }
@@ -73,16 +68,16 @@ public class Player_UI : MonoBehaviour
 
     public void UpdateDashUI()
     {
-        dashTimer.maxValue = _playerMovement.DashCd;
-        if (_playerMovement.GetDashTimerCount() == 0)
+        dashTimer.maxValue = _playerBehaviour.playerMovement.DashCd;
+        if (_playerBehaviour.playerMovement.GetDashTimerCount() == 0)
         {
             dashTimer.value = dashTimer.maxValue;
         }
         else
         {
-            dashTimer.value = _playerMovement.GetDashTimerCount();
+            dashTimer.value = _playerBehaviour.playerMovement.GetDashTimerCount();
         }
-        switch (_playerMovement.GetDashCount())
+        switch (_playerBehaviour.playerMovement.GetDashCount())
         {
             case 0:
                 dashBar1.enabled = false;
@@ -101,17 +96,17 @@ public class Player_UI : MonoBehaviour
 
     public void UpdateMainSpellUI()
     {
-        spell1Timer.maxValue = _playerCombat.MaxCooldown;
-        spell1ArrowTimer.maxValue = _playerCombat.HoldTime;
-        if (_playerCombat.CurrentCooldown <= 0)
+        spell1Timer.maxValue = _playerBehaviour.playerCombat.MaxCooldown;
+        spell1ArrowTimer.maxValue = _playerBehaviour.playerCombat.HoldTime;
+        if (_playerBehaviour.playerCombat.CurrentCooldown <= 0)
         {
             spell1Timer.value = spell1Timer.maxValue;
         }
         else
         {
-            spell1Timer.value = _playerCombat.CurrentCooldown;
+            spell1Timer.value = _playerBehaviour.playerCombat.CurrentCooldown;
         }
-        spell1ArrowTimer.value = _playerCombat.HeldTime;
+        spell1ArrowTimer.value = _playerBehaviour.playerCombat.HeldTime;
     }
 
     public void UpdateHealthUI()

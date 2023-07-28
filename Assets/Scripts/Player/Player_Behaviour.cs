@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Player_Behaviour : MonoBehaviour
 {
+    // Player Reference
+
+    public Player_Movement playerMovement { get; private set;}
+
+    public Player_Combat playerCombat { get; private set;}
+
+    public Player_UI playerUi { get; private set;}
+
+
     [Header("Player Stats")] 
 
     [SerializeField] private float maxHealth = 100;
@@ -12,8 +21,6 @@ public class Player_Behaviour : MonoBehaviour
     [SerializeField] private int lvl = 1;
 
     private bool _vulnerable = true;
-
-    private Player_Movement _playerMovement;
 
     [SerializeField] private Player_Camera playerCamera;
 
@@ -35,7 +42,9 @@ public class Player_Behaviour : MonoBehaviour
 
     private void Start()
     {
-        _playerMovement = GetComponent<Player_Movement>();
+        playerMovement = GetComponent<Player_Movement>();
+        playerCombat = GetComponent<Player_Combat>();
+        playerUi = GetComponent<Player_UI>();
         GameManager.Instance.playerBehaviour = this;
         health = maxHealth;
     }
@@ -62,7 +71,7 @@ public class Player_Behaviour : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("EnemyProjectile"))
         {
             playerCamera.ShakeCamera(0.2f, 0.1f);
-            _playerMovement.Knockback(col.transform.position);
+            playerMovement.Knockback(col.transform.position);
             if (!_vulnerable) return;
             if (col.gameObject.CompareTag("Enemy"))
             {

@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Player_Combat : MonoBehaviour
 {
+    // Player Reference
     private Player_Behaviour _playerBehaviour;
+    
 
     // Arrow Variables
     [Header("Arrow Variables")]
@@ -17,12 +19,9 @@ public class Player_Combat : MonoBehaviour
     private float _heldTime;
     private float _currentCooldown;
 
-    // playerUI
-    private Player_UI _playerUi;
 
     private void Start()
     {
-        _playerUi = GetComponentInParent<Player_UI>();
         _playerBehaviour = GetComponent<Player_Behaviour>();
     }
 
@@ -47,7 +46,7 @@ public class Player_Combat : MonoBehaviour
         if (_heldTime > 0)
         {
             Attack();
-            _playerUi.animateMainSpellIcon();
+            _playerBehaviour.playerUi.animateMainSpellIcon();
             _currentCooldown = 0f;
         }
         _heldTime = 0;

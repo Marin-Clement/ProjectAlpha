@@ -2143,10 +2143,10 @@ GameObject:
   - component: {fileID: 8681103540809101193}
   - component: {fileID: 8681103540809101195}
   - component: {fileID: 8681103540809101199}
-  - component: {fileID: 8681103540809101194}
-  - component: {fileID: 8681103540809101198}
   - component: {fileID: 8681103540809101197}
   - component: {fileID: 8043004334821998810}
+  - component: {fileID: 8681103540809101194}
+  - component: {fileID: 8681103540809101198}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -2269,6 +2269,45 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8681103540809101197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681103540809101204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b5a7561706e45c2ad4f9378163530f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  lvl: 1
+  playerCamera: {fileID: 0}
+  damage: 10
+  attackRange: 1
+  criticalChance: 25
+  criticalDamage: 20
+  armorPenetration: 0
+  armor: 10
+  magicResistance: 0
+  dodge: 0
+--- !u!114 &8043004334821998810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681103540809101204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70860d18da82c41e19fd60b6ba8372ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 3158241048368802958, guid: f0b90aab27e5345e088cd43802775ec6, type: 3}
+  arrowData: {fileID: 11400000, guid: 6e532112f0d93468d9a1b2af03cbb7b2, type: 2}
+  minHoldTime: 0.1
+  cooldown: 0.4
 --- !u!114 &8681103540809101194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2312,45 +2351,6 @@ MonoBehaviour:
   healthBar: {fileID: 2914563284045647524}
   healthTempBar: {fileID: 6705428407445303400}
   indevText: {fileID: 337001248}
---- !u!114 &8681103540809101197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8681103540809101204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8b5a7561706e45c2ad4f9378163530f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  lvl: 1
-  playerCamera: {fileID: 0}
-  damage: 10
-  attackRange: 1
-  criticalChance: 25
-  criticalDamage: 20
-  armorPenetration: 0
-  armor: 10
-  magicResistance: 0
-  dodge: 0
---- !u!114 &8043004334821998810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8681103540809101204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70860d18da82c41e19fd60b6ba8372ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 3158241048368802958, guid: f0b90aab27e5345e088cd43802775ec6, type: 3}
-  arrowData: {fileID: 11400000, guid: 6e532112f0d93468d9a1b2af03cbb7b2, type: 2}
-  minHoldTime: 0.1
-  cooldown: 0.4
 --- !u!1 &8681103541166672084
 GameObject:
   m_ObjectHideFlags: 0

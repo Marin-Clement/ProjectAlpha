@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Player_Movement :  MonoBehaviour
 {
+    // Player reference
+    private Player_Behaviour _playerBehaviour;
+
+
     // Variables
     private Rigidbody2D _rigidbody;
 
@@ -21,14 +25,9 @@ public class Player_Movement :  MonoBehaviour
     private bool _dashTimer;
     private float _dashTimerCount;
 
-
-    // playerUI
-    private Player_UI _playerUi;
-
-
     void Start()
     {
-        _playerUi = GetComponent<Player_UI>();
+        _playerBehaviour = GetComponent<Player_Behaviour>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
     
@@ -51,7 +50,7 @@ public class Player_Movement :  MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCount > 0 && _movement != Vector2.zero)
         {
             Dash();
-            _playerUi.animateDashIcon();
+            _playerBehaviour.playerUi.animateDashIcon();
         }
         if (!_dashTimer && _dashCount < 2)
         {
