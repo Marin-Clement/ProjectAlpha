@@ -407,6 +407,7 @@ GameObject:
   - component: {fileID: 5357778182973432443}
   - component: {fileID: 5357778182973432440}
   - component: {fileID: 2750034076846627090}
+  - component: {fileID: 1773131664}
   m_Layer: 9
   m_Name: Dummy
   m_TagString: Enemy
@@ -535,9 +536,6 @@ MonoBehaviour:
   enemyStatus: 
   damagePopup: {fileID: 4754867091677353270, guid: a13535022d3a84b1c86d1a70c9b7b523, type: 3}
   animator: {fileID: 5357778182973432436}
-  isDummy: 1
-  dummyCooldown: 2
-  dummyCooldownTimer: 0
 --- !u!114 &2750034076846627090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,6 +550,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 6203156489618250169}
   healthTempBar: {fileID: 8600630923160742009}
+--- !u!114 &1773131664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5357778182973432447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1582efd5b4fdd19438fee2995f512d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  damagePopup: {fileID: 4754867091677353270, guid: a13535022d3a84b1c86d1a70c9b7b523, type: 3}
+  isDummy: 1
+  dummyCooldown: 3
 --- !u!1 &8164360517290229224
 GameObject:
   m_ObjectHideFlags: 0

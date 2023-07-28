@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -49,50 +47,9 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject damagePopup;
     public Animator animator;
 
-    [Header("Dummy")]
-    [SerializeField] private bool isDummy; 
-    [SerializeField] private float dummyCooldown = 3f;
-    [SerializeField] private float dummyCooldownTimer;
-
     private void Awake()
     {
         SetEnemyVariables();
-    }
-
-    private void Update()
-    {
-        if (isDummy)
-        {
-            if (dummyCooldownTimer > 0)
-            {
-                dummyCooldownTimer -= Time.deltaTime;
-            }
-            else
-            {
-                dummyCooldownTimer = dummyCooldown;
-                _health = _maxHealth;
-            }
-        }
-    }
-    
-    public void TakeDamage(List<object> damageInfo)
-    {
-        float damage = (float) damageInfo[0];
-
-        bool isCritical = (bool) damageInfo[1];
-        // TODO : Remove this when done testing
-        if (isDummy)
-        {
-            _health -= damage;
-            dummyCooldownTimer = dummyCooldown;
-            Debug.Log("Dummy took <color=red>" + damage + "</color> damage He has <color=green> " + _health + "</color> health left");
-        }
-        
-        GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
-        DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
-        floatingText.IsCritical = isCritical;
-        floatingText.Damage = damage;
-        animator.Play("dummy_hit");
     }
 
     private void SetEnemyVariables()

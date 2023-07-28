@@ -107,7 +107,6 @@ public class Projectile_Behaviour : MonoBehaviour
             case "Player":
                 if (CompareTag("EnemyProjectile"))
                 {
-                    Debug.Log("Player Hit Enemy" + GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
                     if (_pierceCount > 0)
                     {
                         _pierceCount--;
@@ -155,7 +154,7 @@ public class Projectile_Behaviour : MonoBehaviour
             case "Enemy":
                 if (other.gameObject.CompareTag("Enemy"))
                 {
-                    other.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(GameManager.Instance.playerBehaviour.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
+                    other.gameObject.GetComponent<Health>().TakeDamage(GameManager.Instance.playerBehaviour.playerCombat.CalculateArrowDamage(projectileData.damage, _enemyPierced, _duration));
                     if (_pierceCount > 0)
                     {
                         _pierceCount--;

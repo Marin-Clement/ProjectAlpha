@@ -2147,6 +2147,7 @@ GameObject:
   - component: {fileID: 8043004334821998810}
   - component: {fileID: 8681103540809101194}
   - component: {fileID: 8681103540809101198}
+  - component: {fileID: 637417895}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -2281,11 +2282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b5a7561706e45c2ad4f9378163530f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
   maxHealth: 100
   lvl: 1
-  playerCamera: {fileID: 0}
   damage: 10
-  attackRange: 1
   criticalChance: 25
   criticalDamage: 20
   armorPenetration: 0
@@ -2351,6 +2351,22 @@ MonoBehaviour:
   healthBar: {fileID: 2914563284045647524}
   healthTempBar: {fileID: 6705428407445303400}
   indevText: {fileID: 337001248}
+--- !u!114 &637417895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681103540809101204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1582efd5b4fdd19438fee2995f512d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  damagePopup: {fileID: 0}
+  isDummy: 0
+  dummyCooldown: 3
 --- !u!1 &8681103541166672084
 GameObject:
   m_ObjectHideFlags: 0

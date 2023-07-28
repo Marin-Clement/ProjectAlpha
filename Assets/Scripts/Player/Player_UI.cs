@@ -111,10 +111,10 @@ public class Player_UI : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        healthBar.maxValue = _playerBehaviour.MaxHealth;
-        healthTempBar.maxValue = _playerBehaviour.MaxHealth;
-        healthText.text = _playerBehaviour.Health.ToString() + "/" + _playerBehaviour.MaxHealth.ToString();
-        healthBar.value = Mathf.Lerp(healthBar.value, _playerBehaviour.Health, 0.1f);
+        healthBar.maxValue = _playerBehaviour.playerHealth.MaxHealth;
+        healthTempBar.maxValue = _playerBehaviour.playerHealth.MaxHealth;
+        healthText.text = _playerBehaviour.playerHealth.HealthValue.ToString() + "/" + _playerBehaviour.playerHealth.MaxHealth.ToString();
+        healthBar.value = Mathf.Lerp(healthBar.value, _playerBehaviour.playerHealth.HealthValue, 0.1f);
         healthTempBar.value = Mathf.Lerp(healthTempBar.value, healthBar.value, 0.01f);
     }
     public void animateDashIcon()

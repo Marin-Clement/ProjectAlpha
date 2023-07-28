@@ -9,8 +9,11 @@ public class Player_Camera : MonoBehaviour
     
     [SerializeField] private int cameraSpeed = 5;
     
+    private void Awake() {
+        GameManager.Instance.playerCamera = this;
+    }
 
-    void Start()
+    private void Start()
     {   
         _offset = new Vector3(0, 0, -10);
     }

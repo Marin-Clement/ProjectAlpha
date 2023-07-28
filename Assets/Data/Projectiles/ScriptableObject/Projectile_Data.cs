@@ -14,7 +14,6 @@ public class Projectile_Data : ScriptableObject
     public GameObject deathParticle;
     
     // Status Variables
-    [HideInInspector] public bool isSticky;
     [HideInInspector] public bool isBouncy;
     [HideInInspector] public bool isPoisonous;
     [HideInInspector] public bool isFreezing;
@@ -23,30 +22,22 @@ public class Projectile_Data : ScriptableObject
     [HideInInspector] public bool isStunning;
 
     // Homing Variables`
-    [HideInInspector]
-    public float turnSpeed;
+    [HideInInspector] public float turnSpeed;
     
     // Bouncy Variables
-    [HideInInspector]
-    public int bounces;
+    [HideInInspector] public int bounces;
 
     // Explosion Variables
     [Header("Projectile Behaviour")]
     public bool isHoming;
     public bool isExplosive;
     public bool statusEffect;
-    [HideInInspector]
-    public float timeToExplode;
-    [HideInInspector]
-    public float explosionRadius;
-    [HideInInspector]
-    public float explosionForce;
-    [HideInInspector]
-    public float explosionDamage;
-    [HideInInspector]
-    public int numberOfProjectiles;
-    [HideInInspector]
-    public Projectile_Data childProjectile;
+    [HideInInspector] public float timeToExplode;
+    [HideInInspector] public float explosionRadius;
+    [HideInInspector] public float explosionForce;
+    [HideInInspector] public float explosionDamage;
+    [HideInInspector] public int numberOfProjectiles;
+    [HideInInspector] public Projectile_Data childProjectile;
 }
 
 [CustomEditor(typeof(Projectile_Data))]
@@ -82,7 +73,6 @@ public class Projectile_Data_Editor : Editor
         {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Status Variables");
-            _projectileData.isSticky = EditorGUILayout.Toggle("Sticky", _projectileData.isSticky);
             _projectileData.isBouncy = EditorGUILayout.Toggle("Bouncy", _projectileData.isBouncy);
             _projectileData.isPoisonous = EditorGUILayout.Toggle("Poisonous", _projectileData.isPoisonous);
             _projectileData.isFreezing = EditorGUILayout.Toggle("Freezing", _projectileData.isFreezing);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_Combat : MonoBehaviour
@@ -61,6 +62,24 @@ public class Player_Combat : MonoBehaviour
         var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();
         projectileBehaviour.Duration = (_heldTime + minHoldTime) * 1.2f;
         projectileBehaviour.SetDirection(up);
+    }
+
+    public List<object> CalculateArrowDamage(float arrowDamage, int enemyPierce, float holdTime)
+    {
+        List<object> damageInfo = new List<object>();
+
+        float calculatedDamage = (((arrowDamage * (1 + holdTime)) * _playerBehaviour.Damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
+        bool isCriticalHit = _playerBehaviour.CriticalChance > Random.Range(0, 100);
+
+        if (isCriticalHit)
+        {
+            calculatedDamage *= (1 + (_playerBehaviour.CriticalDamage * 0.01f));
+        }
+
+        damageInfo.Add(calculatedDamage);
+        damageInfo.Add(isCriticalHit);
+        
+        return damageInfo;
     }
 
     public float CurrentCooldown

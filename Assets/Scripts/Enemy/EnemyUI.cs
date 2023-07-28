@@ -9,12 +9,12 @@ public class EnemyUI : MonoBehaviour
 
     // Enemy
 
-    private EnemyBehaviour _enemyBehaviour;
+    private Health _enemyHealth;
 
-    
+
     void Start()
     {
-        _enemyBehaviour = GetComponent<EnemyBehaviour>();
+        _enemyHealth = GetComponent<Health>();
     }
 
     void Update()
@@ -24,9 +24,9 @@ public class EnemyUI : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        healthBar.maxValue = _enemyBehaviour.MaxHealth;
-        healthTempBar.maxValue = _enemyBehaviour.MaxHealth;
-        healthBar.value = Mathf.Lerp(healthBar.value, _enemyBehaviour.Health, 0.01f);
+        healthBar.maxValue = _enemyHealth.MaxHealth;
+        healthTempBar.maxValue = _enemyHealth.MaxHealth;
+        healthBar.value = Mathf.Lerp(healthBar.value, _enemyHealth.HealthValue, 0.01f);
         healthTempBar.value = Mathf.Lerp(healthTempBar.value, healthBar.value, 0.005f);
     }
 }
