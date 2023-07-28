@@ -270,32 +270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9a5ad0c8ee74144b603e51d83a4fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 4754867091677353268}
+  damageColor: {r: 0, g: 0, b: 0, a: 0}
   speed: 2
   duration: 1
-  curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   sizeRange: {x: 1, y: 1.5}
   directionRange: {x: -0.5, y: 0.5}
   sizeCurve:
@@ -331,6 +309,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  damage: 0
   criticalHitSprite: {fileID: 4443349065794678220}
-  isCritical: 0

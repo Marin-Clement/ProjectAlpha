@@ -64,9 +64,11 @@ public class Player_Combat : MonoBehaviour
         projectileBehaviour.SetDirection(up);
     }
 
-    public List<object> CalculateArrowDamage(float arrowDamage, int enemyPierce, float holdTime)
+    public List<object> CalculateArrowDamage(Projectile_Data arrow, int enemyPierce, float holdTime)
     {
         List<object> damageInfo = new List<object>();
+        float arrowDamage = arrow.damage;
+
 
         float calculatedDamage = (((arrowDamage * (1 + holdTime)) * _playerBehaviour.Damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
         bool isCriticalHit = _playerBehaviour.CriticalChance > Random.Range(0, 100);
@@ -78,6 +80,7 @@ public class Player_Combat : MonoBehaviour
 
         damageInfo.Add(calculatedDamage);
         damageInfo.Add(isCriticalHit);
+        damageInfo.Add(arrow.isPoisonous);
         
         return damageInfo;
     }

@@ -562,10 +562,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1582efd5b4fdd19438fee2995f512d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   damagePopup: {fileID: 4754867091677353270, guid: a13535022d3a84b1c86d1a70c9b7b523, type: 3}
   isDummy: 1
   dummyCooldown: 3
+  statusEffectTickRate: 1
+  isPoisoned: 0
+  maxPoisonDuration: 5
+  poisonDuration: 0
+  maxPoisonStacks: 5
+  poisonStacks: 0
 --- !u!1 &8164360517290229224
 GameObject:
   m_ObjectHideFlags: 0

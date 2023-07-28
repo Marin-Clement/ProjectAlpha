@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,12 +29,11 @@ public class Health : MonoBehaviour
     private float statusEffectTimer;
 
     // * Poison
-    private bool isPoisoned;
-    private int maxPoisonStacks = 5;
-    private int poisonStacks;
-
-    // * Burning
-    private bool isBurning;
+    [SerializeField] public bool isPoisoned;
+    [SerializeField] private float maxPoisonDuration = 5f;
+    [SerializeField] private float poisonDuration;
+    [SerializeField] private int maxPoisonStacks = 5;
+    [SerializeField] private int poisonStacks;
     
     private void Start()
     {
@@ -45,6 +45,7 @@ public class Health : MonoBehaviour
             "Object" => ObjectType.Object,
             _ => ObjectType.Object
         };
+        StartCoroutine(StatusEffectTick());
     }
 
     private void Update()
@@ -68,7 +69,22 @@ public class Health : MonoBehaviour
     public void TakeDamage(List<object> damageInfo)
     {
         float damage = (float) damageInfo[0];
-        bool isCritical = (bool) damageInfo[1];
+        bool arrowisCritical = (bool) damageInfo[1];
+        bool arrowIsPoisoned = (bool) damageInfo[2];
+
+        if (arrowIsPoisoned)
+        {
+            isPoisoned = true;
+            poisonDuration = maxPoisonDuration;
+            if (poisonStacks < maxPoisonStacks)
+            {
+                poisonStacks++;
+            }
+            else
+            {
+                poisonStacks = maxPoisonStacks;
+            }
+        }
 
         if (healthType == ObjectType.Player)
         {
@@ -80,7 +96,8 @@ public class Health : MonoBehaviour
             GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
             DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
             floatingText.Damage = damage;
-            floatingText.IsCritical = isCritical;
+            floatingText.IsCritical = arrowisCritical;
+            floatingText.Color = Color.white;
 
             // ! This is a temporary solution
             if (isDummy)
@@ -99,6 +116,36 @@ public class Health : MonoBehaviour
         }
     }
 
+    private void TakeStatusEffectDamage(float damage)
+    {
+        if (isPoisoned)
+        {
+            if (healthType == ObjectType.Player)
+            {
+                health -= damage * poisonStacks;
+            }
+            else if (healthType == ObjectType.Enemy)
+            {
+                health -= damage * poisonStacks;
+                GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
+                DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
+                floatingText.Damage = damage * poisonStacks;
+                floatingText.Color = Color.green;
+
+                // ! This is a temporary solution
+                if (isDummy)
+                {
+                    dummyCooldownTimer = dummyCooldown;
+                }
+                // !
+            }
+            else
+            {
+                Debug.Log("ObjectType not found");
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (healthType == ObjectType.Player)
@@ -106,7 +153,7 @@ public class Health : MonoBehaviour
             switch (col.gameObject.tag)
             {
                 case "Enemy":
-                    TakeDamage(new List<object>(){10f, false});
+                    TakeDamage(new List<object>(){10f, false, false});
                     GameManager.Instance.playerBehaviour.playerMovement.Knockback(col.gameObject.transform.position);
                     GameManager.Instance.playerBehaviour.playerCamera.ShakeCamera(0.2f, 0.1f);
                     break;
@@ -115,6 +162,27 @@ public class Health : MonoBehaviour
                     GameManager.Instance.playerBehaviour.playerCamera.ShakeCamera(0.2f, 0.1f);
                     break;
             }
+        }
+    }
+
+    IEnumerator StatusEffectTick()
+    {
+        while (true)
+        {
+            if (isPoisoned)
+            {
+                poisonDuration -= statusEffectTickRate;
+                if (poisonDuration <= 0)
+                {
+                    isPoisoned = false;
+                    poisonStacks = 0;
+                }
+                else
+                {
+                    TakeStatusEffectDamage(5f);
+                }
+            }
+            yield return new WaitForSeconds(statusEffectTickRate);
         }
     }
 

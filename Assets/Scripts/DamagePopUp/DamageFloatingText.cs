@@ -3,6 +3,9 @@ using TMPro;
 
 public class DamageFloatingText : MonoBehaviour
 {
+
+    [SerializeField] private TMP_Text text; // Text component
+    [SerializeField] private Color damageColor; // Color of the text
     [SerializeField] private float speed = 2f; // Floating speed
     [SerializeField] private float duration = 1f; // Duration of the popup
     [SerializeField] private Vector2 sizeRange = new Vector2(1f, 1.5f); // Range for random size
@@ -39,7 +42,7 @@ public class DamageFloatingText : MonoBehaviour
         }
         else
         {
-            SetText(damage, Color.white);
+            SetText(damage, damageColor);
         }
     }
 
@@ -81,5 +84,10 @@ public class DamageFloatingText : MonoBehaviour
     public float Damage{
         get => damage;
         set => damage = value;
+    }
+
+    public Color Color{
+        get => damageColor;
+        set => damageColor = value;
     }
 }
