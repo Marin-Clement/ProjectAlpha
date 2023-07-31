@@ -68,10 +68,17 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(List<object> damageInfo)
     {
+        // * 0 = Damage, 1 = IsCritical, 3 = ArrowEffects
         float damage = (float) damageInfo[0];
         bool arrowisCritical = (bool) damageInfo[1];
-        bool arrowIsPoisoned = (bool) damageInfo[2];
 
+        // * (ArrowEffects) 0 = Poison, 1 = Burning, 2 = Freezing, 3 = Electrifying 
+        bool[] arrowEffects = (bool[]) damageInfo[2];                                                     
+        bool arrowIsPoisoned = arrowEffects[0];
+        bool arrowIsBurning = arrowEffects[1];
+        bool arrowIsFreezing = arrowEffects[2];
+        bool arrowIsElectrifying = arrowEffects[3];
+        
         if (arrowIsPoisoned)
         {
             isPoisoned = true;
@@ -153,7 +160,7 @@ public class Health : MonoBehaviour
             switch (col.gameObject.tag)
             {
                 case "Enemy":
-                    TakeDamage(new List<object>(){10f, false, false});
+                    TakeDamage(new List<object>(){10f, false});
                     GameManager.Instance.playerBehaviour.playerMovement.Knockback(col.gameObject.transform.position);
                     GameManager.Instance.playerBehaviour.playerCamera.ShakeCamera(0.2f, 0.1f);
                     break;

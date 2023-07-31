@@ -67,7 +67,12 @@ public class Player_Combat : MonoBehaviour
     public List<object> CalculateArrowDamage(Projectile_Data arrow, int enemyPierce, float holdTime)
     {
         List<object> damageInfo = new List<object>();
-        float arrowDamage = arrow.damage;
+        float arrowDamage = arrow.damage; 
+        bool[] arrowEffects = new bool[5];                                                          
+        arrowEffects[0] = arrow.isPoisonous;
+        arrowEffects[1] = arrow.isBurning;
+        arrowEffects[2] = arrow.isFreezing;
+        arrowEffects[4] = arrow.isElectrifying;
 
 
         float calculatedDamage = (((arrowDamage * (1 + holdTime)) * _playerBehaviour.Damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
@@ -80,7 +85,7 @@ public class Player_Combat : MonoBehaviour
 
         damageInfo.Add(calculatedDamage);
         damageInfo.Add(isCriticalHit);
-        damageInfo.Add(arrow.isPoisonous);
+        damageInfo.Add(arrowEffects);
         
         return damageInfo;
     }

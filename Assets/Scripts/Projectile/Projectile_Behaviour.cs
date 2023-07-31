@@ -147,14 +147,14 @@ public class Projectile_Behaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        switch (other.gameObject.tag)
+        switch (col.gameObject.tag)
         {
             case "Enemy":
-                if (other.gameObject.CompareTag("Enemy"))
+                if (col.gameObject.CompareTag("Enemy"))
                 {
-                    other.gameObject.GetComponent<Health>().TakeDamage(GameManager.Instance.playerBehaviour.playerCombat.CalculateArrowDamage(projectileData, _enemyPierced, _duration));
+                    col.gameObject.GetComponent<Health>().TakeDamage(GameManager.Instance.playerBehaviour.playerCombat.CalculateArrowDamage(projectileData, _enemyPierced, _duration));
                     if (_pierceCount > 0)
                     {
                         _pierceCount--;

@@ -19,7 +19,6 @@ public class Projectile_Data : ScriptableObject
     [HideInInspector] public bool isFreezing;
     [HideInInspector] public bool isBurning;
     [HideInInspector] public bool isElectrifying;
-    [HideInInspector] public bool isStunning;
 
     // Homing Variables`
     [HideInInspector] public float turnSpeed;
@@ -78,7 +77,6 @@ public class Projectile_Data_Editor : Editor
             _projectileData.isFreezing = EditorGUILayout.Toggle("Freezing", _projectileData.isFreezing);
             _projectileData.isBurning = EditorGUILayout.Toggle("Burning", _projectileData.isBurning);
             _projectileData.isElectrifying = EditorGUILayout.Toggle("Electrifying", _projectileData.isElectrifying);
-            _projectileData.isStunning = EditorGUILayout.Toggle("Stunning", _projectileData.isStunning);
         }
         if (_projectileData.isBouncy)
         {

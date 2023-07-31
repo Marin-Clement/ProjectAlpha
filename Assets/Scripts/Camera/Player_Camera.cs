@@ -8,13 +8,10 @@ public class Player_Camera : MonoBehaviour
     private Vector3 _offset;
     
     [SerializeField] private int cameraSpeed = 5;
-    
-    private void Awake() {
-        GameManager.Instance.playerCamera = this;
-    }
 
     private void Start()
     {   
+        GameManager.Instance.playerCamera = this;
         _offset = new Vector3(0, 0, -10);
     }
 

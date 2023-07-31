@@ -21,8 +21,7 @@ public class Player_Behaviour : MonoBehaviour
     private float health;
 
     [SerializeField] private int lvl = 1;
-
-    private bool _vulnerable = true;
+    
 
     // Attack stats
     [Header("Attack Stats")] 
@@ -61,14 +60,6 @@ public class Player_Behaviour : MonoBehaviour
         lvl++;
         CalculateStatsPerLevels();
     }
-
-    private IEnumerator InvincibilityTimer()
-    {
-        _vulnerable = false;
-        yield return new WaitForSeconds(0.5f);
-        _vulnerable = true;
-    }
-
 
     public float Health
     {
