@@ -1,0 +1,6 @@
+Update [INDEV] V.0.0.6:
+    - Added New player sprite whis animation 
+    - Added Bow to player 
+    - Added Dash Animation 
+    - Fixed Overhaul health system (Now you are not dependent of ProjectilesBehaviour script)
+    - Fixed Critical bug, where arrows recalculated crit chance for every enemy she hit (Now crit chance is calculated only once, so if arrow crit once, she will crit every enemy she hit)
