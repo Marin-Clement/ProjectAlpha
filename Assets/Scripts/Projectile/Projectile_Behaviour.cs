@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class Projectile_Behaviour : MonoBehaviour
 {
+    // Combat Variables
+    private Player_Behaviour _playerBehaviour;
+    private EnemyBehaviour _enemyBehaviour;
+
     // Projectile Variables
     private Rigidbody2D _rigidbody;
-    private BoxCollider2D _collider;
+    private CapsuleCollider2D _collider;
     private Vector3 _direction;
     public Projectile_Data projectileData;
 
@@ -26,6 +30,10 @@ public class Projectile_Behaviour : MonoBehaviour
     // Bouncy Variables
     private int _bounceCount;
 
+    // Critical Variables
+
+    private bool _isCritical;
+
     private void Start()
     {
         transform.up = _direction;
@@ -35,7 +43,7 @@ public class Projectile_Behaviour : MonoBehaviour
         _bounceCount += projectileData.bounces;
         
         _rigidbody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<BoxCollider2D>();
+        _collider = GetComponent<CapsuleCollider2D>();
         
         switch (gameObject.tag)
         {
@@ -105,22 +113,7 @@ public class Projectile_Behaviour : MonoBehaviour
         switch (col.gameObject.tag)
         {
             case "Player":
-                if (CompareTag("EnemyProjectile"))
-                {
-                    if (_pierceCount > 0)
-                    {
-                        _pierceCount--;
-                        _enemyPierced++;
-                    }
-                    else
-                    {
-                        Destroy(gameObject);
-                    }
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                Physics2D.IgnoreCollision(_collider, col.collider);
                 break;
             case "Wall":
                 if (projectileData.isBouncy)
@@ -142,9 +135,6 @@ public class Projectile_Behaviour : MonoBehaviour
                 }
                 break;
         }
-        {
-            
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -154,7 +144,7 @@ public class Projectile_Behaviour : MonoBehaviour
             case "Enemy":
                 if (col.gameObject.CompareTag("Enemy"))
                 {
-                    col.gameObject.GetComponent<Health>().TakeDamage(GameManager.Instance.playerBehaviour.playerCombat.CalculateArrowDamage(projectileData, _enemyPierced, _duration));
+                    col.gameObject.GetComponent<Health>().TakeDamage(_playerBehaviour.playerCombat.CalculateDamage(projectileData, _enemyPierced, _duration, _isCritical));
                     if (_pierceCount > 0)
                     {
                         _pierceCount--;
@@ -183,5 +173,23 @@ public class Projectile_Behaviour : MonoBehaviour
     {
         get => _duration;
         set => _duration = value;
+    }
+
+    public Boolean IsCritical
+    {
+        get => _isCritical;
+        set => _isCritical = value;
+    }
+
+    public Player_Behaviour PlayerBehaviour
+    {
+        get => _playerBehaviour;
+        set => _playerBehaviour = value;
+    }
+
+    public EnemyBehaviour EnemyBehaviour
+    {
+        get => _enemyBehaviour;
+        set => _enemyBehaviour = value;
     }
 }

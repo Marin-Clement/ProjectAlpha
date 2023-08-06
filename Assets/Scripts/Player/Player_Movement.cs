@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class Player_Movement :  MonoBehaviour
 {
+    // Properties
+    public bool isMoving { get; private set; }
+
     // Player reference
     private Player_Behaviour _playerBehaviour;
 
+    private SpriteRenderer _spriteRenderer;
 
     // Variables
     private Rigidbody2D _rigidbody;
@@ -20,38 +24,35 @@ public class Player_Movement :  MonoBehaviour
     [Header("Dash Movement")]
     [SerializeField] private int dashForce;
     [SerializeField] private float dashCd;
+    [SerializeField] private GameObject dashClone;
     private bool _isDashing;
     private int _dashCount = 2;
     private bool _dashTimer;
     private float _dashTimerCount;
-
+    
+    
     void Start()
     {
         _playerBehaviour = GetComponent<Player_Behaviour>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
     
     void Update()
     {
-        // player look at mouse
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        var transform1 = transform;
-        var position = transform1.position;
-        Vector2 direction = new Vector2(mousePos.x - position.x, mousePos.y - position.y);
-        transform1.up = direction;
-
-
-
         _movement.x = Input.GetAxisRaw("Horizontal");
         _movement.y = Input.GetAxisRaw("Vertical");
-        
-        
-        if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCount > 0 && _movement != Vector2.zero)
+
+        isMoving = _movement != Vector2.zero;
+
+        _spriteRenderer.flipX = _movement.x < 0;
+
+        if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCount > 0 && isMoving)
         {
             Dash();
             _playerBehaviour.playerUi.animateDashIcon();
         }
+
         if (!_dashTimer && _dashCount < 2)
         {
             StartCoroutine(DashTimer());
@@ -82,6 +83,7 @@ public class Player_Movement :  MonoBehaviour
         _isDashing = true;
         _dashCount--;
         _rigidbody.AddForce(_movement.normalized * (dashForce * 2), ForceMode2D.Impulse);
+        StartCoroutine(DashClone());
         StartCoroutine(DashCooldown());
     }
     
@@ -112,6 +114,18 @@ public class Player_Movement :  MonoBehaviour
         _dashCount += 1;
         _dashTimerCount = 0;
         _dashTimer = false;
+    }
+
+    IEnumerator DashClone()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(0.05f);
+            GameObject clone = Instantiate(dashClone, transform.position, Quaternion.identity);
+            SpriteRenderer cloneSpriteRenderer = clone.GetComponent<SpriteRenderer>();
+            cloneSpriteRenderer.flipX = _spriteRenderer.flipX;
+            cloneSpriteRenderer.sprite = _spriteRenderer.sprite;
+        }
     }
 
     public int GetDashCount()

@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Player_Combat : MonoBehaviour
 {
+    // Properties
+    public bool isHolding { get; private set; }
+    public bool isAttacking { get; private set; }
+
     // Player Reference
     private Player_Behaviour _playerBehaviour;
     
@@ -14,9 +18,10 @@ public class Player_Combat : MonoBehaviour
     
     // Bow Stats
     [Header("Bow Stats")]
-
+    [SerializeField] private Transform bowOutTransform;
     [SerializeField] private float minHoldTime = 0.2f;
     [SerializeField] private float cooldown = 0.2f;
+
     private float _heldTime;
     private float _currentCooldown;
 
@@ -37,6 +42,8 @@ public class Player_Combat : MonoBehaviour
     // Check for attack input and update held time
     if (Input.GetKey(KeyCode.Mouse0) && _currentCooldown >= cooldown)
     {
+        isAttacking = true;
+        isHolding = true;
         _heldTime += Time.deltaTime;
         _heldTime = Mathf.Min(_heldTime, arrowData.lifeTime);
     }
@@ -50,6 +57,8 @@ public class Player_Combat : MonoBehaviour
             _playerBehaviour.playerUi.animateMainSpellIcon();
             _currentCooldown = 0f;
         }
+        isAttacking = false;
+        isHolding = false;
         _heldTime = 0;
     }
     }
@@ -58,13 +67,16 @@ public class Player_Combat : MonoBehaviour
     {
         var playerTranform = transform;
         var up = playerTranform.up;
-        var arrow = Instantiate(arrowPrefab, playerTranform.position + (up), Quaternion.identity);
+        var arrow = Instantiate(arrowPrefab, bowOutTransform.position, Quaternion.identity);
         var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();
+        projectileBehaviour.PlayerBehaviour = _playerBehaviour;
+        projectileBehaviour.IsCritical = _playerBehaviour.CriticalChance > Random.Range(0, 100);
         projectileBehaviour.Duration = (_heldTime + minHoldTime) * 1.2f;
-        projectileBehaviour.SetDirection(up);
+        // set direction to mouse position
+        projectileBehaviour.SetDirection((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
     }
 
-    public List<object> CalculateArrowDamage(Projectile_Data arrow, int enemyPierce, float holdTime)
+    public List<object> CalculateDamage(Projectile_Data arrow, int enemyPierce, float holdTime, bool isCriticalHit)
     {
         List<object> damageInfo = new List<object>();
         float arrowDamage = arrow.damage; 
@@ -76,7 +88,6 @@ public class Player_Combat : MonoBehaviour
 
 
         float calculatedDamage = (((arrowDamage * (1 + holdTime)) * _playerBehaviour.Damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
-        bool isCriticalHit = _playerBehaviour.CriticalChance > Random.Range(0, 100);
 
         if (isCriticalHit)
         {

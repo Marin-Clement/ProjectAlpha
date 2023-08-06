@@ -16,13 +16,12 @@ MonoBehaviour:
   damage: 10
   lifeTime: 5
   pierceCount: 0
-  isSticky: 0
+  deathParticle: {fileID: 4397324319892588662, guid: 52a1b958048654266943454cd4591125, type: 3}
   isBouncy: 0
   isPoisonous: 0
   isFreezing: 0
   isBurning: 0
   isElectrifying: 0
-  isStunning: 0
   turnSpeed: 0
   bounces: 0
   isHoming: 0

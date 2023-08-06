@@ -160,15 +160,19 @@ public class Health : MonoBehaviour
             switch (col.gameObject.tag)
             {
                 case "Enemy":
-                    TakeDamage(new List<object>(){10f, false});
+                    TakeDamage(new List<object>(){10f, false, new bool[]{false, false, false, false}});
                     GameManager.Instance.playerBehaviour.playerMovement.Knockback(col.gameObject.transform.position);
                     GameManager.Instance.playerBehaviour.playerCamera.ShakeCamera(0.2f, 0.1f);
                     break;
                 case "EnemyProjectile":
-                    TakeDamage(new List<object>(){col.gameObject.GetComponent<Projectile_Behaviour>().projectileData.damage, false});
+                    TakeDamage(new List<object>(){col.gameObject.GetComponent<Projectile_Behaviour>().projectileData.damage,false, new bool[]{false, false, false, false}});
                     GameManager.Instance.playerBehaviour.playerCamera.ShakeCamera(0.2f, 0.1f);
                     break;
             }
+        }
+        else
+        {
+            Debug.Log("ObjectType not found");
         }
     }
 

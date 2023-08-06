@@ -11,6 +11,8 @@ public class Player_Behaviour : MonoBehaviour
 
     public Player_UI playerUi { get; private set;}
 
+    public Player_Animation playerAnimation { get; private set;}
+    
     public Health playerHealth { get; private set;}
 
     [SerializeField] public Player_Camera playerCamera;

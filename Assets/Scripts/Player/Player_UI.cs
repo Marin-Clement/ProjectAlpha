@@ -31,39 +31,17 @@ public class Player_UI : MonoBehaviour
     [SerializeField] private Slider healthBar;
     [SerializeField] private Slider healthTempBar;
 
-
-    [Header("Indev UI")]
-    [SerializeField] private TextMeshProUGUI indevText;
-    private RectTransform indevTextRectTransform;
-
-    // Debug
-    // TODO: Remove this when the game is finished
-    private RectTransform canvasRectTransform;
-
     void Start()
     {
         _playerBehaviour = GetComponent<Player_Behaviour>();
-        indevTextRectTransform = indevText.GetComponent<RectTransform>();
-        canvasRectTransform = indevText.transform.parent.GetComponent<RectTransform>();
+
     }
 
     private void Update()
     {
-        KeepIndevTextAtTopRightCorner();
         UpdateDashUI();
         UpdateMainSpellUI();
         UpdateHealthUI();
-    }
-
-
-    private void KeepIndevTextAtTopRightCorner()
-    {
-        float canvasWidth = canvasRectTransform.rect.width;
-        float canvasHeight = canvasRectTransform.rect.height;
-        float xOffset = canvasWidth / 2f - indevTextRectTransform.rect.width / 2f;
-        float yOffset = canvasHeight / 2f + indevTextRectTransform.rect.height / 2f;
-
-        indevTextRectTransform.localPosition = new Vector3(xOffset + 30f, (yOffset - 30f) + Mathf.Sin(Time.time * 2f) * 10f, 0f);
     }
 
     public void UpdateDashUI()
