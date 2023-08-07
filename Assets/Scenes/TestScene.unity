@@ -295,10 +295,6 @@ GameObject:
   m_Component:
   - component: {fileID: 918500646}
   - component: {fileID: 918500645}
-<<<<<<< HEAD
-  - component: {fileID: 918500647}
-=======
->>>>>>> 4b7893bbec50f475c4b3dcdca48f460a8e4b4c72
   m_Layer: 0
   m_Name: Dungeon
   m_TagString: Untagged
@@ -334,24 +330,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
---- !u!114 &918500647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918500644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ce4e42590d0544b1bb239b2b4dfa7f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rooms: 10
-  roomsPrefabs: []
-  startRoom: {fileID: 0}
-=======
->>>>>>> 4b7893bbec50f475c4b3dcdca48f460a8e4b4c72
 --- !u!1 &990205854
 GameObject:
   m_ObjectHideFlags: 0
