@@ -4,7 +4,6 @@ using UnityEngine;
 public class Player_Combat : MonoBehaviour
 {
     // Properties
-    public bool isHolding { get; private set; }
     public bool isAttacking { get; private set; }
 
     // Player Reference
@@ -33,66 +32,63 @@ public class Player_Combat : MonoBehaviour
 
     public void Update()
     {
-    // Reduce cooldown time
-    if (_currentCooldown < cooldown)
-    {
-        _currentCooldown += Time.deltaTime;
-    }
-
-    // Check for attack input and update held time
-    if (Input.GetKey(KeyCode.Mouse0) && _currentCooldown >= cooldown)
-    {
-        isAttacking = true;
-        isHolding = true;
-        _heldTime += Time.deltaTime;
-        _heldTime = Mathf.Min(_heldTime, arrowData.lifeTime);
-    }
-
-    // Check for attack release and perform attack if held time is positive
-    if (Input.GetKeyUp(KeyCode.Mouse0))
-    {
-        if (_heldTime > 0)
+        // Reduce cooldown time
+        if (_currentCooldown < cooldown)
         {
-            Attack();
-            _playerBehaviour.playerUi.animateMainSpellIcon();
-            _currentCooldown = 0f;
+            _currentCooldown += Time.deltaTime;
         }
-        isAttacking = false;
-        isHolding = false;
-        _heldTime = 0;
-    }
+
+        // Check for attack input and update held time
+        if (Input.GetKey(KeyCode.Mouse0) && _currentCooldown >= cooldown)
+        {
+            isAttacking = true;
+            _heldTime += Time.deltaTime;
+            _heldTime = Mathf.Min(_heldTime, arrowData.lifeTime);
+        }
+
+        // Check for attack release and perform attack if held time is positive
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            if (_heldTime > 0)
+            {
+                Attack();
+                _playerBehaviour.playerUi.animateMainSpellIcon();
+                _currentCooldown = 0f;
+            }
+            isAttacking = false;
+            _heldTime = 0;
+        }
     }
 
     private void Attack()
     {
-        var playerTranform = transform;
-        var up = playerTranform.up;
         var arrow = Instantiate(arrowPrefab, bowOutTransform.position, Quaternion.identity);
-        var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();
-        projectileBehaviour.PlayerBehaviour = _playerBehaviour;
+        var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();;
         projectileBehaviour.IsCritical = _playerBehaviour.CriticalChance > Random.Range(0, 100);
+        projectileBehaviour.Damage = CalculateDamage(arrowData, projectileBehaviour.IsCritical);
         projectileBehaviour.Duration = (_heldTime + minHoldTime) * 1.2f;
         // set direction to mouse position
         projectileBehaviour.SetDirection((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
     }
 
-    public List<object> CalculateDamage(Projectile_Data arrow, int enemyPierce, float holdTime, bool isCriticalHit)
+    public List<object> CalculateDamage(Projectile_Data arrow, bool isCriticalHit)
     {
-        List<object> damageInfo = new List<object>();
-        float arrowDamage = arrow.damage; 
-        bool[] arrowEffects = new bool[5];                                                          
-        arrowEffects[0] = arrow.isPoisonous;
-        arrowEffects[1] = arrow.isBurning;
-        arrowEffects[2] = arrow.isFreezing;
-        arrowEffects[4] = arrow.isElectrifying;
+        // * 0 = Damage, 1 = IsCritical, 3 = ArrowEffects
 
-
-        float calculatedDamage = (((arrowDamage * (1 + holdTime)) * _playerBehaviour.Damage * 0.2f) / (1 + (enemyPierce * 0.4f)));
+        float calculatedDamage = _playerBehaviour.Damage * 0.5f * arrow.damage * 0.5f * (1 + (_heldTime * 0.5f)) ;
 
         if (isCriticalHit)
         {
             calculatedDamage *= (1 + (_playerBehaviour.CriticalDamage * 0.01f));
         }
+
+        List<object> damageInfo = new List<object>();
+
+        bool[] arrowEffects = new bool[5];                                                          
+        arrowEffects[0] = arrow.isPoisonous;
+        arrowEffects[1] = arrow.isBurning;
+        arrowEffects[2] = arrow.isFreezing;
+        arrowEffects[4] = arrow.isElectrifying;
 
         damageInfo.Add(calculatedDamage);
         damageInfo.Add(isCriticalHit);

@@ -16,8 +16,7 @@ public class Player_Animation : MonoBehaviour
     void Update()
     {
         _isMoving = _playerBehaviour.playerMovement.isMoving;
-        _animator.SetBool("isMoving", _isMoving && !_playerBehaviour.playerCombat.isAttacking && !_playerBehaviour.playerCombat.isHolding);
+        _animator.SetBool("isMoving", _isMoving && !_playerBehaviour.playerCombat.isAttacking);
         _animator.SetBool("isAttacking", _playerBehaviour.playerCombat.isAttacking);
-        _animator.SetBool("isHolding", _playerBehaviour.playerCombat.isHolding);
     }
 }

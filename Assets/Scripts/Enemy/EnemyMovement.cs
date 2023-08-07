@@ -74,8 +74,8 @@ public class EnemyMovement : MonoBehaviour
             {
                 _enemyBehaviour.enemyStatus = "Chasing player!";
                 // No obstacle found in this direction, so add weight based on distance to the player
-                var distanceToPlayer = Vector2.Distance((transform.position + (Vector3)directionVectors[i] * raycastDistance), GameManager.Instance.playerBehaviour.transform.position);
-                directionWeights[i] = 1.0f / distanceToPlayer;
+                // var distanceToPlayer = Vector2.Distance((transform.position + (Vector3)directionVectors[i] * raycastDistance), GameManager.Instance.playerBehaviour.transform.position);
+                // directionWeights[i] = 1.0f / distanceToPlayer;
             }
         }
     }
@@ -95,43 +95,43 @@ public class EnemyMovement : MonoBehaviour
     private void MoveIntoBestDirection()
     {
         // Move into the direction with the highest weight but if in range of firing
-        if (Vector2.Distance(transform.position, GameManager.Instance.playerBehaviour.transform.position) < _enemyBehaviour.AttackRange)
-        {
-            if (_enemyBehaviour.IsRanged && !Physics2D.Raycast(transform.position, GameManager.Instance.playerBehaviour.transform.position - transform.position, _enemyBehaviour.AttackRange, obstacleLayer))
-            {
-                // if player in range of personal space move away
-                if (Vector2.Distance(transform.position, GameManager.Instance.playerBehaviour.transform.position) < _rangePersonalSpace)
-                {
-                    _enemyBehaviour.enemyStatus = "Personal space!";
-                    Vector2 direction = directionVectors[highestWeightIndex];
-                    direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
-                    transform.position -= (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
-                }
-                else
-                {
-                    _enemyBehaviour.enemyStatus = "Firing!";
-                }
-            }
-            else
-            {
-                _enemyBehaviour.enemyStatus = "Moving!";
-                Vector2 direction = directionVectors[highestWeightIndex];
-                direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
-                transform.position += (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
-            }
-            if (_enemyBehaviour.IsMelee)
-            {
-                _enemyBehaviour.enemyStatus = "Melee!";
-            }
-        }
-        else
-        {
-            _enemyBehaviour.enemyStatus = "Moving!";
-            Vector2 direction = directionVectors[highestWeightIndex];
-            Vector2 newDirection = direction + new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
-            direction = Vector2.Lerp(direction, newDirection, 0.2f); // 0.2f is the blending factor
-            transform.position += (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
-        }
+        // if (Vector2.Distance(transform.position, GameManager.Instance.playerBehaviour.transform.position) < _enemyBehaviour.AttackRange)
+        // {
+        //     if (_enemyBehaviour.IsRanged && !Physics2D.Raycast(transform.position, GameManager.Instance.playerBehaviour.transform.position - transform.position, _enemyBehaviour.AttackRange, obstacleLayer))
+        //     {
+        //         // if player in range of personal space move away
+        //         if (Vector2.Distance(transform.position, GameManager.Instance.playerBehaviour.transform.position) < _rangePersonalSpace)
+        //         {
+        //             _enemyBehaviour.enemyStatus = "Personal space!";
+        //             Vector2 direction = directionVectors[highestWeightIndex];
+        //             direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
+        //             transform.position -= (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
+        //         }
+        //         else
+        //         {
+        //             _enemyBehaviour.enemyStatus = "Firing!";
+        //         }
+        //     }
+        //     else
+        //     {
+        //         _enemyBehaviour.enemyStatus = "Moving!";
+        //         Vector2 direction = directionVectors[highestWeightIndex];
+        //         direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
+        //         transform.position += (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
+        //     }
+        //     if (_enemyBehaviour.IsMelee)
+        //     {
+        //         _enemyBehaviour.enemyStatus = "Melee!";
+        //     }
+        // }
+        // else
+        // {
+        //     _enemyBehaviour.enemyStatus = "Moving!";
+        //     Vector2 direction = directionVectors[highestWeightIndex];
+        //     Vector2 newDirection = direction + new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
+        //     direction = Vector2.Lerp(direction, newDirection, 0.2f); // 0.2f is the blending factor
+        //     transform.position += (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
+        // }
     }   
     
     private void OnDrawGizmos()

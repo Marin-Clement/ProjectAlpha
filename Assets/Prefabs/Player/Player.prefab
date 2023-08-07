@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 667924462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.66, y: 0.005, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1254468564}
@@ -153,8 +153,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 299861635
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 84c0b482e520be040a6d5a165caa85f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -270,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1771094532}
   - component: {fileID: 1771094533}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1960,8 +1960,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -10, y: 0}
-  m_SizeDelta: {x: 281.6273, y: 23.9129}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 191.7813, y: 23.9129}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &3791033191072676912
 CanvasRenderer:
@@ -1991,7 +1991,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Project alpha [INDEV] v0.0.1
+  m_text: Project alpha [INDEV] v0.0.6
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bdbc40df5e9105544881668e69aa81de, type: 2}
   m_sharedMaterial: {fileID: 5648686919612507959, guid: bdbc40df5e9105544881668e69aa81de, type: 2}
@@ -2003,7 +2003,7 @@ MonoBehaviour:
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
-  m_colorMode: 3
+  m_colorMode: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
@@ -2018,13 +2018,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 6
+  m_fontSizeBase: 6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 4
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2369,12 +2369,12 @@ GameObject:
   - component: {fileID: 8681103540809101192}
   - component: {fileID: 8681103540809101193}
   - component: {fileID: 8681103540809101199}
+  - component: {fileID: 637417896}
   - component: {fileID: 8681103540809101197}
   - component: {fileID: 8043004334821998810}
   - component: {fileID: 8681103540809101194}
   - component: {fileID: 8681103540809101198}
   - component: {fileID: 637417895}
-  - component: {fileID: 637417896}
   - component: {fileID: 637417897}
   m_Layer: 8
   m_Name: Player
@@ -2419,7 +2419,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -2440,8 +2440,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 299861635
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 1748132239, guid: c7452012a08e6e744bf0d97b797aeb15, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2475,6 +2475,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &637417896
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681103540809101204}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 50fff194cf97c34459f548f5dc05953f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8681103540809101197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2487,7 +2508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b5a7561706e45c2ad4f9378163530f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
   maxHealth: 100
   lvl: 1
   damage: 10
@@ -2579,27 +2599,6 @@ MonoBehaviour:
   poisonDuration: 0
   maxPoisonStacks: 5
   poisonStacks: 0
---- !u!95 &637417896
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8681103540809101204}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 50fff194cf97c34459f548f5dc05953f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &637417897
 MonoBehaviour:
   m_ObjectHideFlags: 0

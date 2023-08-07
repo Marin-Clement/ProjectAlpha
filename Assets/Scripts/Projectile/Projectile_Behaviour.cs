@@ -1,12 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile_Behaviour : MonoBehaviour
 {
-    // Combat Variables
-    private Player_Behaviour _playerBehaviour;
-    private EnemyBehaviour _enemyBehaviour;
-
     // Projectile Variables
     private Rigidbody2D _rigidbody;
     private CapsuleCollider2D _collider;
@@ -18,21 +15,24 @@ public class Projectile_Behaviour : MonoBehaviour
     
     // Explosive Variables
     private float _currentExplosionTime;
-    private float _spawnTime = 0.3f;
+    private float _spawnTime = 0.2f;
     
     // Player Variables
     private float _duration;
     
     // Pierce Variables
     private int _pierceCount;
-    private int _enemyPierced;
+    private int _entityPierced;
     
     // Bouncy Variables
     private int _bounceCount;
 
     // Critical Variables
-
     private bool _isCritical;
+
+    // Damage Variables
+
+    private List<object> _damage;
 
     private void Start()
     {
@@ -54,6 +54,11 @@ public class Projectile_Behaviour : MonoBehaviour
                 Destroy(gameObject, projectileData.lifeTime);
                 break;
         }
+
+        if (projectileData.isHoming)
+        {
+            _target = GameObject.FindGameObjectWithTag("Enemy");
+        }
     }
 
     private void Update()
@@ -65,9 +70,11 @@ public class Projectile_Behaviour : MonoBehaviour
                 _spawnTime -= Time.deltaTime;
                 if (_spawnTime <= 0)
                 {
-                    _direction = _target.transform.position - transform.position;
-                    _direction.Normalize();
-                    _rigidbody.velocity = _direction * projectileData.speed;
+                    Vector3 targetPosition = _target.transform.position;
+                    Vector3 desiredDirection = (targetPosition - transform.position).normalized;
+
+                    Vector3 newDirection = Vector3.Lerp(_rigidbody.velocity.normalized, desiredDirection, projectileData.turnSpeed * Time.deltaTime);
+                    _rigidbody.velocity = newDirection * projectileData.speed;
                 }
                 else
                 {
@@ -101,6 +108,8 @@ public class Projectile_Behaviour : MonoBehaviour
             GameObject projectile = Instantiate(gameObject, transform.position, Quaternion.identity);
             Projectile_Behaviour projectileBehaviour = projectile.GetComponent<Projectile_Behaviour>();
             projectileBehaviour.SetDirection(direction);
+            projectileBehaviour.Damage = Damage;
+            projectileBehaviour.Damage[0] = (float) projectileData.childProjectile.damage;
             projectileBehaviour.gameObject.transform.up = direction;
             projectileBehaviour.projectileData = projectileData.childProjectile;
             projectileBehaviour.Duration = projectileData.lifeTime;
@@ -144,11 +153,11 @@ public class Projectile_Behaviour : MonoBehaviour
             case "Enemy":
                 if (col.gameObject.CompareTag("Enemy"))
                 {
-                    col.gameObject.GetComponent<Health>().TakeDamage(_playerBehaviour.playerCombat.CalculateDamage(projectileData, _enemyPierced, _duration, _isCritical));
                     if (_pierceCount > 0)
                     {
                         _pierceCount--;
-                        _enemyPierced++;
+                        _entityPierced++;
+                        Damage[0] = (float) Damage[0] - _entityPierced * (float) Damage[0] * 0.2f;
                     }
                     else
                     {
@@ -175,21 +184,15 @@ public class Projectile_Behaviour : MonoBehaviour
         set => _duration = value;
     }
 
+    public List<object> Damage
+    {
+        get => _damage;
+        set => _damage = value;
+    }
+
     public Boolean IsCritical
     {
         get => _isCritical;
         set => _isCritical = value;
-    }
-
-    public Player_Behaviour PlayerBehaviour
-    {
-        get => _playerBehaviour;
-        set => _playerBehaviour = value;
-    }
-
-    public EnemyBehaviour EnemyBehaviour
-    {
-        get => _enemyBehaviour;
-        set => _enemyBehaviour = value;
     }
 }

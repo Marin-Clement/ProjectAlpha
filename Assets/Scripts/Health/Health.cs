@@ -161,12 +161,22 @@ public class Health : MonoBehaviour
             {
                 case "Enemy":
                     TakeDamage(new List<object>(){10f, false, new bool[]{false, false, false, false}});
-                    GameManager.Instance.playerBehaviour.playerMovement.Knockback(col.gameObject.transform.position);
-                    GameManager.Instance.playerBehaviour.playerCamera.ShakeCamera(0.2f, 0.1f);
+                    GameManager.Instance.player.GetComponent<Player_Behaviour>().playerMovement.Knockback(col.gameObject.transform.position);
+                    GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.2f, 0.1f);
                     break;
                 case "EnemyProjectile":
                     TakeDamage(new List<object>(){col.gameObject.GetComponent<Projectile_Behaviour>().projectileData.damage,false, new bool[]{false, false, false, false}});
-                    GameManager.Instance.playerBehaviour.playerCamera.ShakeCamera(0.2f, 0.1f);
+                    GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.2f, 0.1f);
+                    break;
+            }
+        }
+        else if (healthType == ObjectType.Enemy)
+        {
+            switch (col.gameObject.tag)
+            {
+                case "PlayerProjectile":
+                    TakeDamage(col.gameObject.GetComponent<Projectile_Behaviour>().Damage);
+                    GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.1f, 0.05f);
                     break;
             }
         }

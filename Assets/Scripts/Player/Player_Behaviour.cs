@@ -15,7 +15,8 @@ public class Player_Behaviour : MonoBehaviour
     
     public Health playerHealth { get; private set;}
 
-    [SerializeField] public Player_Camera playerCamera;
+    public Player_Camera playerCamera { get; private set;}
+
 
     [Header("Player Stats")] 
 
@@ -24,7 +25,6 @@ public class Player_Behaviour : MonoBehaviour
 
     [SerializeField] private int lvl = 1;
     
-
     // Attack stats
     [Header("Attack Stats")] 
     
@@ -46,9 +46,8 @@ public class Player_Behaviour : MonoBehaviour
         playerCombat = GetComponent<Player_Combat>();
         playerUi = GetComponent<Player_UI>();
         playerHealth = GetComponent<Health>();
-        playerCamera = GameManager.Instance.playerCamera;
         health = maxHealth;
-        GameManager.Instance.playerBehaviour = this;
+        GameManager.Instance.player = gameObject;
     }
 
     // Stats Functions
@@ -121,5 +120,10 @@ public class Player_Behaviour : MonoBehaviour
     {
         get => dodge;
         set => dodge = value;
+    }
+
+    public void SetPlayerCamera(Player_Camera value)
+    {
+        playerCamera = value;
     }
 }
