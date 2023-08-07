@@ -12,9 +12,6 @@ public class Room : MonoBehaviour
     private bool _hasWestDoor;
     private bool _isStartRoom;
 
-    [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _playerCamera;
-    
     [Header("Room Prefab")]
     private GameObject _roomPrefab;
     
@@ -39,8 +36,8 @@ public class Room : MonoBehaviour
         if (_isStartRoom)
         {
             var position = transform.position;
-            var player = Instantiate(_player, position, Quaternion.identity);
-            var playerCamera = Instantiate(_playerCamera, position, Quaternion.identity);
+            var player = Instantiate(roomData.playerPrefab, position, Quaternion.identity);
+            var playerCamera = Instantiate(roomData.playerCameraPrefab, position, Quaternion.identity);
             player.GetComponent<Player_Behaviour>().SetPlayerCamera(playerCamera.GetComponent<Player_Camera>());
             playerCamera.GetComponent<Player_Camera>().player = player.GetComponent<Player_Movement>();
         }
@@ -53,10 +50,7 @@ public class Room : MonoBehaviour
         {
             if (child.CompareTag("EnemySpawner"))
             {
-                foreach (var enemy in _enemies)
-                {
-                    child.GetComponent<EnemySpawner>().SpawnEnemy(enemy);
-                }
+                child.GetComponent<EnemySpawner>().SpawnEnemy(_enemies[Random.Range(0, _enemies.Count)]);
             }
         }
     }

@@ -36,8 +36,7 @@ public class Player_UI : MonoBehaviour
         _playerBehaviour = GetComponent<Player_Behaviour>();
 
     }
-
-    private void Update()
+    private void LateUpdate() 
     {
         UpdateDashUI();
         UpdateMainSpellUI();

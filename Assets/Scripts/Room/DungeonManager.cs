@@ -19,7 +19,6 @@ public class DungeonManager : MonoBehaviour
    private Room[,] _roomsGrid; 
    private int _numberOfRooms;
    
-   
    // Start is called before the first frame update
    private void Start()
    {
@@ -31,6 +30,7 @@ public class DungeonManager : MonoBehaviour
    // Generate the dungeon
    private void GenerateDungeon()
    {
-      
+      // instantiate as child of dungeon manager
+      Instantiate(startRoom, this.transform);
    }
 }

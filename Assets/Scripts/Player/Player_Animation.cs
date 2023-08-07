@@ -13,7 +13,7 @@ public class Player_Animation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         _isMoving = _playerBehaviour.playerMovement.isMoving;
         _animator.SetBool("isMoving", _isMoving && !_playerBehaviour.playerCombat.isAttacking);

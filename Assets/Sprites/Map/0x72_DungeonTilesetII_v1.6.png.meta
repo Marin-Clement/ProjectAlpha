@@ -3384,8 +3384,8 @@ TextureImporter:
       name: 0x72_DungeonTilesetII_v1.6_156
       rect:
         serializedVersion: 2
-        x: 192
-        y: 400
+        x: 149
+        y: 352
         width: 16
         height: 16
       alignment: 0
