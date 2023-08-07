@@ -11,7 +11,6 @@ public class Player_Camera : MonoBehaviour
 
     private void Start()
     {   
-        GameManager.Instance.playerCamera = this;
         _offset = new Vector3(0, 0, -10);
     }
 

@@ -11,8 +11,10 @@ public class Room : MonoBehaviour
     private bool _hasEastDoor;
     private bool _hasWestDoor;
     private bool _isStartRoom;
-    
 
+    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _playerCamera;
+    
     [Header("Room Prefab")]
     private GameObject _roomPrefab;
     
@@ -37,8 +39,9 @@ public class Room : MonoBehaviour
         if (_isStartRoom)
         {
             var position = transform.position;
-            var player = Instantiate(GameManager.Instance.player, position, Quaternion.identity);
-            var playerCamera = Instantiate(GameManager.Instance.playerCamera, position, Quaternion.identity);
+            var player = Instantiate(_player, position, Quaternion.identity);
+            var playerCamera = Instantiate(_playerCamera, position, Quaternion.identity);
+            player.GetComponent<Player_Behaviour>().SetPlayerCamera(playerCamera.GetComponent<Player_Camera>());
             playerCamera.GetComponent<Player_Camera>().player = player.GetComponent<Player_Movement>();
         }
     }
