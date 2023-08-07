@@ -6,6 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New RoomData", menuName = "Room/RoomData")]
 public class RoomData : ScriptableObject
 {
+    // Player Prefab
+    [Header("Player Prefab (Start Room Only)")]
+    public GameObject playerPrefab;
+    public GameObject playerCameraPrefab;
+
+
     [Header("Door Data")]
     public bool hasNorthDoor;
     public bool hasSouthDoor;
@@ -23,4 +29,7 @@ public class RoomData : ScriptableObject
     public bool isTrapRoom;
     public bool isLootRoom;
     public bool isBossRoom;
+
+    [Header("Room Prefab")]
+    public GameObject roomPrefab;
 }
