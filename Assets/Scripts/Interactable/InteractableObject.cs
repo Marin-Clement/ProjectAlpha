@@ -1,34 +1,62 @@
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class InteractableObject : MonoBehaviour
 {   
-    // Simple interactable object script for 2d games
 
-    [SerializeField] private float _interactDistance;   
-    [SerializeField] private LayerMask _interactLayerMask;
-    
+    [SerializeField] private float interactDistance;   
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private CircleCollider2D _interactCollider;
+
+    [SerializeField] private GameObject interactUI;
+
+    private bool _isInRange;
         
+    private void Start()
+    {
+        _isInRange = false;
+        interactUI.SetActive(false);
+        _interactCollider = gameObject.AddComponent<CircleCollider2D>();
+        _interactCollider.radius = interactDistance;
+        _interactCollider.isTrigger = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _interactDistance, Vector2.zero, 0f, _interactLayerMask);
-        if (hit.collider != null)
+        if (_isInRange && Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("Interacted with " + hit.collider.gameObject.name);
-            }
+            Interact();
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _isInRange = true;
+            interactUI.SetActive(true);
         }
     }
 
-    private void OnDrawGizmos() {
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _isInRange = false;
+            interactUI.SetActive(false);
+        }
+    }
+
+    private void Interact()
+    {
+        Debug.Log("Interacting with object");
+    }
+
+
+    private void OnDrawGizmosSelected() 
+    {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _interactDistance);
+        Gizmos.DrawWireSphere(transform.position, interactDistance);
     }
 }
