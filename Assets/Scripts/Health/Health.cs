@@ -63,7 +63,6 @@ public class Health : MonoBehaviour
                 health = maxHealth;
             }
         }
-        // !
     }
 
     public void TakeDamage(List<object> damageInfo)
@@ -186,6 +185,7 @@ public class Health : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator StatusEffectTick()
     {
         while (true)

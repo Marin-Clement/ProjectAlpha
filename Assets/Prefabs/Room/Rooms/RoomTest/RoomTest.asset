@@ -27,3 +27,4 @@ MonoBehaviour:
   isTrapRoom: 0
   isLootRoom: 0
   isBossRoom: 0
+  roomPrefab: {fileID: 9168127394096542348, guid: 963a04b2206bc274ebf029164899704b, type: 3}

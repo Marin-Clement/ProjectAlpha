@@ -27,7 +27,9 @@ public class Room : MonoBehaviour
     private bool _isTrapRoom;
     private bool _isLootRoom;
     private bool _isBossRoom;
-    
+
+    [Header("Room Status")]
+    private bool _isCleared;
 
     private void Start()
     {
@@ -44,7 +46,7 @@ public class Room : MonoBehaviour
     }
     
     // Spawn enemies on enemy spawner 
-    public void SpawnEnemies()
+    private void SpawnEnemies()
     {
         foreach (Transform child in transform)
         {
@@ -54,7 +56,6 @@ public class Room : MonoBehaviour
             }
         }
     }
-    
     
 
     private void SetRoomVariables()
@@ -72,7 +73,12 @@ public class Room : MonoBehaviour
         _isLootRoom = roomData.isLootRoom;
         _isBossRoom = roomData.isBossRoom;
     }
-    
+
+    public RoomData GetRoomData()
+    {
+        return roomData;
+    }
+
     public bool GetHasNorthDoor()
     {
         return _hasNorthDoor;

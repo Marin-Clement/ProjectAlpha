@@ -1,29 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class DungeonManager : MonoBehaviour
 {
+   //! Singleton
+   public static DungeonManager Instance { get; private set; }
+     private void Awake()
+   {
+      if (Instance == null)
+      {
+         Instance = this;
+         DontDestroyOnLoad(gameObject);
+      }
+      else
+      {
+         Destroy(gameObject);
+      }
+   }
+   //! Singleton
+
    // Dungeon generation variables
    [Header("Dungeon Generation")]
 
    [SerializeField] private int rooms = 10;
-
-   [SerializeField] private GameObject[] roomsPrefabs;
-   
+   [SerializeField] private RoomData[] roomsData;
    [SerializeField] private GameObject startRoom;
-   
-   // Dungeon private variables
-   private List<Room> _rooms;
-   private Room[,] _roomsGrid; 
-   private int _numberOfRooms;
-   
-   // Start is called before the first frame update
+
+
+
+   private Room[,] _roomsLayout;
+   private Vector2 _currentRoomPosition;
+
+   // Live variables
+
+
    private void Start()
    {
-      _rooms = new List<Room>();
-      _numberOfRooms = rooms;
       GenerateDungeon();
    }
    
@@ -31,6 +43,30 @@ public class DungeonManager : MonoBehaviour
    private void GenerateDungeon()
    {
       // instantiate as child of dungeon manager
-      Instantiate(startRoom, this.transform);
+
+   }
+
+   private void GenerateDungeonLayout()
+   {
+      // Create the start room
+      _roomsLayout[0, 0] = startRoom.GetComponent<Room>();
+
+      // Create the rest of the rooms
+      for (int i = 0; i < rooms; i++)
+      {
+
+      }
+   }
+
+
+   private void CreateRoom(Room room)
+   {
+      Instantiate(room.GetRoomData().roomPrefab, this.transform);
+   }
+
+   public void ChangeRoom(Vector2 direction)
+   {
+      // Change the current room position
+      _currentRoomPosition += direction;
    }
 }
