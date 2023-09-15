@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d781658dc4b240e9873b38865bebc13, type: 3}
-  m_Name: RoomTest
+  m_Name: StartRoomTest 1
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8681103540809101204, guid: d4824db154d6c402ca559c7b88cc4fd8, type: 3}
   playerCameraPrefab: {fileID: 7945617313968576385, guid: 0845fbea13c116e46a011c8a61b84db7, type: 3}
@@ -18,7 +18,7 @@ MonoBehaviour:
   hasSouthDoor: 1
   hasEastDoor: 0
   hasWestDoor: 0
-  isStartRoom: 0
+  isStartRoom: 1
   enemies:
   - {fileID: 5357778182973432447, guid: 82b576d474ade0349bb0beec136b844e, type: 3}
   traps: []
