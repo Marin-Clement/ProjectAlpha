@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d781658dc4b240e9873b38865bebc13, type: 3}
-  m_Name: StartRoomTest 1
+  m_Name: StartRoomTest
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8681103540809101204, guid: d4824db154d6c402ca559c7b88cc4fd8, type: 3}
   playerCameraPrefab: {fileID: 7945617313968576385, guid: 0845fbea13c116e46a011c8a61b84db7, type: 3}
@@ -27,4 +27,4 @@ MonoBehaviour:
   isTrapRoom: 0
   isLootRoom: 0
   isBossRoom: 0
-  roomPrefab: {fileID: 9168127394096542348, guid: 963a04b2206bc274ebf029164899704b, type: 3}
+  roomPrefab: {fileID: 9168127394096542348, guid: 16dd1f57eb9e74e09938765d246f3239, type: 3}

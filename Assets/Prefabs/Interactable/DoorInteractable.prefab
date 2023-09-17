@@ -144,10 +144,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8060322139811309861}
-  - component: {fileID: 8060322139811309859}
   - component: {fileID: 8060322139811309858}
+  - component: {fileID: 8393783471200578210}
   m_Layer: 0
-  m_Name: InteractableObject
+  m_Name: DoorInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -174,20 +174,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1, y: 15}
   m_SizeDelta: {x: 5, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8060322139811309859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8060322139811309856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42a2d00e6f50c12459ab8f110bf1c7a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactDistance: 1
-  interactUI: {fileID: 8060322140009755956}
 --- !u!223 &8060322139811309858
 Canvas:
   m_ObjectHideFlags: 0
@@ -207,8 +193,22 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: -1936690497
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &8393783471200578210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060322139811309856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e104cb76834434ea5804efa8a19975a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactDistance: 2
+  interactUI: {fileID: 8060322140009755956}
 --- !u!1 &8060322140009755956
 GameObject:
   m_ObjectHideFlags: 0

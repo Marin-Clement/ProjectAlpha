@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -25,6 +26,7 @@ public class DungeonManager : MonoBehaviour
 
    [SerializeField] private int rooms;
    [SerializeField] private RoomData[] roomsData;
+   [SerializeField] private RoomData[] bossRoomsData;
    [SerializeField] private RoomData startRoom;
    private readonly Vector2[] _directions = {Vector2.up, Vector2.down, Vector2.left, Vector2.right};
 
@@ -34,17 +36,35 @@ public class DungeonManager : MonoBehaviour
 
    // Live variables
    private List<bool> _roomsCleared;
+   private int _floor;
 
    private void Start()
    {
       _roomsLayout = new RoomData[rooms * 2, rooms * 2];
+      _currentRoomPosition = new Vector2(rooms, rooms);
+      _floor = 1;
       GenerateDungeonLayout();
+      GenerateRoom();
    }
 
    // Generate the Room
    private void GenerateRoom()
    {
-      // instantiate as child of dungeon manager
+      RoomData roomData = _roomsLayout[(int)_currentRoomPosition.x, (int)_currentRoomPosition.y];
+      if (roomData != null)
+      {
+         // instantiate the room as a child of the dungeon manager
+         Instantiate(roomData.roomPrefab, transform);
+      }
+      else
+      {
+         Debug.LogError("Room data is null");
+      }
+   }
+
+   public void ChangeRoom(Vector2 direction)
+   {
+      _currentRoomPosition += direction;
    }
 
    private RoomData GetRandomRoomData()
@@ -54,10 +74,20 @@ public class DungeonManager : MonoBehaviour
       {
          return roomsData[randomRoomIndex];
       }
-      else
-      {
-         return GetRandomRoomData();
-      }
+      return GetRandomRoomData();
+   }
+
+   private RoomData GetBossRoomData()
+   {
+      return bossRoomsData[_floor - 1];
+   }
+
+   public void ResetDungeon()
+   {
+      _roomsLayout = new RoomData[rooms * 2, rooms * 2];
+      _currentRoomPosition = new Vector2(rooms, rooms);
+      _floor = 1;
+      GenerateDungeonLayout();
    }
 
    private void GenerateDungeonLayout()
@@ -65,13 +95,13 @@ public class DungeonManager : MonoBehaviour
       //! Debug Time
       float startTime = Time.realtimeSinceStartup;
 
-      Vector2 currentRoomGenerationPosition = new Vector2(rooms / 2, rooms / 2);
-      _roomsLayout[rooms / 2, rooms / 2] = startRoom;
-      // Create the rest of the rooms
+      Vector2 currentRoomGenerationPosition = new Vector2(rooms, rooms );
+      _roomsLayout[rooms, rooms] = startRoom;
+
       for (int i = 1; i < rooms; i++)
       {
-         bool roomGenerated = TryGenerateRoomInAllDirections(currentRoomGenerationPosition);
-         if (Random.Range(0, 4) == 0 || !roomGenerated)
+         bool roomGenerated = TryGenerateRoomInAllDirections(currentRoomGenerationPosition, i);
+         if (Random.Range(0, 2) == 0 || !roomGenerated)
          {
             currentRoomGenerationPosition += _directions[Random.Range(0, _directions.Length)];
          }
@@ -83,13 +113,20 @@ public class DungeonManager : MonoBehaviour
       Debug.Log("<color=green>Generated dungeon layout in " + (Time.realtimeSinceStartup - startTime) + " seconds</color>");
       DebugPrintDungeonLayout();
    }
-   private bool TryGenerateRoomInAllDirections(Vector2 generationPosition)
+   private bool TryGenerateRoomInAllDirections(Vector2 generationPosition, int index)
    {
       foreach (Vector2 direction in _directions)
       {
          if (IsRoomInDirectionEmpty(generationPosition, direction))
          {
-            GenerateRoomInDirection(generationPosition, direction);
+            if (index == rooms - 1)
+            {
+               GenerateBossRoom(generationPosition, direction);
+            }
+            else
+            {
+               GenerateRoomInDirection(generationPosition, direction);
+            }
             return true;
          }
       }
@@ -107,6 +144,13 @@ public class DungeonManager : MonoBehaviour
          GetRandomRoomData();
    }
 
+   private void GenerateBossRoom(Vector2 generationPosition, Vector2 direction)
+   {
+      _roomsLayout[(int)generationPosition.x + (int)direction.x, (int)generationPosition.y + (int)direction.y] =
+         GetBossRoomData();
+   }
+
+   //! DEBUG // TODO: Remove
    private void DebugPrintDungeonLayout()
    {
       for (int i = 0; i < _roomsLayout.GetLength(0); i++)
@@ -115,15 +159,42 @@ public class DungeonManager : MonoBehaviour
          {
             if (_roomsLayout[i, j] != null)
             {
-               Debug.Log("<color=yellow>Room at </color>" + i + ", " + j + " is " + "<color=red>" + _roomsLayout[i, j].name + "</color>");
+               if (_roomsLayout[i, j].isStartRoom)
+               {
+                  Debug.DrawLine(new Vector3(i, j, 0), new Vector3(i, j + 1, 0), Color.blue, 100f);
+               }
+               else if(_roomsLayout[i, j].isBossRoom)
+               {
+                  Debug.DrawLine(new Vector3(i, j, 0), new Vector3(i, j + 1, 0), Color.red, 100f);
+               }
+               else
+               {
+                  Debug.DrawLine(new Vector3(i, j, 0), new Vector3(i, j + 1, 0), Color.green, 100f);
+               }
+            }
+            else
+            {
+               Debug.DrawLine(new Vector3(i, j, 0), new Vector3(i, j + 1, 0), Color.white, 100f);
             }
          }
       }
    }
+}
 
-   public void ChangeRoom(Vector2 direction)
+[CustomEditor(typeof(DungeonManager))]
+public class DungeonManagerEditor : Editor
+{
+   public override void OnInspectorGUI()
    {
-      // Change the current room position
-      _currentRoomPosition += direction;
+      base.OnInspectorGUI();
+
+      DungeonManager dungeonManager = (DungeonManager)target;
+
+      GUILayout.Space(10);
+
+      if (GUILayout.Button("Regenerate Dungeon Layout"))
+      {
+         dungeonManager.ResetDungeon();
+      }
    }
 }

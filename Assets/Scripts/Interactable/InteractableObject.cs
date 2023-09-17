@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-
-public class InteractableObject : MonoBehaviour
+public abstract class InteractableObject : MonoBehaviour
 {   
 
     [SerializeField] private float interactDistance;   
@@ -20,6 +18,7 @@ public class InteractableObject : MonoBehaviour
         _interactCollider = gameObject.AddComponent<CircleCollider2D>();
         _interactCollider.radius = interactDistance;
         _interactCollider.isTrigger = true;
+        Debug.Log("Interactable Object Created");
     }
 
     private void Update()
@@ -48,15 +47,11 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void Interact()
-    {
-        Debug.Log("Interacting with object");
-    }
-
-
     private void OnDrawGizmosSelected() 
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, interactDistance);
     }
+
+    protected abstract void Interact();
 }
