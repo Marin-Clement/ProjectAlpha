@@ -340,6 +340,7 @@ MonoBehaviour:
   bossRoomsData:
   - {fileID: 11400000, guid: a1c6576da3d164ada8c4336788c79ae0, type: 2}
   startRoom: {fileID: 11400000, guid: c893ab857d3de421e8f2de903968651a, type: 2}
+  debug: 1
 --- !u!1 &990205854
 GameObject:
   m_ObjectHideFlags: 0

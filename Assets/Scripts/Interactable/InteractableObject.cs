@@ -10,7 +10,7 @@ public abstract class InteractableObject : MonoBehaviour
     [SerializeField] private GameObject interactUI;
 
     private bool _isInRange;
-        
+
     private void Start()
     {
         _isInRange = false;
@@ -18,7 +18,6 @@ public abstract class InteractableObject : MonoBehaviour
         _interactCollider = gameObject.AddComponent<CircleCollider2D>();
         _interactCollider.radius = interactDistance;
         _interactCollider.isTrigger = true;
-        Debug.Log("Interactable Object Created");
     }
 
     private void Update()

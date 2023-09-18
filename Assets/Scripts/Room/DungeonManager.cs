@@ -35,8 +35,11 @@ public class DungeonManager : MonoBehaviour
    private Vector2 _currentRoomPosition;
 
    // Live variables
-   private List<bool> _roomsCleared;
+   private bool[,] _visitedRooms;
    private int _floor;
+
+   // DEBUG
+   [SerializeField,Space(20),Header("Debug")] private bool debug;
 
    private void Start()
    {
@@ -101,17 +104,29 @@ public class DungeonManager : MonoBehaviour
       for (int i = 1; i < rooms; i++)
       {
          bool roomGenerated = TryGenerateRoomInAllDirections(currentRoomGenerationPosition, i);
-         if (Random.Range(0, 2) == 0 || !roomGenerated)
+         if (!roomGenerated)
          {
-            currentRoomGenerationPosition += _directions[Random.Range(0, _directions.Length)];
+            Vector2 direction = _directions[Random.Range(0, _directions.Length)];
+            foreach(Vector2 dir in _directions)
+            {
+               if (IsRoomInDirectionEmpty(currentRoomGenerationPosition, dir))
+               {
+                  direction = dir;
+                  break;
+               }
+            }
+            currentRoomGenerationPosition += direction;
          }
          if (!roomGenerated)
          {
             i--;
          }
       }
-      Debug.Log("<color=green>Generated dungeon layout in " + (Time.realtimeSinceStartup - startTime) + " seconds</color>");
-      DebugPrintDungeonLayout();
+      Debug.Log("<color=green>Generated dungeon layout in " + ((Time.realtimeSinceStartup - startTime)* 1000) + "ms</color>");
+      if (debug)
+      {
+         DebugPrintDungeonLayout();
+      }
    }
    private bool TryGenerateRoomInAllDirections(Vector2 generationPosition, int index)
    {
@@ -190,7 +205,7 @@ public class DungeonManagerEditor : Editor
 
       DungeonManager dungeonManager = (DungeonManager)target;
 
-      GUILayout.Space(10);
+      GUILayout.Space(30);
 
       if (GUILayout.Button("Regenerate Dungeon Layout"))
       {
