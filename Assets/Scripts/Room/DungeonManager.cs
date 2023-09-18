@@ -18,6 +18,12 @@ public class DungeonManager : MonoBehaviour
       {
          Destroy(gameObject);
       }
+      _roomsLayout = new RoomData[rooms * 2, rooms * 2];
+      _visitedRooms = new bool[rooms * 2, rooms * 2];
+      _currentRoomPosition = new Vector2(rooms, rooms);
+      _floor = 1;
+      GenerateDungeonLayout();
+      GenerateRoom(Vector2.zero);
    }
    //! Singleton
 
@@ -35,29 +41,30 @@ public class DungeonManager : MonoBehaviour
    private Vector2 _currentRoomPosition;
 
    // Live variables
+   private GameObject _currentRoom;
    private bool[,] _visitedRooms;
    private int _floor;
 
    // DEBUG
    [SerializeField,Space(20),Header("Debug")] private bool debug;
 
-   private void Start()
-   {
-      _roomsLayout = new RoomData[rooms * 2, rooms * 2];
-      _currentRoomPosition = new Vector2(rooms, rooms);
-      _floor = 1;
-      GenerateDungeonLayout();
-      GenerateRoom();
-   }
-
    // Generate the Room
-   private void GenerateRoom()
+   private void GenerateRoom(Vector2 direction)
    {
       RoomData roomData = _roomsLayout[(int)_currentRoomPosition.x, (int)_currentRoomPosition.y];
       if (roomData != null)
       {
-         // instantiate the room as a child of the dungeon manager
-         Instantiate(roomData.roomPrefab, transform);
+         _currentRoom = Instantiate(roomData.roomPrefab, transform);
+         Room room = _currentRoom.GetComponent<Room>();
+         room.playerSpawnPosition = direction;
+         if (_visitedRooms[(int)_currentRoomPosition.x, (int)_currentRoomPosition.y])
+         {
+            room.visited = true;
+         }
+         else
+         {
+            _visitedRooms[(int)_currentRoomPosition.x, (int)_currentRoomPosition.y] = true;
+         }
       }
       else
       {
@@ -68,6 +75,11 @@ public class DungeonManager : MonoBehaviour
    public void ChangeRoom(Vector2 direction)
    {
       _currentRoomPosition += direction;
+      Room room = _currentRoom.GetComponent<Room>();
+      room.DestroyDoors();
+      room.DestroyEnemies();
+      Destroy(_currentRoom);
+      GenerateRoom(direction);
    }
 
    private RoomData GetRandomRoomData()
@@ -146,6 +158,20 @@ public class DungeonManager : MonoBehaviour
          }
       }
       return false;
+   }
+
+   // left door = 0, right door = 1, top door = 2, bottom door = 3
+   public bool[] GetRoomDoors()
+   {
+      bool[] doors = new bool[4];
+      foreach (Vector2 direction in _directions)
+      {
+         if (!IsRoomInDirectionEmpty(_currentRoomPosition, direction))
+         {
+            doors[ArrayUtility.IndexOf(_directions, direction)] = true;
+         }
+      }
+      return doors;
    }
 
    private bool IsRoomInDirectionEmpty(Vector2 generationPosition, Vector2 direction)

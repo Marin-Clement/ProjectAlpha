@@ -9,6 +9,8 @@ TagManager:
   - PlayerProjectile
   - Wall
   - EnemySpawner
+  - DoorSpawner
+  - Door
   layers:
   - Default
   - TransparentFX

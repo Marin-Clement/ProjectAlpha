@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Room : MonoBehaviour
@@ -14,11 +16,12 @@ public class Room : MonoBehaviour
 
     [Header("Room Prefab")]
     private GameObject _roomPrefab;
+    [SerializeField] private GameObject doorPrefab;
     
     [Header("Room Data")]
     private List<GameObject> _enemies;
     private List<GameObject> _traps;
-    
+
     [Header("Room Loot")]
     private List<GameObject> _loot;
     
@@ -31,20 +34,76 @@ public class Room : MonoBehaviour
     [Header("Room Status")]
     private bool _isCleared;
 
+    // Live variables
+    public bool visited;
+    public Vector2 playerSpawnPosition;
+    private List<GameObject> _doorsAlive;
+    private List<GameObject> _enemiesAlive;
+
     private void Start()
     {
         SetRoomVariables();
-        SpawnEnemies();
-        if (_isStartRoom)
+        SpawnDoors();
+        SpawnPlayer();
+        if (!visited)
         {
-            var position = transform.position;
-            var player = Instantiate(roomData.playerPrefab, position, Quaternion.identity);
-            var playerCamera = Instantiate(roomData.playerCameraPrefab, position, Quaternion.identity);
-            player.GetComponent<Player_Behaviour>().SetPlayerCamera(playerCamera.GetComponent<Player_Camera>());
-            playerCamera.GetComponent<Player_Camera>().player = player.GetComponent<Player_Movement>();
+            SpawnEnemies();
+            if (_isStartRoom)
+            {
+                var position = transform.position;
+                var player = Instantiate(roomData.playerPrefab, position, Quaternion.identity);
+                var playerCamera = Instantiate(roomData.playerCameraPrefab, position, Quaternion.identity);
+                player.GetComponent<Player_Behaviour>().SetPlayerCamera(playerCamera.GetComponent<Player_Camera>());
+                playerCamera.GetComponent<Player_Camera>().player = player.GetComponent<Player_Movement>();
+            }
         }
     }
-    
+
+    private void SpawnPlayer()
+    {
+        if (playerSpawnPosition == Vector2.up)
+        {
+            foreach (var door in _doorsAlive)
+            {
+                if (door.GetComponent<InteractableDoor>().GetDirection() == Vector2.down)
+                {
+                    GameManager.Instance.player.transform.position = door.transform.position;
+                }
+            }
+        }
+        else if (playerSpawnPosition == Vector2.down)
+        {
+            foreach (var door in _doorsAlive)
+            {
+                if (door.GetComponent<InteractableDoor>().GetDirection() == Vector2.up)
+                {
+                    GameManager.Instance.player.transform.position = door.transform.position;
+                }
+            }
+        }
+        else if (playerSpawnPosition == Vector2.right)
+        {
+            foreach (var door in _doorsAlive)
+            {
+                if (door.GetComponent<InteractableDoor>().GetDirection() == Vector2.left)
+                {
+                    GameManager.Instance.player.transform.position = door.transform.position;
+                }
+            }
+        }
+        else if (playerSpawnPosition == Vector2.left)
+        {
+            foreach (var door in _doorsAlive)
+            {
+                if (door.GetComponent<InteractableDoor>().GetDirection() == Vector2.right)
+                {
+                    GameManager.Instance.player.transform.position = door.transform.position;
+                }
+            }
+        }
+    }
+
+
     // Spawn enemies on enemy spawner 
     private void SpawnEnemies()
     {
@@ -55,8 +114,47 @@ public class Room : MonoBehaviour
                 child.GetComponent<EnemySpawner>().SpawnEnemy(_enemies[Random.Range(0, _enemies.Count)]);
             }
         }
+        _enemiesAlive = GameObject.FindGameObjectsWithTag("Enemy").ToList();
     }
-    
+
+    // left door = 0, right door = 1, top door = 2, bottom door = 3
+    private void SpawnDoors()
+    {
+        var doorsToSpawn = DungeonManager.Instance.GetRoomDoors();
+        var doorSpawners = new List<GameObject>();
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("DoorSpawner"))
+            {
+                doorSpawners.Add(child.gameObject);
+            }
+        }
+        for (var i = 0; i < doorsToSpawn.Length; i++)
+        {
+            if (doorsToSpawn[i])
+            {
+                doorSpawners[i].GetComponent<DoorSpawner>().SpawnDoor(doorPrefab);
+            }
+        }
+        _doorsAlive = GameObject.FindGameObjectsWithTag("Door").ToList();
+    }
+
+    public void DestroyDoors()
+    {
+        foreach (var door in _doorsAlive)
+        {
+            Destroy(door);
+        }
+    }
+
+    public void DestroyEnemies()
+    {
+        if (_enemiesAlive == null) return;
+        foreach (var enemy in _enemiesAlive)
+        {
+            Destroy(enemy);
+        }
+    }
 
     private void SetRoomVariables()
     {
