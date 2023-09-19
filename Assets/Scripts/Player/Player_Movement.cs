@@ -91,7 +91,7 @@ public class Player_Movement :  MonoBehaviour
     public void Knockback(Vector3 enemyPosition)
     {
         _isDashing = true;
-        _rigidbody.AddForce((transform.position - enemyPosition).normalized * (dashForce * 5), ForceMode2D.Impulse);
+        _rigidbody.AddForce((transform.position - enemyPosition).normalized * (dashForce * 2), ForceMode2D.Impulse);
         StartCoroutine(KnockbackCooldown());
     }
     

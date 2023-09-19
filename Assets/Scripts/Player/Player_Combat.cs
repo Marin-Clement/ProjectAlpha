@@ -71,15 +71,15 @@ public class Player_Combat : MonoBehaviour
         projectileBehaviour.SetDirection((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
     }
 
-    public List<object> CalculateDamage(Projectile_Data arrow, bool isCriticalHit)
+    private List<object> CalculateDamage(Projectile_Data arrow, bool isCriticalHit)
     {
         // * 0 = Damage, 1 = IsCritical, 3 = ArrowEffects
 
-        float calculatedDamage = _playerBehaviour.Damage * 0.5f * arrow.damage * 0.5f * (1 + (_heldTime * 0.5f)) ;
+        float calculatedDamage = _playerBehaviour.Damage * 0.5f * arrow.damage * 0.5f / (1 + (-_heldTime)) ;
 
         if (isCriticalHit)
         {
-            calculatedDamage *= (1 + (_playerBehaviour.CriticalDamage * 0.01f));
+            calculatedDamage *= (1 + (_playerBehaviour.CriticalDamage * 0.05f));
         }
 
         List<object> damageInfo = new List<object>();
