@@ -1,3 +1,10 @@
+Update [INDEV] V.0.1.0:
+    - Dungeon Generation Algo
+    - Procedural Generation
+    - Enemy IA Overhaul
+    - Dugeon Now visitable Whis each room locked
+    - Add Enemy Combat Implementation
+
 Update [INDEV] V.0.0.6:
     - Added New player sprite whis animation 
     - Added Bow to player 
