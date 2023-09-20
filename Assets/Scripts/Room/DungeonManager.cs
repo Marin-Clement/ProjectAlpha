@@ -109,7 +109,6 @@ public class DungeonManager : MonoBehaviour
       return bossRoomsData[_floor - 1];
    }
 
-   // ReSharper disable Unity.PerformanceAnalysis
    public void ResetDungeon()
    {
       _roomsLayout = new RoomData[rooms * 2, rooms * 2];

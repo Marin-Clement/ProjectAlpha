@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1237119205558181857}
   - component: {fileID: 1237119205558181861}
   - component: {fileID: 1237119205558181863}
+  - component: {fileID: 2080714681289028820}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237119205558181865}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a53c395b71634483baae0e964f43749e, type: 3}
   m_Name: 
@@ -156,8 +157,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: c4bd3f77f77114bb3b780bc3465f51d3, type: 2}
+  enemyCombat: {fileID: 2080714681289028820}
   enemyStatus: Debug
   damagePopup: {fileID: 4754867091677353270, guid: a13535022d3a84b1c86d1a70c9b7b523, type: 3}
+  animator: {fileID: 0}
+--- !u!114 &2080714681289028820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237119205558181865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde943dbf59b54d2d8c828e4143f7ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyProjectile: {fileID: 5104581199091298988, guid: 3d237d3fdc5cf48838b11e6597f834a2, type: 3}
 --- !u!1 &1237119205688643076
 GameObject:
   m_ObjectHideFlags: 0

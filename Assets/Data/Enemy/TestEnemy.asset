@@ -19,6 +19,7 @@ MonoBehaviour:
   lvl: 1
   damage: 5
   attackRange: 10
+  attackCooldown: 2
   criticalChance: 0
   criticalDamage: 0
   armorPenetration: 0

@@ -18,6 +18,7 @@ public class EnemyData : ScriptableObject
    [Header("Attack Stats")]
    public int damage;
    public int attackRange;
+   public float attackCooldown;
    public int criticalChance;
    public int criticalDamage;
    public int armorPenetration;

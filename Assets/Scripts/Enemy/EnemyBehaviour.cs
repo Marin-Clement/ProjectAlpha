@@ -2,16 +2,24 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    [SerializeField] private EnemyData enemyData;
+    public enum EnemyState
+    {
+        Idle,
+        Chase,
+        Attack,
+        Dead
+    }
 
     [Header("Enemy Data")]
     private Sprite _enemySprite;
     private string _enemyName;
     private GameObject _enemyProjectile;
-   
+    public EnemyState enemyState;
+    [SerializeField] private EnemyData enemyData;
+    [SerializeField] private EnemyCombat enemyCombat;
+
     // Enemy stats
     [Header("Enemy Base Stats")]
-
     private float _maxHealth;
     private float _health;
     private int _lvl;
@@ -20,6 +28,7 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Attack Stats")]
     private int _damage;
     private int _attackRange;
+    private float _attackCooldown;
     private int _criticalChance;
     private int _criticalDamage;
     private int _armorPenetration;
@@ -62,6 +71,7 @@ public class EnemyBehaviour : MonoBehaviour
         _lvl = enemyData.lvl;
         _damage = enemyData.damage;
         _attackRange = enemyData.attackRange;
+        _attackCooldown = enemyData.attackCooldown;
         _criticalChance = enemyData.criticalChance;
         _criticalDamage = enemyData.criticalDamage;
         _armorPenetration = enemyData.armorPenetration;
@@ -93,7 +103,13 @@ public class EnemyBehaviour : MonoBehaviour
         get => _enemyProjectile;
         set => _enemyProjectile = value;
     }
-    
+
+    public EnemyCombat EnemyCombat
+    {
+        get => enemyCombat;
+        set => enemyCombat = value;
+    }
+
     // Enemy stats
     public float MaxHealth
     {
@@ -149,6 +165,12 @@ public class EnemyBehaviour : MonoBehaviour
     {
         get => _attackSpeed;
         set => _attackSpeed = value;
+    }
+
+    public float AttackCooldown
+    {
+        get => _attackCooldown;
+        set => _attackCooldown = value;
     }
     
     // Defence stats

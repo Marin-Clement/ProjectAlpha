@@ -20,7 +20,7 @@ MonoBehaviour:
   hasWestDoor: 0
   isStartRoom: 1
   enemies:
-  - {fileID: 5357778182973432447, guid: 82b576d474ade0349bb0beec136b844e, type: 3}
+  - {fileID: 1237119205558181865, guid: b30852767cd864546a820d983a5782e9, type: 3}
   traps: []
   loot: []
   isCombatRoom: 1
