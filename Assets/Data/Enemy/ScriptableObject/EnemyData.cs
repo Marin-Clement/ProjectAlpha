@@ -22,7 +22,6 @@ public class EnemyData : ScriptableObject
    public int criticalChance;
    public int criticalDamage;
    public int armorPenetration;
-   public float attackSpeed;
    
    // Defence stats
    [Header("Defence Stats")]

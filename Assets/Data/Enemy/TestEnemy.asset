@@ -15,7 +15,7 @@ MonoBehaviour:
   enemySprite: {fileID: 0}
   enemyName: Test
   enemyProjectile: {fileID: 0}
-  health: 100
+  health: 200
   lvl: 1
   damage: 5
   attackRange: 10
@@ -23,7 +23,6 @@ MonoBehaviour:
   criticalChance: 0
   criticalDamage: 0
   armorPenetration: 0
-  attackSpeed: 1
   armor: 0
   magicResistance: 0
   movementSpeed: 5

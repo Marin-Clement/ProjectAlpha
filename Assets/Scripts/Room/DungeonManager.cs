@@ -31,6 +31,7 @@ public class DungeonManager : MonoBehaviour
    [Header("Dungeon UI")]
    [SerializeField] private TMP_Text roomText;
    [SerializeField] private TMP_Text roomNameText;
+   [SerializeField] private TMP_Text clearText;
 
    // Dungeon generation variables
    [Space(20),Header("Dungeon Generation")]
@@ -81,6 +82,8 @@ public class DungeonManager : MonoBehaviour
       int y = (int)_currentRoomPosition.y - rooms / 2;
       roomText.text = "(" + x + "," + y + ")";
       roomNameText.text = roomData.roomPrefab.name;
+      clearText.text = "Cleared";
+      clearText.color = _currentRoom.GetComponent<Room>().visited ? Color.green : Color.red;
    }
 
    // ReSharper disable Unity.PerformanceAnalysis

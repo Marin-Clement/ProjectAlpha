@@ -75,11 +75,12 @@ public class Player_Combat : MonoBehaviour
     {
         // * 0 = Damage, 1 = IsCritical, 3 = ArrowEffects
 
-        float calculatedDamage = _playerBehaviour.Damage * 0.5f * arrow.damage * 0.5f / (1 + (-_heldTime)) ;
+        float calculatedDamage = _playerBehaviour.Damage * 0.5f * arrow.damage * 0.5f / (1 + (-_heldTime)) *
+                                 _playerBehaviour.Lvl * 0.5f;
 
         if (isCriticalHit)
         {
-            calculatedDamage *= (1 + (_playerBehaviour.CriticalDamage * 0.05f));
+            calculatedDamage *= (1 + (_playerBehaviour.CriticalDamage * 0.025f));
         }
 
         List<object> damageInfo = new List<object>();

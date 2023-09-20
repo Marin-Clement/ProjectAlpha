@@ -28,6 +28,7 @@ public class DoorSpawner : MonoBehaviour
         {
             doorScript.SetDirection(Vector2.right);
         }
+        doorScript.SetLocked(true);
         Destroy(gameObject);
     }
 }

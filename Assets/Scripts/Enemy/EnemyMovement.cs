@@ -14,8 +14,12 @@ public class EnemyMovement : MonoBehaviour
 
     private float _rangePersonalSpace;
 
+    //temp
+    private SpriteRenderer _spriteRenderer;
+
     private void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _enemyBehaviour = GetComponent<EnemyBehaviour>();
         _rangePersonalSpace = _enemyBehaviour.AttackRange * 0.5f;
         // Define the direction vectors
@@ -38,13 +42,20 @@ public class EnemyMovement : MonoBehaviour
         directionWeights = new float[directionVectors.Length];
     }
 
-    private void Update()
+    public void Routine()
     {
-        if (_enemyBehaviour.enemyState == EnemyBehaviour.EnemyState.Dead) return;
         ResetWeights();
         CheckForObstacles();
         FindBestDirection();
         MoveIntoBestDirection();
+        if (transform.position.x > GameManager.Instance.player.transform.position.x)
+        {
+            _spriteRenderer.flipX = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+        }
     }
     
     private void ResetWeights()
@@ -64,7 +75,6 @@ public class EnemyMovement : MonoBehaviour
             Vector3 targetPos = transform.position + (Vector3)directionVectors[i] * raycastDistance;
             if (Physics2D.OverlapCircle(targetPos, minDistanceToObstacle, obstacleLayer))
             {
-                _enemyBehaviour.enemyStatus = "Stop walls!";
                 continue;
             }
             if (Physics2D.Raycast(transform.position, directionVectors[i], raycastDistance, obstacleLayer))
@@ -73,7 +83,6 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                _enemyBehaviour.enemyStatus = "Chasing player!";
                 // No obstacle found in this direction, so add weight based on distance to the player
                 var distanceToPlayer = Vector2.Distance((transform.position + (Vector3)directionVectors[i] * raycastDistance), GameManager.Instance.player.transform.position);
                 directionWeights[i] = 1.0f / distanceToPlayer;
@@ -102,32 +111,27 @@ public class EnemyMovement : MonoBehaviour
                 // if player in range of personal space move away
                 if (Vector2.Distance(transform.position, GameManager.Instance.player.transform.position) < _rangePersonalSpace)
                 {
-                    _enemyBehaviour.enemyStatus = "Personal space!";
                     Vector2 direction = directionVectors[highestWeightIndex];
                     direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
                     transform.position -= (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
                 }
                 else
                 {
-                    _enemyBehaviour.enemyStatus = "Firing!";
                     _enemyBehaviour.enemyState = EnemyBehaviour.EnemyState.Attack;
                 }
             }
             else
             {
-                _enemyBehaviour.enemyStatus = "Moving!";
                 Vector2 direction = directionVectors[highestWeightIndex];
                 direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
                 transform.position += (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
             }
             if (_enemyBehaviour.IsMelee)
             {
-                _enemyBehaviour.enemyStatus = "Melee!";
             }
         }
         else
         {
-            _enemyBehaviour.enemyStatus = "Moving!";
             Vector2 direction = directionVectors[highestWeightIndex];
             Vector2 newDirection = direction + new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
             direction = Vector2.Lerp(direction, newDirection, 0.2f); // 0.2f is the blending factor

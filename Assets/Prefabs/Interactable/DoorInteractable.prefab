@@ -210,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDistance: 2
   interactUI: {fileID: 8060322140009755956}
-  direction: {x: 0, y: 0}
+  floatingText: {fileID: 4754867091677353270, guid: 21806bf5ea868f64d9c5d74f43ca1226, type: 3}
 --- !u!212 &4491221465741285334
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -122,7 +122,11 @@ public class Projectile_Behaviour : MonoBehaviour
         switch (col.gameObject.tag)
         {
             case "Player":
-                Physics2D.IgnoreCollision(_collider, col.collider);
+                if (gameObject.CompareTag("EnemyProjectile"))
+                {
+                    col.gameObject.GetComponent<Health>().TakeDamage(_damage);
+                    Destroy(gameObject);
+                }
                 break;
             case "Wall":
                 if (projectileData.isBouncy)

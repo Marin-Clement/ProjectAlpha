@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
     [SerializeField] private GameObject damagePopup;
 
     [Header("(DEBUG) Dummy")]
-    [SerializeField] private bool isDummy; 
+    [SerializeField] public bool isDummy;
     [SerializeField] private float dummyCooldown = 3f;
     private float dummyCooldownTimer;
 
@@ -95,6 +95,11 @@ public class Health : MonoBehaviour
         if (healthType == ObjectType.Player)
         {
             health -= damage;
+            GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
+            DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
+            floatingText.Damage = damage;
+            floatingText.IsCritical = arrowisCritical;
+            floatingText.Color = Color.white;
         }
         else if (healthType == ObjectType.Enemy)
         {
@@ -119,6 +124,12 @@ public class Health : MonoBehaviour
         else
         {
             Debug.Log("ObjectType not found");
+        }
+
+        // check if dead
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -149,6 +160,12 @@ public class Health : MonoBehaviour
             {
                 Debug.Log("ObjectType not found");
             }
+        }
+
+        // check if dead
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 

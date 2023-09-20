@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,40 +9,34 @@ public abstract class EnemyCombat : MonoBehaviour
     // Prefabs
     [Header("Prefabs")]
     [SerializeField] protected GameObject enemyProjectile;
+    [SerializeField] protected Projectile_Data projectileData;
 
     //! live variables
-    protected enum EnemyState
+    public enum EnemyState
     {
         Attack,
         AttackSpecial,
         InCooldown,
     }
 
-    protected EnemyState enemyState;
+    public EnemyState attackState;
 
-    protected abstract void Attack();
-    protected abstract void SpecialAttack();
+    public bool isCastingSpecialAttack = false;
 
+    //! abstract methods
+
+    public abstract void Attack();
+    public abstract void SpecialAttack();
+
+    //! virtual methods
+    protected abstract IEnumerator AttackCooldown();
+    protected abstract IEnumerator SpecialAttackPreview();
+
+    //! shared methods
     protected virtual void Start()
     {
         _enemyBehaviour = GetComponent<EnemyBehaviour>();
     }
-
-    protected void Update()
-    {
-        if (_enemyBehaviour.enemyState == EnemyBehaviour.EnemyState.Dead) return;
-        if (enemyState == EnemyState.Attack)
-        {
-            Attack();
-            enemyState = EnemyState.InCooldown;
-        }
-        else if (enemyState == EnemyState.AttackSpecial)
-        {
-            SpecialAttack();
-        }
-    }
-
-    protected abstract IEnumerator AttackCooldown();
 
     protected List<object> CalculateDamage(Projectile_Data projectile)
     {
@@ -60,8 +53,6 @@ public abstract class EnemyCombat : MonoBehaviour
         damageInfo.Add(calculatedDamage); // damage
         damageInfo.Add(false); // isCriticalHit
         damageInfo.Add(effects); // projectileEffects
-
-        _enemyBehaviour.enemyState = EnemyBehaviour.EnemyState.Chase;
         return damageInfo;
     }
 }

@@ -17,6 +17,8 @@ public class EnemyBehaviour : MonoBehaviour
     public EnemyState enemyState;
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private EnemyCombat enemyCombat;
+    [SerializeField] private EnemyMovement enemyMovement;
+    private Health _healthScript;
 
     // Enemy stats
     [Header("Enemy Base Stats")]
@@ -52,14 +54,35 @@ public class EnemyBehaviour : MonoBehaviour
     
     // Debug
     [Header("Debug")]
-    public string enemyStatus;
     public GameObject damagePopup;
     public Animator animator;
 
     private void Awake()
     {
         SetEnemyVariables();
+        _healthScript = GetComponent<Health>();
     }
+
+    protected void Update()
+    {
+        if (_healthScript.isDummy) return;
+        if (enemyState == EnemyState.Dead) return;
+        if (EnemyCombat.isCastingSpecialAttack) return;
+        if (enemyState == EnemyState.Attack)
+        {
+            switch (enemyCombat.attackState)
+            {
+                case EnemyCombat.EnemyState.Attack:
+                    enemyCombat.Attack();
+                    break;
+                case EnemyCombat.EnemyState.AttackSpecial:
+                    enemyCombat.SpecialAttack();
+                    break;
+            }
+        }
+        enemyMovement.Routine();
+    }
+
 
     private void SetEnemyVariables()
     {
@@ -75,7 +98,6 @@ public class EnemyBehaviour : MonoBehaviour
         _criticalChance = enemyData.criticalChance;
         _criticalDamage = enemyData.criticalDamage;
         _armorPenetration = enemyData.armorPenetration;
-        _attackSpeed = enemyData.attackSpeed;
         _armor = enemyData.armor;
         _magicResistance = enemyData.magicResistance;
         _movementSpeed = enemyData.movementSpeed;
@@ -159,12 +181,6 @@ public class EnemyBehaviour : MonoBehaviour
     {
         get => _armorPenetration;
         set => _armorPenetration = value;
-    }
-    
-    public float AttackSpeed
-    {
-        get => _attackSpeed;
-        set => _attackSpeed = value;
     }
 
     public float AttackCooldown

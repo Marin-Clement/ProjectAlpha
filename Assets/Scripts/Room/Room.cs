@@ -1,17 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {   
     [SerializeField] private RoomData roomData;
-    
+
     [Header("Door Data")]
-    private bool _hasNorthDoor;
-    private bool _hasSouthDoor;
-    private bool _hasEastDoor;
-    private bool _hasWestDoor;
     private bool _isStartRoom;
 
     [Header("Room Prefab")]
@@ -45,11 +42,23 @@ public class Room : MonoBehaviour
         SetRoomVariables();
         SpawnDoors();
         SpawnPlayer();
+
+        //! Todo: Remove this if statement
+        if(_isStartRoom)
+        {
+            SpawnEnemies();
+        }
+        //! Todo: Remove this if statement
+
         if (!visited)
         {
             SpawnEnemies();
             if (_isStartRoom)
             {
+                foreach (var door in _doorsAlive)
+                {
+                    door.GetComponent<InteractableDoor>().SetLocked(false);
+                }
                 var position = transform.position;
                 var player = Instantiate(roomData.playerPrefab, position, Quaternion.identity);
                 var playerCamera = Instantiate(roomData.playerCameraPrefab, position, Quaternion.identity);
@@ -57,7 +66,38 @@ public class Room : MonoBehaviour
                 playerCamera.GetComponent<Player_Camera>().player = player.GetComponent<Player_Movement>();
             }
         }
+        else
+        {
+            foreach (var door in _doorsAlive)
+            {
+                door.GetComponent<InteractableDoor>().SetLocked(false);
+            }
+        }
     }
+
+    private void Update()
+    {
+        if(visited) return;
+        CheckIfClear();
+        if (_isCleared)
+        {
+            GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+            foreach (var door in doors)
+            {
+                door.GetComponent<InteractableDoor>().SetLocked(false);
+            }
+        }
+    }
+
+    private void CheckIfClear()
+    {
+        foreach (var enemy in _enemiesAlive)
+        {
+            if (enemy != null) return;
+        }
+        _isCleared = true;
+    }
+
 
     private void SpawnPlayer()
     {
@@ -158,10 +198,6 @@ public class Room : MonoBehaviour
 
     private void SetRoomVariables()
     {
-        _hasNorthDoor = roomData.hasNorthDoor;
-        _hasSouthDoor = roomData.hasSouthDoor;
-        _hasEastDoor = roomData.hasEastDoor;
-        _hasWestDoor = roomData.hasWestDoor;
         _isStartRoom = roomData.isStartRoom;
         _enemies = roomData.enemies;
         _traps = roomData.traps;
@@ -177,26 +213,6 @@ public class Room : MonoBehaviour
         return roomData;
     }
 
-    public bool GetHasNorthDoor()
-    {
-        return _hasNorthDoor;
-    }
-    
-    public bool GetHasSouthDoor()
-    {
-        return _hasSouthDoor;
-    }
-    
-    public bool GetHasEastDoor()
-    {
-        return _hasEastDoor;
-    }
-    
-    public bool GetHasWestDoor()
-    {
-        return _hasWestDoor;
-    }
-    
     public bool GetIsStartRoom()
     {
         return _isStartRoom;
@@ -240,27 +256,5 @@ public class Room : MonoBehaviour
     public bool GetIsBossRoom()
     {
         return _isBossRoom;
-    }
-    
-    public int GetRoomWeight()
-    {
-        var weight = 0;
-        if (_hasNorthDoor)
-        {
-            weight += 1;
-        }
-        if (_hasSouthDoor)
-        {
-            weight += 1;
-        }
-        if (_hasEastDoor)
-        {
-            weight += 1;
-        }
-        if (_hasWestDoor)
-        {
-            weight += 1;
-        }
-        return weight;
     }
 }

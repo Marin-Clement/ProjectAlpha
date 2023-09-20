@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7b0aea3a63c49459fd3b379c83f95e, type: 3}
   m_Name: BaseEnemyProjectile
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 30
   damage: 10
-  lifeTime: 5
+  lifeTime: 3
   pierceCount: 0
   deathParticle: {fileID: 4397324319892588662, guid: 52a1b958048654266943454cd4591125, type: 3}
-  isBouncy: 0
+  isBouncy: 1
   isPoisonous: 0
   isFreezing: 0
   isBurning: 0
   isElectrifying: 0
   turnSpeed: 0
-  bounces: 0
+  bounces: 2
   isHoming: 0
   isExplosive: 0
-  statusEffect: 0
-  timeToExplode: 0
+  statusEffect: 1
+  timeToExplode: 0.2
   explosionRadius: 0
   explosionForce: 0
   explosionDamage: 0
-  numberOfProjectiles: 0
-  childProjectile: {fileID: 0}
+  numberOfProjectiles: 12
+  childProjectile: {fileID: 11400000, guid: 9180c7a17326c4fadbdd3b3f690e92e9, type: 2}

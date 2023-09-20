@@ -13,10 +13,6 @@ public class RoomData : ScriptableObject
 
 
     [Header("Door Data")]
-    public bool hasNorthDoor;
-    public bool hasSouthDoor;
-    public bool hasEastDoor;
-    public bool hasWestDoor;
     public bool isStartRoom;
     
     [Header("Room Data")]
