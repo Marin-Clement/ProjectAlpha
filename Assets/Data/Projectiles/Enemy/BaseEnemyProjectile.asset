@@ -17,7 +17,7 @@ MonoBehaviour:
   lifeTime: 3
   pierceCount: 0
   deathParticle: {fileID: 4397324319892588662, guid: 52a1b958048654266943454cd4591125, type: 3}
-  isBouncy: 1
+  isBouncy: 0
   isPoisonous: 0
   isFreezing: 0
   isBurning: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   bounces: 2
   isHoming: 0
   isExplosive: 0
-  statusEffect: 1
+  statusEffect: 0
   timeToExplode: 0.2
   explosionRadius: 0
   explosionForce: 0

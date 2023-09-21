@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
@@ -61,6 +62,11 @@ public class EnemyBehaviour : MonoBehaviour
     {
         SetEnemyVariables();
         _healthScript = GetComponent<Health>();
+    }
+
+    private void Start()
+    {
+        _healthScript.MaxHealth = _maxHealth;
     }
 
     protected void Update()

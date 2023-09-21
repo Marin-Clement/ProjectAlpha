@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,6 +33,7 @@ public class Room : MonoBehaviour
     private bool _isCleared;
 
     // Live variables
+    private bool _enemiesSpawned;
     public bool visited;
     public Vector2 playerSpawnPosition;
     private List<GameObject> _doorsAlive;
@@ -44,7 +46,7 @@ public class Room : MonoBehaviour
         SpawnPlayer();
 
         //! Todo: Remove this if statement
-        if(_isStartRoom)
+        if(_isStartRoom && !visited)
         {
             SpawnEnemies();
         }
@@ -52,7 +54,6 @@ public class Room : MonoBehaviour
 
         if (!visited)
         {
-            SpawnEnemies();
             if (_isStartRoom)
             {
                 foreach (var door in _doorsAlive)
@@ -64,6 +65,10 @@ public class Room : MonoBehaviour
                 var playerCamera = Instantiate(roomData.playerCameraPrefab, position, Quaternion.identity);
                 player.GetComponent<Player_Behaviour>().SetPlayerCamera(playerCamera.GetComponent<Player_Camera>());
                 playerCamera.GetComponent<Player_Camera>().player = player.GetComponent<Player_Movement>();
+            }
+            else
+            {
+                SpawnEnemies();
             }
         }
         else
@@ -78,7 +83,10 @@ public class Room : MonoBehaviour
     private void Update()
     {
         if(visited) return;
-        CheckIfClear();
+        if (_enemiesSpawned)
+        {
+            CheckIfClear();
+        }
         if (_isCleared)
         {
             GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
@@ -91,6 +99,7 @@ public class Room : MonoBehaviour
 
     private void CheckIfClear()
     {
+        if(_enemiesAlive == null) Debug.Log("EnemiesAlive Didn't Spawn Yet");
         foreach (var enemy in _enemiesAlive)
         {
             if (enemy != null) return;
@@ -147,14 +156,26 @@ public class Room : MonoBehaviour
     // Spawn enemies on enemy spawner 
     private void SpawnEnemies()
     {
+        StartCoroutine(SpawnEnemyTimer());
+    }
+
+    private IEnumerator SpawnEnemyTimer()
+    {
         foreach (Transform child in transform)
         {
-            if (child.CompareTag("EnemySpawner"))
-            {
-                child.GetComponent<EnemySpawner>().SpawnEnemy(_enemies[Random.Range(0, _enemies.Count)]);
-            }
+            if (!child.CompareTag("EnemySpawner")) continue;
+            EnemySpawner enemySpawner = child.GetComponent<EnemySpawner>();
+            enemySpawner.SetCanSpawn(true);
+        }
+        yield return new WaitForSeconds(1f);
+        foreach (Transform child in transform)
+        {
+            if (!child.CompareTag("EnemySpawner")) continue;
+            EnemySpawner enemySpawner = child.GetComponent<EnemySpawner>();
+            enemySpawner.SpawnEnemy(_enemies[Random.Range(0, _enemies.Count)]);
         }
         _enemiesAlive = GameObject.FindGameObjectsWithTag("Enemy").ToList();
+        _enemiesSpawned = true;
     }
 
     // left door = 0, right door = 1, top door = 2, bottom door = 3

@@ -21,7 +21,7 @@ public class EnemyMovement : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _enemyBehaviour = GetComponent<EnemyBehaviour>();
-        _rangePersonalSpace = _enemyBehaviour.AttackRange * 0.5f;
+        _rangePersonalSpace = _enemyBehaviour.AttackRange * 0.8f;
         // Define the direction vectors
         directionVectors = new Vector2[] {
             new Vector2(0.0f, 1.0f),

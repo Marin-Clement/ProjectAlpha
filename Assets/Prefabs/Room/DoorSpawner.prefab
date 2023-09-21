@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: DoorSpawner
   m_TagString: DoorSpawner
-  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTopDoor: 0
-  isBottomDoor: 0
+  isBottomDoor: 1
   isLeftDoor: 0
   isRightDoor: 0

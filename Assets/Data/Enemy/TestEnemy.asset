@@ -15,10 +15,10 @@ MonoBehaviour:
   enemySprite: {fileID: 0}
   enemyName: Test
   enemyProjectile: {fileID: 0}
-  health: 200
+  health: 100
   lvl: 1
   damage: 5
-  attackRange: 10
+  attackRange: 20
   attackCooldown: 2
   criticalChance: 0
   criticalDamage: 0

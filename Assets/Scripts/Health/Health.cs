@@ -95,6 +95,7 @@ public class Health : MonoBehaviour
         if (healthType == ObjectType.Player)
         {
             health -= damage;
+            GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.1f, 0.5f);
             GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
             DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
             floatingText.Damage = damage;
@@ -182,7 +183,7 @@ public class Health : MonoBehaviour
                     break;
                 case "EnemyProjectile":
                     TakeDamage(new List<object>(){col.gameObject.GetComponent<Projectile_Behaviour>().projectileData.damage,false, new bool[]{false, false, false, false}});
-                    GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.2f, 0.1f);
+                    GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.2f, 1f);
                     break;
             }
         }

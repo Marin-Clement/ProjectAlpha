@@ -5,8 +5,8 @@ public class RoachCombat : EnemyCombat
 {
     // * constants
     private readonly float _fireInterval = 0.05f;                        // time between each projectile
-    private readonly int _numberOfProjectiles = 8;                       // number of projectiles to fire
-    private readonly int _specialChance = 30;                            // chance to use special attack in percent
+    private readonly int _numberOfProjectiles = 16;                      // number of projectiles to fire
+    private readonly int _specialChance = 10;                           // chance to use special attack in percent
     private readonly float _offsetDistance = 1.5f;                       // distance from the enemy to the projectile
 
     // ! live variables
