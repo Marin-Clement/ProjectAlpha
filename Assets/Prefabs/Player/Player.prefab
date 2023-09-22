@@ -2664,8 +2664,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   damagePopup: {fileID: 4754867091677353270, guid: a13535022d3a84b1c86d1a70c9b7b523, type: 3}
-  isDummy: 0
-  dummyCooldown: 1
+  isDummy: 1
+  dummyCooldown: 0
   statusEffectTickRate: 1
   isPoisoned: 0
   maxPoisonDuration: 5

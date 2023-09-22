@@ -6,11 +6,12 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
-{   
+{
     [SerializeField] private RoomData roomData;
 
     [Header("Door Data")]
     private bool _isStartRoom;
+    private bool _isNewFloor;
 
     [Header("Room Prefab")]
     private GameObject _roomPrefab;
@@ -46,7 +47,7 @@ public class Room : MonoBehaviour
         SpawnPlayer();
 
         //! Todo: Remove this if statement
-        if(_isStartRoom && !visited)
+        if(_isStartRoom && !visited && !_isNewFloor)
         {
             SpawnEnemies();
         }
@@ -54,12 +55,8 @@ public class Room : MonoBehaviour
 
         if (!visited)
         {
-            if (_isStartRoom)
+            if (_isStartRoom && !_isNewFloor)
             {
-                foreach (var door in _doorsAlive)
-                {
-                    door.GetComponent<InteractableDoor>().SetLocked(false);
-                }
                 var position = transform.position;
                 var player = Instantiate(roomData.playerPrefab, position, Quaternion.identity);
                 var playerCamera = Instantiate(roomData.playerCameraPrefab, position, Quaternion.identity);
@@ -72,6 +69,14 @@ public class Room : MonoBehaviour
             }
         }
         else
+        {
+            foreach (var door in _doorsAlive)
+            {
+                door.GetComponent<InteractableDoor>().SetLocked(false);
+            }
+        }
+
+        if (!_isBossRoom && !_isStartRoom) return;
         {
             foreach (var door in _doorsAlive)
             {
@@ -277,5 +282,10 @@ public class Room : MonoBehaviour
     public bool GetIsBossRoom()
     {
         return _isBossRoom;
+    }
+
+    public void SetIsNewFloor()
+    {
+        _isNewFloor = true;
     }
 }

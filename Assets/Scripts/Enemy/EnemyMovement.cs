@@ -4,9 +4,9 @@ using Random = UnityEngine.Random;
 public class EnemyMovement : MonoBehaviour
 {
     private EnemyBehaviour _enemyBehaviour;
-    public float raycastDistance = 2.0f;
+    public float raycastDistance = 10.0f;
     public LayerMask obstacleLayer;
-    public float minDistanceToObstacle = 0.5f;
+    public float minDistanceToObstacle = 10f;
 
     private Vector2[] directionVectors;
     private float[] directionWeights;
@@ -73,10 +73,6 @@ public class EnemyMovement : MonoBehaviour
         for (int i = 0; i < directionVectors.Length; i++)
         {
             Vector3 targetPos = transform.position + (Vector3)directionVectors[i] * raycastDistance;
-            if (Physics2D.OverlapCircle(targetPos, minDistanceToObstacle, obstacleLayer))
-            {
-                continue;
-            }
             if (Physics2D.Raycast(transform.position, directionVectors[i], raycastDistance, obstacleLayer))
             {
                 directionWeights[i] = 0.0f;
@@ -85,7 +81,15 @@ public class EnemyMovement : MonoBehaviour
             {
                 // No obstacle found in this direction, so add weight based on distance to the player
                 var distanceToPlayer = Vector2.Distance((transform.position + (Vector3)directionVectors[i] * raycastDistance), GameManager.Instance.player.transform.position);
-                directionWeights[i] = 1.0f / distanceToPlayer;
+                // If the distance is smaller than the minimum distance to an obstacle, set the weight to 0
+                if (distanceToPlayer < minDistanceToObstacle)
+                {
+                    directionWeights[i] = 0.0f;
+                }
+                else
+                {
+                    directionWeights[i] = 1.0f / distanceToPlayer;
+                }
             }
         }
     }
@@ -111,6 +115,8 @@ public class EnemyMovement : MonoBehaviour
                 // if player in range of personal space move away
                 if (Vector2.Distance(transform.position, GameManager.Instance.player.transform.position) < _rangePersonalSpace)
                 {
+                    // Debug distance to player
+                    Debug.DrawLine(transform.position, GameManager.Instance.player.transform.position, Color.red);
                     Vector2 direction = directionVectors[highestWeightIndex];
                     direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
                     transform.position -= (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);

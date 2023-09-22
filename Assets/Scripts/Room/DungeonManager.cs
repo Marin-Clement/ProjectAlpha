@@ -21,9 +21,8 @@ public class DungeonManager : MonoBehaviour
       _roomsLayout = new RoomData[rooms + 2, rooms + 2];
       _visitedRooms = new bool[rooms + 2, rooms + 2];
       _currentRoomPosition = new Vector2(rooms/2, rooms/2);
-      _floor = 1;
       GenerateDungeonLayout();
-      GenerateRoom(Vector2.zero);
+      GenerateRoom(Vector2.one);
    }
    //! Singleton
 
@@ -32,6 +31,7 @@ public class DungeonManager : MonoBehaviour
    [SerializeField] private TMP_Text roomText;
    [SerializeField] private TMP_Text roomNameText;
    [SerializeField] private TMP_Text clearText;
+   [SerializeField] private TMP_Text floorText;
 
    // Dungeon generation variables
    [Space(20),Header("Dungeon Generation")]
@@ -49,7 +49,7 @@ public class DungeonManager : MonoBehaviour
    // Live variables
    private GameObject _currentRoom;
    private bool[,] _visitedRooms;
-   private int _floor;
+   private int _floor = 1;
 
    // DEBUG
    [SerializeField, Space(20), Header("Debug")]
@@ -63,6 +63,7 @@ public class DungeonManager : MonoBehaviour
       {
          _currentRoom = Instantiate(roomData.roomPrefab, transform);
          Room room = _currentRoom.GetComponent<Room>();
+         if (direction == Vector2.zero) room.SetIsNewFloor();
          room.playerSpawnPosition = direction;
          if (_visitedRooms[(int)_currentRoomPosition.x, (int)_currentRoomPosition.y])
          {
@@ -83,19 +84,36 @@ public class DungeonManager : MonoBehaviour
       roomText.text = "(" + x + "," + y + ")";
       roomNameText.text = roomData.roomPrefab.name;
       clearText.text = "Cleared";
+      floorText.text = "Floor " + _floor;
       clearText.color = _currentRoom.GetComponent<Room>().visited ? Color.green : Color.red;
+
    }
 
-   // ReSharper disable Unity.PerformanceAnalysis
    public void ChangeRoom(Vector2 direction)
    {
-      _currentRoomPosition += direction;
+      if (direction == Vector2.zero)
+      {
+         _currentRoomPosition = new Vector2(rooms / 2, rooms / 2);
+      }
+      else
+      {
+         _currentRoomPosition += direction;
+      }
       Room room = _currentRoom.GetComponent<Room>();
       room.DestroyDoors();
       room.DestroyEnemies();
       Destroy(_currentRoom);
       GenerateRoom(direction);
    }
+
+   public void ChangeFloor()
+   {
+      ResetDungeon();
+      _floor++;
+      ChangeRoom(Vector2.zero);
+   }
+
+
 
    private RoomData GetRandomRoomData()
    {
@@ -109,14 +127,14 @@ public class DungeonManager : MonoBehaviour
 
    private RoomData GetBossRoomData()
    {
-      return bossRoomsData[_floor - 1];
+      return bossRoomsData[0];
    }
 
    public void ResetDungeon()
    {
-      _roomsLayout = new RoomData[rooms * 2, rooms * 2];
+      _roomsLayout = new RoomData[rooms + 2, rooms + 2];
+      _visitedRooms = new bool[rooms + 2, rooms + 2];
       _currentRoomPosition = new Vector2(rooms, rooms);
-      _floor = 1;
       GenerateDungeonLayout();
    }
 
