@@ -18,14 +18,14 @@ MonoBehaviour:
   health: 100
   lvl: 1
   damage: 5
-  attackRange: 20
+  attackRange: 15
   attackCooldown: 2
   criticalChance: 0
   criticalDamage: 0
   armorPenetration: 0
   armor: 0
   magicResistance: 0
-  movementSpeed: 5
+  movementSpeed: 15
   isRanged: 1
   isMelee: 0
   isMagic: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7b0aea3a63c49459fd3b379c83f95e, type: 3}
   m_Name: Player_Arrow
   m_EditorClassIdentifier: 
-  speed: 40
+  speed: 60
   damage: 10
   lifeTime: 0.5
   pierceCount: 3

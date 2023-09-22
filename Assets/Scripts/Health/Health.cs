@@ -95,7 +95,7 @@ public class Health : MonoBehaviour
         if (healthType == ObjectType.Player)
         {
             health -= damage;
-            GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.1f, 0.5f);
+            GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.1f, 0.2f);
             GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
             DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
             floatingText.Damage = damage;
@@ -128,7 +128,7 @@ public class Health : MonoBehaviour
         }
 
         // check if dead
-        if (health <= 0)
+        if (health <= 0 && !isDummy) // Todo: Remove !isDummy
         {
             Destroy(gameObject);
         }
@@ -177,13 +177,12 @@ public class Health : MonoBehaviour
             switch (col.gameObject.tag)
             {
                 case "Enemy":
-                    TakeDamage(new List<object>(){10f, false, new bool[]{false, false, false, false}});
+                    TakeDamage(new List<object>(){10f, false, new[]{false, false, false, false}});
                     GameManager.Instance.player.GetComponent<Player_Behaviour>().playerMovement.Knockback(col.gameObject.transform.position);
                     GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.2f, 0.1f);
                     break;
                 case "EnemyProjectile":
-                    TakeDamage(new List<object>(){col.gameObject.GetComponent<Projectile_Behaviour>().projectileData.damage,false, new bool[]{false, false, false, false}});
-                    GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.2f, 1f);
+                    TakeDamage(new List<object>(){col.gameObject.GetComponent<Projectile_Behaviour>().projectileData.damage,false, new[]{false, false, false, false}});
                     break;
             }
         }

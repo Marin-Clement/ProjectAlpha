@@ -1,166 +1,208 @@
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class EnemyMovement : MonoBehaviour
 {
     private EnemyBehaviour _enemyBehaviour;
-    public float raycastDistance = 10.0f;
+    public float raycastDistance = 10f;
     public LayerMask obstacleLayer;
-    public float minDistanceToObstacle = 10f;
+    public float minDistanceToObstacle = 5f;
 
-    private Vector2[] directionVectors;
-    private float[] directionWeights;
-    int highestWeightIndex = 0;
+    private Vector2[] _directionVectors;
+    private float[] _directionWeights;
+    private int _highestWeightIndex = 0;
 
-    private float _rangePersonalSpace;
+    private float _rangePersonalSpace = 7f;
 
-    //temp
-    private SpriteRenderer _spriteRenderer;
+    private GameObject[] _enemies;
+    private GameObject _player;
 
     private void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _enemyBehaviour = GetComponent<EnemyBehaviour>();
-        _rangePersonalSpace = _enemyBehaviour.AttackRange * 0.8f;
-        // Define the direction vectors
-        directionVectors = new Vector2[] {
-            new Vector2(0.0f, 1.0f),
-            new Vector2(0.5f, 0.866f),
-            new Vector2(0.866f, 0.5f),
-            new Vector2(1.0f, 0.0f),
-            new Vector2(0.866f, -0.5f),
-            new Vector2(0.5f, -0.866f),
-            new Vector2(0.0f, -1.0f),
-            new Vector2(-0.5f, -0.866f),
-            new Vector2(-0.866f, -0.5f),
-            new Vector2(-1.0f, 0.0f),
-            new Vector2(-0.866f, 0.5f),
-            new Vector2(-0.5f, 0.866f)
-        };
 
-        // Initialize the direction weights
-        directionWeights = new float[directionVectors.Length];
+        // Define the direction vectors for the enemy
+        CreateDirectionVectors(8);
     }
 
+    // Create the direction vectors for the enemy
+    private void CreateDirectionVectors(int numberOfDirections)
+    {
+        _directionVectors = new Vector2[numberOfDirections];
+        _directionWeights = new float[numberOfDirections];
+        float angle = 2 * Mathf.PI / numberOfDirections;
+        for (int i = 0; i < numberOfDirections; i++)
+        {
+            _directionVectors[i] = new Vector2(Mathf.Cos(angle * i), Mathf.Sin(angle * i));
+        }
+    }
+
+    private readonly float _maxTime = 0.4f;
+    private float _timer;
+
+    // Update is called once per frame
     public void Routine()
     {
-        ResetWeights();
-        CheckForObstacles();
-        FindBestDirection();
-        MoveIntoBestDirection();
-        if (transform.position.x > GameManager.Instance.player.transform.position.x)
+        _timer -= Time.deltaTime;
+        if (_timer <= 0)
         {
-            _spriteRenderer.flipX = true;
+            _timer = _maxTime;
+            ResetWeights();
+            FindBestDirection();
         }
-        else
+        CheckForObstacle();
+        MoveIntoBestDirection();
+        if (InRange())
         {
-            _spriteRenderer.flipX = false;
+            _enemyBehaviour.enemyState = EnemyBehaviour.EnemyState.Attack;
+            Debug.DrawLine(transform.position, GameManager.Instance.player.transform.position, Color.blue);
         }
     }
-    
+
     private void ResetWeights()
     {
-        // Reset the direction weights
-        for (int i = 0; i < directionWeights.Length; i++)
+        for (int i = 0; i < _directionWeights.Length; i++)
         {
-            directionWeights[i] = 0.0f;
+            _directionWeights[i] = 1;
         }
     }
-    
-    private void CheckForObstacles()
+
+    private void FindBestDirection()
     {
-        // Check each direction for obstacles
-        for (int i = 0; i < directionVectors.Length; i++)
+        CalculateWeights();
+
+        // Find the highest weight
+        _highestWeightIndex = 0;
+        for (int i = 0; i < _directionWeights.Length; i++)
         {
-            Vector3 targetPos = transform.position + (Vector3)directionVectors[i] * raycastDistance;
-            if (Physics2D.Raycast(transform.position, directionVectors[i], raycastDistance, obstacleLayer))
+            if (_directionWeights[i] > _directionWeights[_highestWeightIndex])
             {
-                directionWeights[i] = 0.0f;
+                _highestWeightIndex = i;
+            }
+        }
+    }
+
+    private bool InRange()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector2 currentPosition = transform.position;
+        Vector2 playerPosition = player.transform.position;
+        float distance = CalculateDistance(currentPosition, playerPosition);
+        return distance < _enemyBehaviour.AttackRange;
+    }
+
+    private float CalculateDistance(Vector2 positionA, Vector2 positionB)
+    {
+        return Vector2.Distance(positionA, positionB);
+    }
+
+    private void CalculateWeights()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        Vector2 currentPosition = transform.position;
+
+        // Check for other enemies (avoid self)
+        foreach (var enemy in enemies)
+        {
+            if (enemy == gameObject) continue;
+
+            Vector2 enemyPosition = enemy.transform.position;
+            Vector2 direction = enemyPosition - currentPosition;
+            float distance = CalculateDistance(currentPosition, enemyPosition);
+
+            if (distance < _rangePersonalSpace)
+            {
+                direction.Normalize();
+                Debug.Log(direction);
+                float weight = 1 - (distance / _rangePersonalSpace);
+                AddWeight(direction, -weight);
+            }
+        }
+
+        // Check for player
+        Vector2 playerPosition = player.transform.position;
+        Vector2 playerDirection = playerPosition - currentPosition;
+        float playerDistance = CalculateDistance(currentPosition, playerPosition);
+
+        if (playerDistance < _rangePersonalSpace)
+        {
+            playerDirection.Normalize();
+            float weight = 1 - (playerDistance / _rangePersonalSpace);
+            AddWeight(playerDirection, weight);
+
+            // add weight to the opposite direction of the player if no wall is in the way
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, playerDirection, raycastDistance, obstacleLayer);
+            if (!hit.collider)
+            {
+                AddWeight(-playerDirection, 1);
+            }
+        }
+
+        if (_enemyBehaviour.IsRanged)
+        {
+            // Go in max range
+            if (playerDistance > _enemyBehaviour.AttackRange)
+            {
+                float weight = 1 - (_enemyBehaviour.AttackRange / playerDistance);
+                AddWeight(playerDirection, weight);
             }
             else
             {
-                // No obstacle found in this direction, so add weight based on distance to the player
-                var distanceToPlayer = Vector2.Distance((transform.position + (Vector3)directionVectors[i] * raycastDistance), GameManager.Instance.player.transform.position);
-                // If the distance is smaller than the minimum distance to an obstacle, set the weight to 0
-                if (distanceToPlayer < minDistanceToObstacle)
+                // Randomly move
+                if (Random.Range(0, 4) == 0)
                 {
-                    directionWeights[i] = 0.0f;
-                }
-                else
-                {
-                    directionWeights[i] = 1.0f / distanceToPlayer;
+                    Vector2 randomDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    AddWeight(randomDirection, 1);
                 }
             }
         }
     }
-    
-    private void FindBestDirection()
+
+    private void CheckForObstacle()
     {
-        var highestWeight = 0.0f;
-        // Find the direction with the highest weight
-        for (var i = 0; i < directionWeights.Length; i++)
+        for (int i = 0; i < _directionVectors.Length; i++)
         {
-            if (!(directionWeights[i] > highestWeight)) continue;
-            highestWeight = directionWeights[i];
-            highestWeightIndex = i;
+            Vector2 direction = _directionVectors[i];
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, raycastDistance, obstacleLayer);
+            if (hit.collider != null)
+            {
+                // Remove weight if obstacle is closer
+                float weight = 1 - (hit.distance / raycastDistance);
+                AddWeight(direction, -weight);
+            }
+        }
+    }
+
+    private void AddWeight(Vector2 direction, float weight)
+    {
+        for (int i = 0; i < _directionVectors.Length; i++)
+        {
+            // Take the closest direction
+            if (Vector2.Dot(direction, _directionVectors[i]) > 0.5f)
+            {
+                _directionWeights[i] += weight;
+            }
         }
     }
 
     private void MoveIntoBestDirection()
     {
-        if (Vector2.Distance(transform.position, GameManager.Instance.player.transform.position) < _enemyBehaviour.AttackRange)
+        _highestWeightIndex = 0;
+        for (int i = 0; i < _directionWeights.Length; i++)
         {
-            if (_enemyBehaviour.IsRanged && !Physics2D.Raycast(transform.position, GameManager.Instance.player.transform.position - transform.position, _enemyBehaviour.AttackRange, obstacleLayer))
+            if (_directionWeights[i] > _directionWeights[_highestWeightIndex])
             {
-                // if player in range of personal space move away
-                if (Vector2.Distance(transform.position, GameManager.Instance.player.transform.position) < _rangePersonalSpace)
-                {
-                    // Debug distance to player
-                    Debug.DrawLine(transform.position, GameManager.Instance.player.transform.position, Color.red);
-                    Vector2 direction = directionVectors[highestWeightIndex];
-                    direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
-                    transform.position -= (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
-                }
-                else
-                {
-                    _enemyBehaviour.enemyState = EnemyBehaviour.EnemyState.Attack;
-                }
-            }
-            else
-            {
-                Vector2 direction = directionVectors[highestWeightIndex];
-                direction = new Vector2(direction.x + Random.Range(-0.1f, 0.1f), direction.y + Random.Range(-0.1f, 0.1f));
-                transform.position += (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
-            }
-            if (_enemyBehaviour.IsMelee)
-            {
+                _highestWeightIndex = i;
             }
         }
-        else
-        {
-            Vector2 direction = directionVectors[highestWeightIndex];
-            Vector2 newDirection = direction + new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
-            direction = Vector2.Lerp(direction, newDirection, 0.2f); // 0.2f is the blending factor
-            transform.position += (Vector3)direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
-        }
+        Vector2 direction = _directionVectors[_highestWeightIndex];
+        Move(direction);
     }
-    
-    private void OnDrawGizmos()
+
+    private void Move(Vector2 direction)
     {
-        if (!Application.isPlaying) return;
-        // Draw the direction vectors with their weights as colors (green best, red worst)
-        for (int i = 0; i < directionVectors.Length; i++)
-        {
-            if (directionWeights[i] > 0.0f)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawLine(transform.position, transform.position + ((Vector3)directionVectors[i] * raycastDistance ) * (directionWeights[i] * 5.0f));
-            }
-            else
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(transform.position, transform.position + (Vector3)directionVectors[i] * raycastDistance);
-            }
-        }
+        Vector2 targetPosition = (Vector2)transform.position + direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
+        transform.position = Vector2.Lerp(transform.position, targetPosition, 0.4f);
     }
 }
