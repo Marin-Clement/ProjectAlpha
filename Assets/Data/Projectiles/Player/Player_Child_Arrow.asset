@@ -22,7 +22,7 @@ MonoBehaviour:
   isFreezing: 0
   isBurning: 0
   isElectrifying: 0
-  turnSpeed: 1
+  turnSpeed: 5
   bounces: 20
   isHoming: 0
   isExplosive: 0

@@ -57,7 +57,7 @@ public class Projectile_Behaviour : MonoBehaviour
 
         if (projectileData.isHoming)
         {
-            _target = GameObject.FindGameObjectWithTag("Enemy");
+            _target = GameObject.FindGameObjectWithTag("Player");
         }
     }
 

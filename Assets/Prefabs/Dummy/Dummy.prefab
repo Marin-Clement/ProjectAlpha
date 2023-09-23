@@ -179,7 +179,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 6792795306746438834}
   m_HandleRect: {fileID: 0}
@@ -344,7 +344,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 5503954775256380222}
   m_HandleRect: {fileID: 0}
@@ -532,8 +532,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d4537573f624496a0f6f558c4a41f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
   enemyData: {fileID: 11400000, guid: c4bd3f77f77114bb3b780bc3465f51d3, type: 2}
-  enemyStatus: 
+  enemyCombat: {fileID: 0}
+  enemyMovement: {fileID: 0}
   damagePopup: {fileID: 4754867091677353270, guid: a13535022d3a84b1c86d1a70c9b7b523, type: 3}
   animator: {fileID: 5357778182973432436}
 --- !u!114 &2750034076846627090

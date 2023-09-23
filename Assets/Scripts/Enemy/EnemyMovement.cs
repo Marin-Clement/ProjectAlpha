@@ -5,7 +5,7 @@ public class EnemyMovement : MonoBehaviour
     private EnemyBehaviour _enemyBehaviour;
     public float raycastDistance = 10f;
     public LayerMask obstacleLayer;
-    public float minDistanceToObstacle = 5f;
+    public float minDistanceToObstacle = 1f;
 
     private Vector2[] _directionVectors;
     private float[] _directionWeights;
@@ -110,11 +110,11 @@ public class EnemyMovement : MonoBehaviour
             Vector2 enemyPosition = enemy.transform.position;
             Vector2 direction = enemyPosition - currentPosition;
             float distance = CalculateDistance(currentPosition, enemyPosition);
+            Debug.DrawLine(currentPosition, enemyPosition, Color.red);
 
             if (distance < _rangePersonalSpace)
             {
                 direction.Normalize();
-                Debug.Log(direction);
                 float weight = 1 - (distance / _rangePersonalSpace);
                 AddWeight(direction, -weight);
             }
