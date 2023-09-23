@@ -28,4 +28,4 @@
 
 <span class="hljs-section">***Feedback 📢***</span>
 
-We greatly appreciate your feedback as it helps us improve the game. Feel free to report any issues or share your suggestions in our [<span class="hljs-string">issue tracker</span>](<span class="hljs-link">https://github.com/ProjectAlpha/issues</span>). 🤝
+We greatly appreciate your feedback as it helps us improve the game. Feel free to report any issues or share your suggestions in our<span class="hljs-string">issue tracker</span> <a href="https://github.com/Marin-Clement/ProjectAlpha/issues">Issue</a>. 🤝
