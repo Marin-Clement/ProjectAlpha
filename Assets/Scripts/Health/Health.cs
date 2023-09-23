@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Mathf;
 
 public class Health : MonoBehaviour
 {
@@ -94,7 +95,7 @@ public class Health : MonoBehaviour
 
         if (healthType == ObjectType.Player)
         {
-            health -= damage;
+            health -= RoundToInt(damage);
             GameManager.Instance.player.GetComponent<Player_Behaviour>().playerCamera.ShakeCamera(0.1f, 0.2f);
             GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
             DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
@@ -104,7 +105,7 @@ public class Health : MonoBehaviour
         }
         else if (healthType == ObjectType.Enemy)
         {
-            health -= damage;
+            health -= RoundToInt(damage);
             GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
             DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
             floatingText.Damage = damage;
@@ -130,6 +131,11 @@ public class Health : MonoBehaviour
         // check if dead
         if (health <= 0 && !isDummy) // Todo: Remove !isDummy
         {
+            DropItem dropItem = GetComponent<DropItem>();
+            if (dropItem != null)
+            {
+                dropItem.GenerateItem();
+            }
             Destroy(gameObject);
         }
     }
@@ -166,7 +172,25 @@ public class Health : MonoBehaviour
         // check if dead
         if (health <= 0)
         {
+            DropItem dropItem = GetComponent<DropItem>();
+            if (dropItem != null)
+            {
+                dropItem.GenerateItem();
+            }
             Destroy(gameObject);
+        }
+    }
+
+    public void Heal(float healAmount)
+    {
+        health += healAmount;
+        GameObject damagePopupInstance = Instantiate(damagePopup, transform.position, Quaternion.identity);
+        DamageFloatingText floatingText = damagePopupInstance.GetComponent<DamageFloatingText>();
+        floatingText.Damage = healAmount;
+        floatingText.Color = Color.magenta;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
         }
     }
 

@@ -7,7 +7,7 @@ public class Projectile_Behaviour : MonoBehaviour
     // Projectile Variables
     private Rigidbody2D _rigidbody;
     private CapsuleCollider2D _collider;
-    private Vector3 _direction;
+    private Vector2 _direction;
     public Projectile_Data projectileData;
 
     // Homing Variables
@@ -36,6 +36,7 @@ public class Projectile_Behaviour : MonoBehaviour
 
     private void Start()
     {
+        _direction = _direction.normalized;
         transform.up = _direction;
         // Declare Variables
         _currentExplosionTime = projectileData.timeToExplode;

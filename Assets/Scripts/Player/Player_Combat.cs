@@ -68,7 +68,7 @@ public class Player_Combat : MonoBehaviour
         projectileBehaviour.Damage = CalculateDamage(arrowData, projectileBehaviour.IsCritical);
         projectileBehaviour.Duration = (_heldTime + minHoldTime) * 1.2f;
         // set direction to mouse position
-        projectileBehaviour.SetDirection((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
+        projectileBehaviour.SetDirection((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position));
     }
 
     private List<object> CalculateDamage(Projectile_Data arrow, bool isCriticalHit)

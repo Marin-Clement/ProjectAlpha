@@ -112,7 +112,7 @@ public class EnemyBehaviour : MonoBehaviour
         _isMagic = enemyData.isMagic;
         _isPhysical = enemyData.isPhysical;
     }
-    
+
     // Setters Getters Functions
     public Sprite Sprite
     {

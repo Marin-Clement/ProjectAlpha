@@ -34,7 +34,6 @@ public class Player_UI : MonoBehaviour
     void Start()
     {
         _playerBehaviour = GetComponent<Player_Behaviour>();
-
     }
     private void LateUpdate() 
     {
@@ -90,7 +89,7 @@ public class Player_UI : MonoBehaviour
     {
         healthBar.maxValue = _playerBehaviour.playerHealth.MaxHealth;
         healthTempBar.maxValue = _playerBehaviour.playerHealth.MaxHealth;
-        healthText.text = _playerBehaviour.playerHealth.HealthValue.ToString() + "/" + _playerBehaviour.playerHealth.MaxHealth.ToString();
+        healthText.text = _playerBehaviour.playerHealth.HealthValue.ToString();
         healthBar.value = Mathf.Lerp(healthBar.value, _playerBehaviour.playerHealth.HealthValue, 0.1f);
         healthTempBar.value = Mathf.Lerp(healthTempBar.value, healthBar.value, 0.01f);
     }

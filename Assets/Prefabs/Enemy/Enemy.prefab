@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2080714681289028820}
   - component: {fileID: -5603515394148660474}
   - component: {fileID: 1198939471806518863}
+  - component: {fileID: 525521667997505530}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -216,6 +217,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7234978212030064251}
   healthTempBar: {fileID: 5222871978312132827}
+--- !u!114 &525521667997505530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237119205558181865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab70d8a2ab90be149a357de4be36cd04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 4131783210589949110, guid: e128aab87052c534a8bd42ebb4219617, type: 3}
 --- !u!1 &1279879889324588626
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.3443396, b: 0.3443396, a: 1}
+  m_Color: {r: 0.5, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -316,9 +331,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796300635412254658}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.31, y: 0.6516, z: 0}
-  m_LocalScale: {x: 3.481472, y: 2.7076495, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.41309977, y: 0.90540016, z: 0}
+  m_LocalScale: {x: 0.6338, y: 0.6338, z: 0.6338}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2090012837068815717}
@@ -344,7 +359,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,12 +380,12 @@ SpriteRenderer:
   m_SortingLayerID: -1936690497
   m_SortingLayer: 2
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: dbc15384080c0449f931cde113b89ae2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20adaea86b5df97418c08e9d1c02487f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 0.5}
+  m_Size: {x: 8, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -435,7 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.80772793, b: 0.3254717, a: 1}
+  m_Color: {r: 1, g: 0.7782745, b: 0.2216981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -487,8 +502,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.3062003, y: 0.6541}
-  m_SizeDelta: {x: 3.2503, y: 1.0072}
+  m_AnchoredPosition: {x: -0.3517, y: 0.8862}
+  m_SizeDelta: {x: 2.4228, y: 0.5519}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7234978212030064251
 MonoBehaviour:
@@ -576,8 +591,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.3062003, y: 0.6541}
-  m_SizeDelta: {x: 3.2503, y: 1.0072}
+  m_AnchoredPosition: {x: -0.3517, y: 0.8862}
+  m_SizeDelta: {x: 2.4228, y: 0.5519}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5222871978312132827
 MonoBehaviour:
