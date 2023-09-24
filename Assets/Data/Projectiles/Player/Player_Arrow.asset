@@ -31,5 +31,5 @@ MonoBehaviour:
   explosionRadius: 20
   explosionForce: 20
   explosionDamage: 50
-  numberOfProjectiles: 9
+  numberOfProjectiles: 180
   childProjectile: {fileID: 11400000, guid: 9180c7a17326c4fadbdd3b3f690e92e9, type: 2}

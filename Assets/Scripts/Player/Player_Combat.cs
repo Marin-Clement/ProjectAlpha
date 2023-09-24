@@ -21,6 +21,14 @@ public class Player_Combat : MonoBehaviour
     [SerializeField] private float minHoldTime = 0.2f;
     [SerializeField] private float cooldown = 0.2f;
 
+
+    [Header("CrossHair")]
+    private Vector2 _crossHairHotSpot = Vector2.zero;
+    [SerializeField] private Texture2D crosshairTexture;
+    [SerializeField] private Texture2D crosshairTexture2;
+    [SerializeField] private Texture2D crosshairTexture3;
+
+
     private float _heldTime;
     private float _currentCooldown;
 
@@ -28,10 +36,24 @@ public class Player_Combat : MonoBehaviour
     private void Start()
     {
         _playerBehaviour = GetComponent<Player_Behaviour>();
+        _crossHairHotSpot = new Vector2(crosshairTexture.width / 2, crosshairTexture.height / 2);
     }
 
     public void Update()
     {
+        // Set crosshair texture
+        if (_heldTime < arrowData.lifeTime * 0.50f)
+        {
+            Cursor.SetCursor(crosshairTexture, _crossHairHotSpot, CursorMode.Auto);
+        }
+        else if (_heldTime < arrowData.lifeTime * 0.95f)
+        {
+            Cursor.SetCursor(crosshairTexture2, _crossHairHotSpot, CursorMode.Auto);
+        }
+        else
+        {
+            Cursor.SetCursor(crosshairTexture3, _crossHairHotSpot, CursorMode.Auto);
+        }
         // Reduce cooldown time
         if (_currentCooldown < cooldown)
         {
@@ -56,8 +78,7 @@ public class Player_Combat : MonoBehaviour
                 _currentCooldown = 0f;
             }
             isAttacking = false;
-            _heldTime = 0;
-        }
+            _heldTime = 0; }
     }
 
     private void Attack()

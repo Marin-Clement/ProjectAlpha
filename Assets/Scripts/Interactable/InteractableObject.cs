@@ -11,7 +11,7 @@ public abstract class InteractableObject : MonoBehaviour
 
     private bool _isInRange;
 
-    private void Start()
+    protected void Start()
     {
         _isInRange = false;
         interactUI.SetActive(false);
@@ -26,6 +26,7 @@ public abstract class InteractableObject : MonoBehaviour
         {
             Interact();
         }
+        SetDetail();
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,4 +54,6 @@ public abstract class InteractableObject : MonoBehaviour
     }
 
     protected abstract void Interact();
+
+    protected abstract void SetDetail();
 }
