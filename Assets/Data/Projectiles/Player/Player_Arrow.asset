@@ -24,12 +24,12 @@ MonoBehaviour:
   isElectrifying: 0
   turnSpeed: 0.2
   bounces: 3
-  isHoming: 0
+  isHoming: 1
   isExplosive: 0
   statusEffect: 0
   timeToExplode: 0.2
   explosionRadius: 20
   explosionForce: 20
   explosionDamage: 50
-  numberOfProjectiles: 180
+  numberOfProjectiles: 16
   childProjectile: {fileID: 11400000, guid: 9180c7a17326c4fadbdd3b3f690e92e9, type: 2}

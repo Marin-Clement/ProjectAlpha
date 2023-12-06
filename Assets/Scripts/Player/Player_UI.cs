@@ -8,26 +8,22 @@ public class Player_UI : MonoBehaviour
     // Player reference
     private Player_Behaviour _playerBehaviour;
 
-    [Header("Dash UI")]
-    [SerializeField] private GameObject dashContainer;
+    [Header("Dash UI")] [SerializeField] private GameObject dashContainer;
     [SerializeField] private Image dashIcon;
     [SerializeField] private Image dashBar1;
     [SerializeField] private Image dashBar2;
     [SerializeField] private Slider dashTimer;
 
-    [Header("Spell1 UI")]
-    [SerializeField] private GameObject spell1Container;
+    [Header("Spell1 UI")] [SerializeField] private GameObject spell1Container;
     [SerializeField] private Image spell1Icon;
     [SerializeField] private Slider spell1Timer;
     [SerializeField] private Slider spell1ArrowTimer;
 
-    [Header("Spell2 UI")]
-    [SerializeField] private GameObject spell2Container;
+    [Header("Spell2 UI")] [SerializeField] private GameObject spell2Container;
     [SerializeField] private Image spell2Icon;
     [SerializeField] private Slider spell2Timer;
 
-    [Header("Health UI")]
-    [SerializeField] private TMP_Text healthText;
+    [Header("Health UI")] [SerializeField] private TMP_Text healthText;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Slider healthTempBar;
 
@@ -35,7 +31,8 @@ public class Player_UI : MonoBehaviour
     {
         _playerBehaviour = GetComponent<Player_Behaviour>();
     }
-    private void LateUpdate() 
+
+    private void LateUpdate()
     {
         UpdateDashUI();
         UpdateMainSpellUI();
@@ -53,6 +50,7 @@ public class Player_UI : MonoBehaviour
         {
             dashTimer.value = _playerBehaviour.playerMovement.GetDashTimerCount();
         }
+
         switch (_playerBehaviour.playerMovement.GetDashCount())
         {
             case 0:
@@ -82,6 +80,7 @@ public class Player_UI : MonoBehaviour
         {
             spell1Timer.value = _playerBehaviour.playerCombat.CurrentCooldown;
         }
+
         spell1ArrowTimer.value = _playerBehaviour.playerCombat.HeldTime;
     }
 
@@ -93,6 +92,7 @@ public class Player_UI : MonoBehaviour
         healthBar.value = Mathf.Lerp(healthBar.value, _playerBehaviour.playerHealth.HealthValue, 0.1f);
         healthTempBar.value = Mathf.Lerp(healthTempBar.value, healthBar.value, 0.01f);
     }
+
     public void animateDashIcon()
     {
         StartCoroutine(AnimateContainerCoroutine(dashContainer.transform));
@@ -104,14 +104,13 @@ public class Player_UI : MonoBehaviour
         StartCoroutine(AnimateContainerCoroutine(spell1Container.transform));
         StartCoroutine(AnimateIconCoroutine(spell1Icon));
     }
-    
+
     private IEnumerator AnimateIconCoroutine(Image Icon)
     {
         Color originalColor = Icon.color;
         Icon.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
         for (float i = 0; i <= 1f; i += 0.2f)
         {
-            
             Icon.color = new Color(originalColor.r, originalColor.g, originalColor.b, i);
             yield return new WaitForSeconds(0.05f);
         }
@@ -123,7 +122,7 @@ public class Player_UI : MonoBehaviour
         Container.localScale = new Vector3(baseScale, baseScale, 1f);
         for (float i = baseScale; i <= 0.8f; i += 0.02f)
         {
-            Container.localScale = new Vector3(i,i,1f);
+            Container.localScale = new Vector3(i, i, 1f);
             yield return new WaitForSeconds(0.01f);
         }
     }

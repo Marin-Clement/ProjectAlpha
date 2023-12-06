@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player_Movement :  MonoBehaviour
+public class Player_Movement : MonoBehaviour
 {
     // Properties
     public bool isMoving { get; private set; }
@@ -15,29 +15,31 @@ public class Player_Movement :  MonoBehaviour
     private Rigidbody2D _rigidbody;
 
     // Basic Movement
-    [Header("Basic Movement")]
-    [SerializeField] private int speed;
+    [Header("Basic Movement")] [SerializeField]
+    private int speed;
+
     private Vector2 _movement;
 
-    
+
     // Dash Movement
-    [Header("Dash Movement")]
-    [SerializeField] private int dashForce;
+    [Header("Dash Movement")] [SerializeField]
+    private int dashForce;
+
     [SerializeField] private float dashCd;
     [SerializeField] private GameObject dashClone;
     private bool _isDashing;
     private int _dashCount = 2;
     private bool _dashTimer;
     private float _dashTimerCount;
-    
-    
+
+
     void Start()
     {
         _playerBehaviour = GetComponent<Player_Behaviour>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
-    
+
     void Update()
     {
         _movement.x = Input.GetAxisRaw("Horizontal");
@@ -72,12 +74,12 @@ public class Player_Movement :  MonoBehaviour
             Move();
         }
     }
-    
+
     private void Move()
     {
         _rigidbody.velocity = _movement.normalized * speed;
     }
-    
+
     private void Dash()
     {
         _isDashing = true;
@@ -86,7 +88,7 @@ public class Player_Movement :  MonoBehaviour
         StartCoroutine(DashClone());
         StartCoroutine(DashCooldown());
     }
-    
+
     // knockback in opoosite direction of enemy
     public void Knockback(Vector3 enemyPosition)
     {
@@ -94,20 +96,20 @@ public class Player_Movement :  MonoBehaviour
         _rigidbody.AddForce((transform.position - enemyPosition).normalized * (dashForce * 2), ForceMode2D.Impulse);
         StartCoroutine(KnockbackCooldown());
     }
-    
-    
+
+
     IEnumerator DashCooldown()
     {
         yield return new WaitForSeconds(0.2f);
         _isDashing = false;
     }
-    
+
     IEnumerator KnockbackCooldown()
     {
         yield return new WaitForSeconds(0.1f);
         _isDashing = false;
     }
-    
+
     IEnumerator DashTimer()
     {
         yield return new WaitForSeconds(dashCd);
@@ -132,12 +134,12 @@ public class Player_Movement :  MonoBehaviour
     {
         return _dashCount;
     }
-    
+
     public float GetDashTimerCount()
     {
         return _dashTimerCount;
     }
-    
+
     // Getter and Setter
     public float DashCd
     {

@@ -12,7 +12,7 @@ public class InteractableDoor : InteractableObject
     private Material _material;
     private ParticleSystem _particleSystem;
     private readonly Color _lockedColor = new(4f, 0f, 0f, 1f);
-    private readonly Color _unlockedColor = new(1f, 7f, 0f, 1f);
+    private readonly Color _unlockedColor = new(4f, 0f, 1.83f, 1f);
 
     private new void Start()
     {

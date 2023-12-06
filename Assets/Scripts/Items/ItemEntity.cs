@@ -8,7 +8,8 @@ public abstract class ItemEntity : MonoBehaviour
     [SerializeField] private float _speed;
     private Rigidbody2D _rigidbody2D;
 
-    protected bool isDestroyed = false;
+    private bool _isDestroyed = false;
+
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -26,11 +27,13 @@ public abstract class ItemEntity : MonoBehaviour
             Vector2 targetPosition = _target.transform.position;
             Vector2 desiredDirection = (targetPosition - position).normalized;
 
-            Vector2 newDirection = Vector2.Lerp(_rigidbody2D.velocity.normalized, desiredDirection, _speed * Time.deltaTime);
+            Vector2 newDirection =
+                Vector2.Lerp(_rigidbody2D.velocity.normalized, desiredDirection, _speed * Time.deltaTime);
             _rigidbody2D.velocity = newDirection * _speed;
-            Debug.DrawLine(position, _target.transform.position, Color.red);
+            Debug.DrawLine(position, desiredDirection, Color.red);
         }
-        if (isDestroyed)
+
+        if (_isDestroyed)
         {
             DestroyAnimation();
         }
@@ -59,9 +62,10 @@ public abstract class ItemEntity : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Action(other);
-            isDestroyed = true;
+            _isDestroyed = true;
             Destroy(gameObject, 0.2f);
         }
+
         if (other.CompareTag("Wall"))
         {
             _rigidbody2D.velocity = Vector2.zero;

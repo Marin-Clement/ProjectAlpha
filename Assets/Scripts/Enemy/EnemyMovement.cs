@@ -49,6 +49,7 @@ public class EnemyMovement : MonoBehaviour
             ResetWeights();
             FindBestDirection();
         }
+
         CheckForObstacle();
         MoveIntoBestDirection();
         if (InRange())
@@ -196,13 +197,17 @@ public class EnemyMovement : MonoBehaviour
                 _highestWeightIndex = i;
             }
         }
+
         Vector2 direction = _directionVectors[_highestWeightIndex];
         Move(direction);
     }
 
     private void Move(Vector2 direction)
     {
-        Vector2 targetPosition = (Vector2)transform.position + direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
-        transform.position = Vector2.Lerp(transform.position, targetPosition, 0.4f);
+        var position = transform.position;
+        Vector2 targetPosition =
+            (Vector2)position + direction * (_enemyBehaviour.MovementSpeed * Time.deltaTime);
+        position = Vector2.Lerp(position, targetPosition, 0.4f);
+        transform.position = position;
     }
 }

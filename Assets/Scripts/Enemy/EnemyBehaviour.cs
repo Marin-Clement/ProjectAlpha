@@ -11,8 +11,7 @@ public class EnemyBehaviour : MonoBehaviour
         Dead
     }
 
-    [Header("Enemy Data")]
-    private Sprite _enemySprite;
+    [Header("Enemy Data")] private Sprite _enemySprite;
     private string _enemyName;
     private GameObject _enemyProjectile;
     public EnemyState enemyState;
@@ -22,40 +21,34 @@ public class EnemyBehaviour : MonoBehaviour
     private Health _healthScript;
 
     // Enemy stats
-    [Header("Enemy Base Stats")]
-    private float _maxHealth;
+    [Header("Enemy Base Stats")] private float _maxHealth;
     private float _health;
     private int _lvl;
 
     // Attack stats
-    [Header("Attack Stats")]
-    private int _damage;
+    [Header("Attack Stats")] private int _damage;
     private int _attackRange;
     private float _attackCooldown;
     private int _criticalChance;
     private int _criticalDamage;
     private int _armorPenetration;
     private float _attackSpeed;
-   
+
     // Defence stats
-    [Header("Defence Stats")]
-    private int _armor;
+    [Header("Defence Stats")] private int _armor;
     private int _magicResistance;
-   
+
     // Movement stats
-    [Header("Movement Stats")]
-    private float _movementSpeed;
-   
+    [Header("Movement Stats")] private float _movementSpeed;
+
     // Enemy type
-    [Header("Enemy Type")]
-    private bool _isRanged;
+    [Header("Enemy Type")] private bool _isRanged;
     private bool _isMelee;
     private bool _isMagic;
     private bool _isPhysical;
-    
+
     // Debug
-    [Header("Debug")]
-    public GameObject damagePopup;
+    [Header("Debug")] public GameObject damagePopup;
     public Animator animator;
 
     private void Awake()
@@ -86,6 +79,7 @@ public class EnemyBehaviour : MonoBehaviour
                     break;
             }
         }
+
         enemyMovement.Routine();
     }
 
@@ -119,13 +113,13 @@ public class EnemyBehaviour : MonoBehaviour
         get => _enemySprite;
         set => _enemySprite = value;
     }
-    
+
     public string EnemyName
     {
         get => _enemyName;
         set => _enemyName = value;
     }
-    
+
     public GameObject EnemyProjectile
     {
         get => _enemyProjectile;
@@ -144,45 +138,45 @@ public class EnemyBehaviour : MonoBehaviour
         get => _maxHealth;
         set => _maxHealth = value;
     }
-    
+
     public float Health
     {
         get => _health;
         set => _health = value;
     }
-    
+
     public int Lvl
     {
         get => _lvl;
         set => _lvl = value;
     }
-    
+
     // Attack stats
-    
+
     public int Damage
     {
         get => _damage;
         set => _damage = value;
     }
-    
+
     public int AttackRange
     {
         get => _attackRange;
         set => _attackRange = value;
     }
-    
+
     public int CriticalChance
     {
         get => _criticalChance;
         set => _criticalChance = value;
     }
-    
+
     public int CriticalDamage
     {
         get => _criticalDamage;
         set => _criticalDamage = value;
     }
-    
+
     public int ArmorPenetration
     {
         get => _armorPenetration;
@@ -194,49 +188,49 @@ public class EnemyBehaviour : MonoBehaviour
         get => _attackCooldown;
         set => _attackCooldown = value;
     }
-    
+
     // Defence stats
-    
+
     public int Armor
     {
         get => _armor;
         set => _armor = value;
     }
-    
+
     public int MagicResistance
     {
         get => _magicResistance;
         set => _magicResistance = value;
     }
-    
+
     // Movement stats
-    
+
     public float MovementSpeed
     {
         get => _movementSpeed;
         set => _movementSpeed = value;
     }
-    
+
     // Enemy type
-    
+
     public bool IsRanged
     {
         get => _isRanged;
         set => _isRanged = value;
     }
-    
+
     public bool IsMelee
     {
         get => _isMelee;
         set => _isMelee = value;
     }
-    
+
     public bool IsMagic
     {
         get => _isMagic;
         set => _isMagic = value;
     }
-    
+
     public bool IsPhysical
     {
         get => _isPhysical;

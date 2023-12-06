@@ -3,7 +3,6 @@ using TMPro;
 
 public class DamageFloatingText : MonoBehaviour
 {
-
     [SerializeField] private TMP_Text text; // Text component
     [SerializeField] private Color damageColor; // Color of the text
     [SerializeField] private float speed = 2f; // Floating speed
@@ -19,6 +18,7 @@ public class DamageFloatingText : MonoBehaviour
     private float timer;
     private float size;
     private Vector3 direction;
+
 
     private void Awake()
     {
@@ -37,7 +37,7 @@ public class DamageFloatingText : MonoBehaviour
         direction = new Vector3(directionX, directionY, 0f).normalized;
         if (isCritical)
         {
-            SetText(damage, new Color(1f,0.5529412f,0.2039216f));
+            SetText(damage, new Color(1f, 0.5529412f, 0.2039216f));
             criticalHitSprite.SetActive(true);
         }
         else
@@ -76,17 +76,20 @@ public class DamageFloatingText : MonoBehaviour
         textMeshPro.color = color;
     }
 
-    public bool IsCritical{
+    public bool IsCritical
+    {
         get => isCritical;
         set => isCritical = value;
     }
 
-    public float Damage{
+    public float Damage
+    {
         get => damage;
         set => damage = value;
     }
 
-    public Color Color{
+    public Color Color
+    {
         get => damageColor;
         set => damageColor = value;
     }

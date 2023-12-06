@@ -5,7 +5,6 @@ public class PlayerClone : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private float Duration = 0.5f;
-    
 
     void Start()
     {

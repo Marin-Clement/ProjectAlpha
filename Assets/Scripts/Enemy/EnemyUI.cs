@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class EnemyUI : MonoBehaviour
 {
-    [Header("Health UI")]
-    [SerializeField] private Slider healthBar;
+    [Header("Health UI")] [SerializeField] private Slider healthBar;
     [SerializeField] private Slider healthTempBar;
 
     // Enemy

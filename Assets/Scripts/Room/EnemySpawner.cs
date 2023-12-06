@@ -1,25 +1,27 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private SpriteRenderer _spawnPreview;
-    private Transform _spawnPreviewTransform;
+    [SerializeField] private GameObject spawnParticle;
+    private Light2D spawnLight;
     private float _spawnTimer = 1f;
-    private bool _canSpawn = false;
+    private bool _canSpawn;
 
     public void SpawnEnemy(GameObject enemy)
     {
-        Instantiate(enemy , transform.position, Quaternion.identity);
+        Instantiate(spawnParticle, transform.position, Quaternion.identity);
+        Instantiate(enemy, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
     private void Start()
     {
-        _spawnPreview = GetComponentInChildren<SpriteRenderer>();
-        _spawnPreviewTransform = _spawnPreview.transform;
+        spawnLight = GetComponent<Light2D>();
         if (!_canSpawn)
         {
-            _spawnPreview.color = new Color(1, 0, 0, 0);
+            spawnLight.intensity = 0;
+            spawnLight.pointLightOuterRadius = 0;
         }
     }
 
@@ -28,8 +30,8 @@ public class EnemySpawner : MonoBehaviour
         if (_canSpawn)
         {
             _spawnTimer -= Time.deltaTime;
-            _spawnPreview.color = new Color(1, 0, 0, _spawnTimer);
-            _spawnPreviewTransform.localScale = new Vector3(_spawnTimer * 3 ,_spawnTimer * 3, 1);
+            spawnLight.intensity = _spawnTimer * 2;
+            spawnLight.pointLightOuterRadius = _spawnTimer * 1 + 10;
         }
     }
 

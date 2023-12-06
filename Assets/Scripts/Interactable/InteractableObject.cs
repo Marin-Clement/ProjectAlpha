@@ -1,11 +1,8 @@
 using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
-{   
-
-    [SerializeField] private float interactDistance;   
-
-    private CircleCollider2D _interactCollider;
+{
+    [SerializeField] private float interactDistance;
 
     [SerializeField] private GameObject interactUI;
 
@@ -15,9 +12,9 @@ public abstract class InteractableObject : MonoBehaviour
     {
         _isInRange = false;
         interactUI.SetActive(false);
-        _interactCollider = gameObject.AddComponent<CircleCollider2D>();
-        _interactCollider.radius = interactDistance;
-        _interactCollider.isTrigger = true;
+        var interactCollider = gameObject.AddComponent<CircleCollider2D>();
+        interactCollider.radius = interactDistance;
+        interactCollider.isTrigger = true;
     }
 
     private void Update()
@@ -26,9 +23,10 @@ public abstract class InteractableObject : MonoBehaviour
         {
             Interact();
         }
+
         SetDetail();
     }
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -47,7 +45,7 @@ public abstract class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected() 
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, interactDistance);

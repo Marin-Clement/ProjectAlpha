@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class DoorSpawner : MonoBehaviour
 {
-    [SerializeField] bool isTopDoor;
-    [SerializeField] bool isBottomDoor;
-    [SerializeField] bool isLeftDoor;
-    [SerializeField] bool isRightDoor;
+    [SerializeField] private bool isTopDoor;
+    [SerializeField] private bool isBottomDoor;
+    [SerializeField] private bool isLeftDoor;
+    [SerializeField] private bool isRightDoor;
 
 
     public void SpawnDoor(GameObject door)
@@ -28,6 +28,7 @@ public class DoorSpawner : MonoBehaviour
         {
             doorScript.SetDirection(Vector2.right);
         }
+
         doorScript.SetLocked(true);
         Destroy(gameObject);
     }

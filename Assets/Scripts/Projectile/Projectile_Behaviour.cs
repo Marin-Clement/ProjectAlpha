@@ -12,18 +12,18 @@ public class Projectile_Behaviour : MonoBehaviour
 
     // Homing Variables
     private GameObject _target;
-    
+
     // Explosive Variables
     private float _currentExplosionTime;
     private float _spawnTime = 0.2f;
-    
+
     // Player Variables
     private float _duration;
-    
+
     // Pierce Variables
     private int _pierceCount;
     private int _entityPierced;
-    
+
     // Bouncy Variables
     private int _bounceCount;
 
@@ -42,10 +42,10 @@ public class Projectile_Behaviour : MonoBehaviour
         _currentExplosionTime = projectileData.timeToExplode;
         _pierceCount += projectileData.pierceCount;
         _bounceCount += projectileData.bounces;
-        
+
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
-        
+
         switch (gameObject.tag)
         {
             case "PlayerProjectile":
@@ -74,7 +74,8 @@ public class Projectile_Behaviour : MonoBehaviour
                     Vector3 targetPosition = _target.transform.position;
                     Vector3 desiredDirection = (targetPosition - transform.position).normalized;
 
-                    Vector3 newDirection = Vector3.Lerp(_rigidbody.velocity.normalized, desiredDirection, projectileData.turnSpeed * Time.deltaTime);
+                    Vector3 newDirection = Vector3.Lerp(_rigidbody.velocity.normalized, desiredDirection,
+                        projectileData.turnSpeed * Time.deltaTime);
                     _rigidbody.velocity = newDirection * projectileData.speed;
                 }
                 else
@@ -91,6 +92,7 @@ public class Projectile_Behaviour : MonoBehaviour
         {
             _rigidbody.velocity = _direction * projectileData.speed;
         }
+
         if (!projectileData.isExplosive) return;
         _currentExplosionTime -= Time.deltaTime;
         if (_currentExplosionTime <= 0)
@@ -99,7 +101,7 @@ public class Projectile_Behaviour : MonoBehaviour
             _currentExplosionTime = projectileData.timeToExplode;
         }
     }
-    
+
     private void Explode()
     {
         int angle = 360 / projectileData.numberOfProjectiles;
@@ -110,11 +112,12 @@ public class Projectile_Behaviour : MonoBehaviour
             Projectile_Behaviour projectileBehaviour = projectile.GetComponent<Projectile_Behaviour>();
             projectileBehaviour.SetDirection(direction);
             projectileBehaviour.Damage = Damage;
-            projectileBehaviour.Damage[0] = (float) projectileData.childProjectile.damage;
+            projectileBehaviour.Damage[0] = (float)projectileData.childProjectile.damage;
             projectileBehaviour.gameObject.transform.up = direction;
             projectileBehaviour.projectileData = projectileData.childProjectile;
             projectileBehaviour.Duration = projectileData.lifeTime;
         }
+
         Destroy(gameObject);
     }
 
@@ -128,6 +131,7 @@ public class Projectile_Behaviour : MonoBehaviour
                     col.gameObject.GetComponent<Health>().TakeDamage(_damage);
                     Destroy(gameObject);
                 }
+
                 break;
             case "Wall":
                 if (projectileData.isBouncy)
@@ -147,6 +151,7 @@ public class Projectile_Behaviour : MonoBehaviour
                 {
                     Destroy(gameObject);
                 }
+
                 break;
         }
     }
@@ -162,13 +167,14 @@ public class Projectile_Behaviour : MonoBehaviour
                     {
                         _pierceCount--;
                         _entityPierced++;
-                        Damage[0] = (float) Damage[0] - _entityPierced * (float) Damage[0] * 0.2f;
+                        Damage[0] = (float)Damage[0] - _entityPierced * (float)Damage[0] * 0.2f;
                     }
                     else
                     {
                         Destroy(gameObject);
                     }
                 }
+
                 break;
         }
     }

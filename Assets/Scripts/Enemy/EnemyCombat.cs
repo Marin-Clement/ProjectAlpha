@@ -7,8 +7,7 @@ public abstract class EnemyCombat : MonoBehaviour
     protected EnemyBehaviour _enemyBehaviour;
 
     // Prefabs
-    [Header("Prefabs")]
-    [SerializeField] protected GameObject enemyProjectile;
+    [Header("Prefabs")] [SerializeField] protected GameObject enemyProjectile;
     [SerializeField] protected Projectile_Data projectileData;
 
     //! live variables

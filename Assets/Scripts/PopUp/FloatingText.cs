@@ -12,6 +12,7 @@ public class FloatingText : MonoBehaviour
     private TextMeshPro _textMeshPro;
     private float _timer;
     private float _size;
+
     private void Awake()
     {
         _textMeshPro = GetComponent<TextMeshPro>();

@@ -5,34 +5,34 @@ public class Player_Behaviour : MonoBehaviour
 {
     // Player Reference
 
-    public Player_Movement playerMovement { get; private set;}
+    public Player_Movement playerMovement { get; private set; }
 
-    public Player_Combat playerCombat { get; private set;}
+    public Player_Combat playerCombat { get; private set; }
 
-    public Player_UI playerUi { get; private set;}
+    public Player_UI playerUi { get; private set; }
 
-    public Player_Animation playerAnimation { get; private set;}
-    
-    public Health playerHealth { get; private set;}
+    public Player_Animation playerAnimation { get; private set; }
 
-    public Player_Camera playerCamera { get; private set;}
+    public Health playerHealth { get; private set; }
+
+    public PlayerCamera playerCamera { get; private set; }
 
 
-    [Header("Player Stats")] 
+    [Header("Player Stats")] [SerializeField]
+    private float maxHealth = 100;
 
-    [SerializeField] private float maxHealth = 100;
     private float health;
 
     [SerializeField] private int lvl = 1;
-    
+
     // Attack stats
-    [Header("Attack Stats")] 
-    
-    [SerializeField] private int damage = 10;
+    [Header("Attack Stats")] [SerializeField]
+    private int damage = 10;
+
     [SerializeField] private int criticalChance = 0; // In percentage
     [SerializeField] private int criticalDamage = 10; // In percentage
     [SerializeField] private int armorPenetration = 0; // In percentage
-    
+
     // Defence stats
     [Header("Defence Stats")] [SerializeField]
     private int armor = 10; // Default armor is 10
@@ -122,7 +122,7 @@ public class Player_Behaviour : MonoBehaviour
         set => dodge = value;
     }
 
-    public void SetPlayerCamera(Player_Camera value)
+    public void SetPlayerCamera(PlayerCamera value)
     {
         playerCamera = value;
     }

@@ -8,22 +8,21 @@ public class Player_Combat : MonoBehaviour
 
     // Player Reference
     private Player_Behaviour _playerBehaviour;
-    
+
 
     // Arrow Variables
-    [Header("Arrow Variables")]
-    [SerializeField] private GameObject arrowPrefab;
+    [Header("Arrow Variables")] [SerializeField]
+    private GameObject arrowPrefab;
+
     [SerializeField] private Projectile_Data arrowData;
-    
+
     // Bow Stats
-    [Header("Bow Stats")]
-    [SerializeField] private Transform bowOutTransform;
+    [Header("Bow Stats")] [SerializeField] private Transform bowOutTransform;
     [SerializeField] private float minHoldTime = 0.2f;
     [SerializeField] private float cooldown = 0.2f;
 
 
-    [Header("CrossHair")]
-    private Vector2 _crossHairHotSpot = Vector2.zero;
+    [Header("CrossHair")] private Vector2 _crossHairHotSpot = Vector2.zero;
     [SerializeField] private Texture2D crosshairTexture;
     [SerializeField] private Texture2D crosshairTexture2;
     [SerializeField] private Texture2D crosshairTexture3;
@@ -54,6 +53,7 @@ public class Player_Combat : MonoBehaviour
         {
             Cursor.SetCursor(crosshairTexture3, _crossHairHotSpot, CursorMode.Auto);
         }
+
         // Reduce cooldown time
         if (_currentCooldown < cooldown)
         {
@@ -77,14 +77,17 @@ public class Player_Combat : MonoBehaviour
                 _playerBehaviour.playerUi.animateMainSpellIcon();
                 _currentCooldown = 0f;
             }
+
             isAttacking = false;
-            _heldTime = 0; }
+            _heldTime = 0;
+        }
     }
 
     private void Attack()
     {
         var arrow = Instantiate(arrowPrefab, bowOutTransform.position, Quaternion.identity);
-        var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();;
+        var projectileBehaviour = arrow.GetComponent<Projectile_Behaviour>();
+        ;
         projectileBehaviour.IsCritical = _playerBehaviour.CriticalChance > Random.Range(0, 100);
         projectileBehaviour.Damage = CalculateDamage(arrowData, projectileBehaviour.IsCritical);
         projectileBehaviour.Duration = (_heldTime + minHoldTime) * 1.2f;
@@ -106,7 +109,7 @@ public class Player_Combat : MonoBehaviour
 
         List<object> damageInfo = new List<object>();
 
-        bool[] arrowEffects = new bool[5];                                                          
+        bool[] arrowEffects = new bool[5];
         arrowEffects[0] = arrow.isPoisonous;
         arrowEffects[1] = arrow.isBurning;
         arrowEffects[2] = arrow.isFreezing;
@@ -115,7 +118,7 @@ public class Player_Combat : MonoBehaviour
         damageInfo.Add(calculatedDamage);
         damageInfo.Add(isCriticalHit);
         damageInfo.Add(arrowEffects);
-        
+
         return damageInfo;
     }
 

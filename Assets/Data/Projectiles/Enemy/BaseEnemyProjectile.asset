@@ -22,11 +22,11 @@ MonoBehaviour:
   isFreezing: 0
   isBurning: 0
   isElectrifying: 0
-  turnSpeed: 20
+  turnSpeed: 5
   bounces: 2
   isHoming: 0
   isExplosive: 0
-  statusEffect: 0
+  statusEffect: 1
   timeToExplode: 0.2
   explosionRadius: 0
   explosionForce: 0
