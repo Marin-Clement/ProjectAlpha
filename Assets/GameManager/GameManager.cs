@@ -18,4 +18,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void ResetPlayerPosition()
+    {
+        player.transform.position = new Vector2(1f, 5f);
+    }
 }

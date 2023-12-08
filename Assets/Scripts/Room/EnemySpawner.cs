@@ -31,7 +31,8 @@ public class EnemySpawner : MonoBehaviour
         {
             _spawnTimer -= Time.deltaTime;
             spawnLight.intensity = _spawnTimer * 2;
-            spawnLight.pointLightOuterRadius = _spawnTimer * 1 + 10;
+            spawnLight.pointLightInnerRadius = _spawnTimer * 2;
+            spawnLight.pointLightOuterRadius = _spawnTimer * 10;
         }
     }
 

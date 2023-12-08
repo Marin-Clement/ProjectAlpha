@@ -49,7 +49,7 @@ public class Room : MonoBehaviour
         {
             if (_isStartRoom && !_isNewFloor)
             {
-                var position = transform.position;
+                var position = new Vector2(1f, 5f);
                 var player = Instantiate(roomData.playerPrefab, position, Quaternion.identity);
                 var playerCamera = Instantiate(roomData.playerCameraPrefab, position, Quaternion.identity);
                 player.GetComponent<Player_Behaviour>().SetPlayerCamera(playerCamera.GetComponent<PlayerCamera>());

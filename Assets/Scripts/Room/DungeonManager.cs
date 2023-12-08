@@ -138,8 +138,10 @@ public class DungeonManager : MonoBehaviour
     {
         _roomsLayout = new RoomData[rooms + 2, rooms + 2];
         _visitedRooms = new bool[rooms + 2, rooms + 2];
-        _currentRoomPosition = new Vector2(rooms, rooms);
+        _currentRoomPosition = new Vector2(rooms / 2, rooms / 2);
         GenerateDungeonLayout();
+        ChangeRoom(Vector2.zero);
+        GameManager.Instance.ResetPlayerPosition();
     }
 
     private void GenerateDungeonLayout()
